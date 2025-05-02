@@ -63,10 +63,15 @@ clist=[0.01,0.1,0.2,1,0.0027]
 bandPassFilterTowThomas(1000,10,10,clist)
 ```
 
-#### Simulation
-- We simulate the same using Ki-Cad
-![Tow Thomas Biquad Filter](./Schematics/amcd-tow-thomas.svg)
-
 #### Choice
 
 We choose $C$ = 0.1$\mu F$ so as to have the resistance on a reasonable level and we choose $R_1$ to be on same as that of $R$
+
+#### Simulation
+
+- We simulate the same using Ki-Cad
+![Tow Thomas Biquad Filter](./Schematics/amcd-tow-thomas.svg)
+- The graph of the simulated data is as follows
+![bandpassTowThomas.png](./Graphs/bandpassTowThomas.png)
+![bandStopTowThomasFilter.png](./Graphs/bandStopTowThomasFilter.png)
+
