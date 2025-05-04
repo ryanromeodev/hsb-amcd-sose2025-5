@@ -74,9 +74,3 @@ We choose $C$ = 0.1$\mu F$ so as to have the resistance on a reasonable level an
 - The graph of the simulated data is as follows
 ![bandpassTowThomas.png](./Graphs/bandpassTowThomas.png)
 ![bandStopTowThomasFilter.png](./Graphs/bandStopTowThomasFilter.png)
-
-# Design of another filter
-ryan part asdasd
-
-#### Design of KHN
-visammaya part asdasd
