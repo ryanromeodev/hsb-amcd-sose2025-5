@@ -166,7 +166,7 @@ window.Quarto = {
 <li>from the above equations we calculate all values and store the available capacitor values in <code>clist</code> of the below python code. Note that the capacitance value is in <span class="math inline">\(\mu F\)</span></li>
 <li><span class="math inline">\(R_3\)</span> is choosen arbitarily so as to not load down the second or the third op-amp</li>
 </ol>
-<div id="efa743c1" class="cell" data-execution_count="1">
+<div id="974ce5c3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bandPassFilterTowThomas(f_0,Q,A_mid,clist):</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> clist:</span>
@@ -219,6 +219,9 @@ For C:  0.0027
 <li>The graph of the simulated data is as follows <img src="./Graphs/bandpassTowThomas.png" class="img-fluid" alt="bandpassTowThomas.png"> <img src="./Graphs/bandStopTowThomasFilter.png" class="img-fluid" alt="bandStopTowThomasFilter.png"></li>
 </ul>
 </section>
+</section>
+<section id="new-approach-designing-a-bandpass-filter-using-tow-thomas-circuit" class="level3">
+<h3 class="anchored" data-anchor-id="new-approach-designing-a-bandpass-filter-using-tow-thomas-circuit">(NEW APPROACH) Designing a bandpass filter using <code>tow-thomas</code> circuit</h3>
 </section>
 </section>
 
