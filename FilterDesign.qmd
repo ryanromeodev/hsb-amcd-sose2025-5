@@ -154,6 +154,7 @@ f = l.get_frequency()
 
 ```
 
+
 ```{python}
 # low pass plot
 v_lpf = l.get_data('v(/lpf)')

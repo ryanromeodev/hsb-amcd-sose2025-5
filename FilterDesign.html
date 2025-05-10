@@ -166,24 +166,25 @@ window.Quarto = {
 <li>from the above equations we calculate all values and store the available capacitor values in <code>clist</code> of the below python code. Note that the capacitance value is in <span class="math inline">\(\mu F\)</span></li>
 <li><span class="math inline">\(R_3\)</span> is choosen arbitarily so as to not load down the second or the third op-amp</li>
 </ol>
-<div id="f8a45ef6" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bandPassFilterTowThomas(f_0,Q,A_mid,clist):</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> clist:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"For C: "</span>,c)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=</span>c<span class="op">*</span><span class="dv">10</span><span class="op">**-</span><span class="dv">6</span> <span class="co">#in microFarard        </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        w_0 <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>f_0</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Q=10 #quality factor</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">#A_mid = 20 #midband gain</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> <span class="dv">10</span><span class="op">**-</span><span class="dv">3</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        R <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>c)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="st"> R : "</span><span class="op">+</span><span class="bu">str</span>(np.ceil(R)<span class="op">*</span>k)<span class="op">+</span><span class="st">" K ohm"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        R_2 <span class="op">=</span> Q<span class="op">*</span>R</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="st"> R_2 : "</span><span class="op">+</span><span class="bu">str</span>(np.ceil(R_2)<span class="op">*</span>k)<span class="op">+</span><span class="st">" K ohm"</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        R_1 <span class="op">=</span> R<span class="op">*</span>Q<span class="op">/</span>A_mid</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="st"> R_1 : "</span><span class="op">+</span><span class="bu">str</span>(np.ceil(R_1)<span class="op">*</span>k)<span class="op">+</span><span class="st">" k ohm"</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>clist<span class="op">=</span>[<span class="fl">0.01</span>,<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="dv">1</span>,<span class="fl">0.0027</span>]</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>bandPassFilterTowThomas(<span class="dv">1000</span>,<span class="dv">10</span>,<span class="dv">10</span>,clist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="837361d7" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#basic tow thomas</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bandPassFilterTowThomas(f_0,Q,A_mid,clist):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> clist:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"For C: "</span>,c)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        c<span class="op">=</span>c<span class="op">*</span><span class="dv">10</span><span class="op">**-</span><span class="dv">6</span> <span class="co">#in microFarard        </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        w_0 <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>f_0</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Q=10 #quality factor</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">#A_mid = 20 #midband gain</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> <span class="dv">10</span><span class="op">**-</span><span class="dv">3</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        R <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>c)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="st"> R : "</span><span class="op">+</span><span class="bu">str</span>(np.ceil(R)<span class="op">*</span>k)<span class="op">+</span><span class="st">" K ohm"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        R_2 <span class="op">=</span> Q<span class="op">*</span>R</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="st"> R_2 : "</span><span class="op">+</span><span class="bu">str</span>(np.ceil(R_2)<span class="op">*</span>k)<span class="op">+</span><span class="st">" K ohm"</span>) </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        R_1 <span class="op">=</span> R<span class="op">*</span>Q<span class="op">/</span>A_mid</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\t</span><span class="st"> R_1 : "</span><span class="op">+</span><span class="bu">str</span>(np.ceil(R_1)<span class="op">*</span>k)<span class="op">+</span><span class="st">" k ohm"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>clist<span class="op">=</span>[<span class="fl">0.01</span>,<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="dv">1</span>,<span class="fl">0.0027</span>]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>bandPassFilterTowThomas(<span class="dv">1000</span>,<span class="dv">10</span>,<span class="dv">10</span>,clist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>For C:  0.01
      R : 15.916 K ohm
@@ -216,127 +217,151 @@ For C:  0.0027
 <h4 class="anchored" data-anchor-id="simulation">Simulation</h4>
 <ul>
 <li>We simulate the same using Ki-Cad <img src="./Schematics/amcd-tow-thomas.svg" class="img-fluid" alt="Tow Thomas Biquad Filter"></li>
-<li>The graph of the simulated data is as follows <img src="./Graphs/bandpassTowThomas.png" class="img-fluid" alt="bandpassTowThomas.png"> <img src="./Graphs/bandStopTowThomasFilter.png" class="img-fluid" alt="bandStopTowThomasFilter.png"> ### (NEW APPROACH) Designing a bandpass filter using <code>tow-thomas</code> circuit</li>
+<li>The graph of the simulated data is as follows <img src="./Graphs/bandpassTowThomas.png" class="img-fluid" alt="bandpassTowThomas.png"> <img src="./Graphs/bandStopTowThomasFilter.png" class="img-fluid" alt="bandStopTowThomasFilter.png"></li>
 </ul>
-<div id="22e3ea29" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fixing</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>f_p <span class="op">=</span> <span class="dv">1000</span> <span class="co">#Hz</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>a_0<span class="op">=</span> (<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>f_p)<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>a_1<span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>f_p<span class="op">/</span>Q</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tf(name,num_s_0,num_s_1,num_s_2,den_s_0,den_s_1,den_s_2):</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    num_s_0  <span class="op">=</span> np.<span class="bu">round</span>(num_s_0,<span class="dv">2</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    num_s_1  <span class="op">=</span> np.<span class="bu">round</span>(num_s_1,<span class="dv">2</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    num_s_2  <span class="op">=</span> np.<span class="bu">round</span>(num_s_2,<span class="dv">2</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    den_s_0  <span class="op">=</span> np.<span class="bu">round</span>(den_s_0,<span class="dv">2</span>)    </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    den_s_1  <span class="op">=</span> np.<span class="bu">round</span>(den_s_1,<span class="dv">2</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    den_s_2  <span class="op">=</span> np.<span class="bu">round</span>(den_s_2,<span class="dv">2</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"("</span><span class="op">+</span><span class="bu">str</span>(num_s_2)<span class="op">+</span><span class="st">"s^2)"</span><span class="op">+</span><span class="st">"+"</span><span class="op">+</span><span class="st">"("</span><span class="op">+</span><span class="bu">str</span>(num_s_1)<span class="op">+</span><span class="st">"s)"</span><span class="op">+</span><span class="st">"+"</span><span class="op">+</span><span class="st">"("</span><span class="op">+</span><span class="bu">str</span>(num_s_0)<span class="op">+</span><span class="st">")"</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"---------------------"</span>)    </span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"("</span><span class="op">+</span><span class="bu">str</span>(den_s_2)<span class="op">+</span><span class="st">"s^2)"</span><span class="op">+</span><span class="st">"+"</span><span class="op">+</span><span class="st">"("</span><span class="op">+</span><span class="bu">str</span>(den_s_1)<span class="op">+</span><span class="st">"s)"</span><span class="op">+</span><span class="st">"+"</span><span class="op">+</span><span class="st">"("</span><span class="op">+</span><span class="bu">str</span>(den_s_0)<span class="op">+</span><span class="st">")"</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> v01byvin(k_2,b_2,a_1,b_1,a_0):</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    num_s_0 <span class="op">=</span> <span class="op">-</span>k_2<span class="op">*</span>((b_2<span class="op">*</span>a_0)<span class="op">-</span>b_0)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    num_s_1 <span class="op">=</span> <span class="op">-</span>k_2<span class="op">*</span>((b_2<span class="op">*</span>a_1)<span class="op">-</span>b_1)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    num_s_2 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    den_s_0 <span class="op">=</span> a_0    </span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    den_s_1 <span class="op">=</span> a_1</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    den_s_2 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    tf(<span class="st">"</span><span class="ch">\n</span><span class="st">V_01/V_in:"</span>,num_s_0,num_s_1,num_s_2,den_s_0,den_s_1,den_s_2)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> v02byvin(b_2,b_1,b_0,a_0,a_1):</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    num_s_0 <span class="op">=</span> b_0</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    num_s_1 <span class="op">=</span> b_1</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    num_s_2 <span class="op">=</span> b_2</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    den_s_0 <span class="op">=</span> a_0    </span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    den_s_1 <span class="op">=</span> a_1</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    den_s_2 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    tf(<span class="st">"</span><span class="ch">\n</span><span class="st">V_02/V_in:"</span>,num_s_0,num_s_1,num_s_2,den_s_0,den_s_1,den_s_2)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> v03byvin(b_2,b_1,b_0,a_0,a_1,k_1):</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    num_s_0 <span class="op">=</span> (<span class="op">-</span><span class="dv">1</span><span class="op">/</span>(k_1<span class="op">*</span>np.sqrt(a_0)))<span class="op">*</span>((a_1<span class="op">*</span>b_0)<span class="op">-</span>(a_0<span class="op">*</span>b_1))</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    num_s_1 <span class="op">=</span> (<span class="op">-</span><span class="dv">1</span><span class="op">/</span>(k_1<span class="op">*</span>np.sqrt(a_0)))<span class="op">*</span>(b_0<span class="op">-</span>(b_2<span class="op">*</span>a_0))</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    num_s_2 <span class="op">=</span> b_2</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    den_s_0 <span class="op">=</span> a_0    </span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    den_s_1 <span class="op">=</span> a_1</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    den_s_2 <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    tf(<span class="st">"</span><span class="ch">\n</span><span class="st">V_03/V_in:"</span>,num_s_0,num_s_1,num_s_2,den_s_0,den_s_1,den_s_2)</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> design(name,R_8,C_1,C_2,k_1,k_2,b_0,b_1,b_2):  </span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(name)</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    R_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(a_1<span class="op">*</span>C_1)</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    R_2 <span class="op">=</span> k_1<span class="op">/</span>(np.sqrt(a_0)<span class="op">*</span>C_2)</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    R_3 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(k_1<span class="op">*</span>k_2<span class="op">*</span>np.sqrt(a_0)<span class="op">*</span>C_1)</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    R_4 <span class="op">=</span> (<span class="dv">1</span><span class="op">/</span>k_2)<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>((a_1<span class="op">*</span>b_2)<span class="op">-</span>b_1))<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>C_1)</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    R_5 <span class="op">=</span> k_1<span class="op">*</span>np.sqrt(a_0)<span class="op">/</span>(b_0<span class="op">*</span>C_2)</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    R_7 <span class="op">=</span> k_2<span class="op">*</span>R_8</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    R_6 <span class="op">=</span> R_8<span class="op">/</span>b_2</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    R_tuples <span class="op">=</span> R_1,R_2,R_3,R_4,R_5,R_6,R_7,R_8</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="dv">8</span>,<span class="dv">1</span>):</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"R "</span><span class="op">+</span><span class="bu">str</span>(i<span class="op">+</span><span class="dv">1</span>)<span class="op">+</span><span class="st">" = "</span><span class="op">+</span><span class="bu">str</span>(R_tuples[i]))</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    v01byvin(k_2,b_2,a_1,b_1,a_0)</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    v02byvin(b_2,b_1,b_0,a_0,a_1)</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    v03byvin(b_2,b_1,b_0,a_0,a_1,k_1)</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="co">#setting</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>R_8 <span class="op">=</span> <span class="dv">1</span><span class="co">#k</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>C_1 <span class="op">=</span> <span class="fl">0.1</span><span class="co">#uF</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>C_2 <span class="op">=</span> <span class="dv">1</span><span class="co">#uF</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="co">#assumption</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>k_1 <span class="op">=</span> <span class="dv">1</span> <span class="co">#ratio is set to 1 for init</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>k_2 <span class="op">=</span> <span class="dv">1</span> <span class="co">#ratio is set to 1 for init</span></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>b_2 <span class="op">=</span> <span class="dv">1</span> <span class="co">#ratio is set to 1 for init</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>b_0 <span class="op">=</span> <span class="dv">1</span> <span class="co">#is set to 1 for init</span></span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>b_1 <span class="op">=</span> <span class="dv">1</span> <span class="co">#is set to 1 for init</span></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> finaldesign(R_8,C_1,C_2,k_1,k_2,b_0,b_1,b_2):    </span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    design(<span class="st">"when b1=0"</span>,R_8,C_1,C_2,k_1,k_2,b_0,b_1,b_2)    </span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>finaldesign(R_8,C_1,C_2,k_1,k_2,b_0,b_1,b_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>when b1=0
-R 1 = 0.015915494309189537
-R 2 = 0.00015915494309189535
-R 3 = 0.0015915494309189533
-R 4 = 0.015940864983782832
-R 5 = 6283.185307179586
-R 6 = 1.0
-R 7 = 1
-R 8 = 1
-
-V_01/V_in:
-(0s^2)+(-627.32s)+(-39478416.6)
----------------------
-(1s^2)+(628.32s)+(39478417.6)
-
-V_02/V_in:
-(1s^2)+(1s)+(1)
----------------------
-(1s^2)+(628.32s)+(39478417.6)
-
-V_03/V_in:
-(1s^2)+(6283.19s)+(6283.09)
----------------------
-(1s^2)+(628.32s)+(39478417.6)</code></pre>
-</div>
-</div>
 </section>
 </section>
 </section>
 <section id="khn-biquad" class="level1">
 <h1>KHN Biquad</h1>
-<div id="d124238f" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span><span class="dv">10</span><span class="op">**-</span><span class="dv">6</span> <span class="co">#F</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>f_c <span class="op">=</span> <span class="dv">1000</span> <span class="co">#Hz</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>Q<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>c<span class="op">*</span>f_c) <span class="co">#ohm</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>R_3 <span class="op">=</span> R_4 <span class="op">=</span> <span class="dv">2000</span> <span class="co">#ohm</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>R_1 <span class="op">=</span> [<span class="dv">1000</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r_1 <span class="kw">in</span> R_1:</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    r_2 <span class="op">=</span> (r_1<span class="op">*</span>(R_3<span class="op">+</span>R_4)<span class="op">/</span>(Q<span class="op">*</span>R_4))<span class="op">-</span>r_1</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(r_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d49e0807" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#KHN biquad :: red pitaya</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ltspice</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> KHNFilter:          </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,h_0,w_0,Q):                </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.h_0 <span class="op">=</span> h_0</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_0 <span class="op">=</span> w_0</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Q <span class="op">=</span> Q        </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> tf(<span class="va">self</span>,name,num,den_s_0,den_s_1,den_s_2):</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">'''Just a Display Function of a TF'''</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        line <span class="op">=</span> <span class="st">"---------------------"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        den <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span>den_s_2<span class="sc">}</span><span class="ss"> S^2)(</span><span class="sc">{</span>den_s_1<span class="sc">}</span><span class="ss"> S)(</span><span class="sc">{</span>den_s_0<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>name<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(num)            </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(line)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(den)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> generatetf(<span class="va">self</span>):</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lowpassfilter()</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.highpassfilter()</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bandpassfilter()</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bandstopfilter()</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> lowpassfilter(<span class="va">self</span>):        </span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Low Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)   </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> highpassfilter(<span class="va">self</span>):        </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="op">*</span>np<span class="sc">.</span>square(<span class="dv">1</span><span class="op">/</span><span class="va">self</span>.w_0)<span class="sc">}</span><span class="ss"> S^2)"</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"High Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> bandpassfilter(<span class="va">self</span>):        </span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="op">-</span><span class="va">self</span><span class="sc">.</span>h_0 <span class="op">*</span> <span class="dv">1</span><span class="op">/</span><span class="va">self</span><span class="sc">.</span>w_0<span class="sc">}</span><span class="ss"> S)"</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Band Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> bandstopfilter(<span class="va">self</span>):        </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="dv">1</span><span class="sc">}</span><span class="ss">+</span><span class="sc">{</span>np<span class="sc">.</span>square(<span class="dv">1</span><span class="op">/</span><span class="va">self</span>.w_0)<span class="sc">}</span><span class="ss"> S^2)</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Band Stop Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)        </span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Given</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>f_0 <span class="op">=</span> <span class="dv">1000</span> <span class="co">#Hz</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co">## so,</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>w_0 <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>f_0</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Choice</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>H_0 <span class="op">=</span> <span class="dv">1</span> <span class="co">#gain</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> <span class="fl">0.1</span><span class="op">*</span><span class="fl">10e-6</span> <span class="co">#F</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="co">## so,</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>C)</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="co">### Rough Notes</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>BSF_resistor <span class="op">=</span> Q<span class="op">*</span>R</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="op">\</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="ss">    BSF resistor : </span><span class="sc">{</span>BSF_resistor<span class="op">*</span><span class="fl">10e-3</span><span class="sc">}</span><span class="ss"> kOhm,</span><span class="ch">\n</span><span class="op">\</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="ss">    General R: </span><span class="sc">{</span>R<span class="op">*</span><span class="fl">10e-3</span><span class="sc">}</span><span class="ss">kOhm</span><span class="op">\</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="ss">    "</span>)</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter design</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>filter_1 <span class="op">=</span> KHNFilter(H_0,w_0,Q)</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="co">#filter_1.generatetf()</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="co"># importing and plotting </span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> ltspice.Ltspice(<span class="st">'.</span><span class="ch">\\</span><span class="st">RAW</span><span class="ch">\\</span><span class="st">khn.raw'</span>) </span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>l.parse() </span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> l.get_frequency()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>-800.0</code></pre>
+<pre><code>    BSF resistor : 15.915494309189533 kOhm,
+    General R: 1.5915494309189533kOhm    </code></pre>
+</div>
+</div>
+<div id="9bae9dc6" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># low pass plot</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>v_lpf <span class="op">=</span> l.get_data(<span class="st">'v(/lpf)'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_lpf)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook.py:1709: ComplexWarning: Casting complex values to real discards the imaginary part
+  return math.isfinite(val)
+c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook.py:1345: ComplexWarning: Casting complex values to real discards the imaginary part
+  return np.asarray(x, float)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FilterDesign_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="2be9f4af" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># high pass plot</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>v_hpf <span class="op">=</span> l.get_data(<span class="st">'v(/hpf)'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_hpf)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FilterDesign_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6d43456a" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># band pass plot</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>v_bpf <span class="op">=</span> l.get_data(<span class="st">'v(/bpf)'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_bpf)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FilterDesign_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="3554dd74" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># band stop plot</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>v_bsf <span class="op">=</span> l.get_data(<span class="st">'v(/bsf)'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_bsf)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="FilterDesign_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
