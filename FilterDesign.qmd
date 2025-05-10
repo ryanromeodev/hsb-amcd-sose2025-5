@@ -44,6 +44,7 @@ $R$, $R_1$, $R_2$, $R_3$, $C$
 4. $R_3$ is choosen arbitarily so as to not load down the second or the third op-amp
 
 ```{python}
+#basic tow thomas
 import numpy as np
 def bandPassFilterTowThomas(f_0,Q,A_mid,clist):
     for c in clist:
@@ -56,7 +57,7 @@ def bandPassFilterTowThomas(f_0,Q,A_mid,clist):
         R = 1/(w_0*c)
         print("\t R : "+str(np.ceil(R)*k)+" K ohm")
         R_2 = Q*R
-        print("\t R_2 : "+str(np.ceil(R_2)*k)+" K ohm")
+        print("\t R_2 : "+str(np.ceil(R_2)*k)+" K ohm") 
         R_1 = R*Q/A_mid
         print("\t R_1 : "+str(np.ceil(R_1)*k)+" k ohm")
 clist=[0.01,0.1,0.2,1,0.0027]
@@ -74,96 +75,112 @@ We choose $C$ = 0.1$\mu F$ so as to have the resistance on a reasonable level an
 - The graph of the simulated data is as follows
 ![bandpassTowThomas.png](./Graphs/bandpassTowThomas.png)
 ![bandStopTowThomasFilter.png](./Graphs/bandStopTowThomasFilter.png)
-### (NEW APPROACH) Designing a bandpass filter using `tow-thomas` circuit
-
-```{python}
-import numpy as np
-# fixing
-f_p = 1000 #Hz
-Q = 10
-a_0= (2*np.pi*f_p)**2
-a_1= 2*np.pi*f_p/Q
-def tf(name,num_s_0,num_s_1,num_s_2,den_s_0,den_s_1,den_s_2):
-    num_s_0  = np.round(num_s_0,2)
-    num_s_1  = np.round(num_s_1,2)
-    num_s_2  = np.round(num_s_2,2)
-    den_s_0  = np.round(den_s_0,2)    
-    den_s_1  = np.round(den_s_1,2)
-    den_s_2  = np.round(den_s_2,2)
-    print(name)
-    print("("+str(num_s_2)+"s^2)"+"+"+"("+str(num_s_1)+"s)"+"+"+"("+str(num_s_0)+")")
-    print("---------------------")    
-    print("("+str(den_s_2)+"s^2)"+"+"+"("+str(den_s_1)+"s)"+"+"+"("+str(den_s_0)+")")
-def v01byvin(k_2,b_2,a_1,b_1,a_0):
-    num_s_0 = -k_2*((b_2*a_0)-b_0)
-    num_s_1 = -k_2*((b_2*a_1)-b_1)
-    num_s_2 = 0
-    den_s_0 = a_0    
-    den_s_1 = a_1
-    den_s_2 = 1
-    tf("\nV_01/V_in:",num_s_0,num_s_1,num_s_2,den_s_0,den_s_1,den_s_2)
-def v02byvin(b_2,b_1,b_0,a_0,a_1):
-    num_s_0 = b_0
-    num_s_1 = b_1
-    num_s_2 = b_2
-    den_s_0 = a_0    
-    den_s_1 = a_1
-    den_s_2 = 1
-    tf("\nV_02/V_in:",num_s_0,num_s_1,num_s_2,den_s_0,den_s_1,den_s_2)
-def v03byvin(b_2,b_1,b_0,a_0,a_1,k_1):
-    num_s_0 = (-1/(k_1*np.sqrt(a_0)))*((a_1*b_0)-(a_0*b_1))
-    num_s_1 = (-1/(k_1*np.sqrt(a_0)))*(b_0-(b_2*a_0))
-    num_s_2 = b_2
-    den_s_0 = a_0    
-    den_s_1 = a_1
-    den_s_2 = 1
-    tf("\nV_03/V_in:",num_s_0,num_s_1,num_s_2,den_s_0,den_s_1,den_s_2)
-def design(name,R_8,C_1,C_2,k_1,k_2,b_0,b_1,b_2):  
-    print(name)
-    R_1 = 1/(a_1*C_1)
-    R_2 = k_1/(np.sqrt(a_0)*C_2)
-    R_3 = 1/(k_1*k_2*np.sqrt(a_0)*C_1)
-    R_4 = (1/k_2)*(1/((a_1*b_2)-b_1))*(1/C_1)
-    R_5 = k_1*np.sqrt(a_0)/(b_0*C_2)
-    R_7 = k_2*R_8
-    R_6 = R_8/b_2
-    R_tuples = R_1,R_2,R_3,R_4,R_5,R_6,R_7,R_8
-    for i in range(0,8,1):
-        print("R "+str(i+1)+" = "+str(R_tuples[i]))
-    v01byvin(k_2,b_2,a_1,b_1,a_0)
-    v02byvin(b_2,b_1,b_0,a_0,a_1)
-    v03byvin(b_2,b_1,b_0,a_0,a_1,k_1)
-#setting
-R_8 = 1#k
-C_1 = 0.1#uF
-C_2 = 1#uF
-
-#assumption
-k_1 = 1 #ratio is set to 1 for init
-k_2 = 1 #ratio is set to 1 for init
-b_2 = 1 #ratio is set to 1 for init
-b_0 = 1 #is set to 1 for init
-b_1 = 1 #is set to 1 for init
-
-def finaldesign(R_8,C_1,C_2,k_1,k_2,b_0,b_1,b_2):    
-    design("when b1=0",R_8,C_1,C_2,k_1,k_2,b_0,b_1,b_2)    
-    
-finaldesign(R_8,C_1,C_2,k_1,k_2,b_0,b_1,b_2)
-
-```
 
 # KHN Biquad
 
 ```{python}
+#KHN biquad :: red pitaya
 import numpy as np
+import ltspice
+import matplotlib.pyplot as plt
 
-c = 0.1 *10**-6 #F
-f_c = 1000 #Hz
-Q=10
-R = 1/(2*np.pi*c*f_c) #ohm
-R_3 = R_4 = 2000 #ohm
-R_1 = [1000]
-for r_1 in R_1:
-    r_2 = (r_1*(R_3+R_4)/(Q*R_4))-r_1
-    print(r_2)
+class KHNFilter:          
+    def __init__(self,h_0,w_0,Q):                
+        self.h_0 = h_0
+        self.w_0 = w_0
+        self.Q = Q        
+        
+    def tf(self,name,num,den_s_0,den_s_1,den_s_2):
+        '''Just a Display Function of a TF'''
+        line = "---------------------"
+        den = f"({den_s_2} S^2)({den_s_1} S)({den_s_0})"
+        print(f"\n{name}\n")
+        print(num)            
+        print(line)
+        print(den)
+    def generatetf(self):
+        self.lowpassfilter()
+        self.highpassfilter()
+        self.bandpassfilter()
+        self.bandstopfilter()
+    def lowpassfilter(self):        
+        numerator = f"({self.h_0})"
+        den_0 = 1/np.square(w_0)
+        den_1 = 1/(w_0*Q)
+        self.tf("Low Pass Filter: ",numerator,den_0,den_1,1)   
+    def highpassfilter(self):        
+        numerator = f"({self.h_0*np.square(1/self.w_0)} S^2)"
+        den_0 = 1/np.square(w_0)
+        den_1 = 1/(w_0*Q)
+        self.tf("High Pass Filter: ",numerator,den_0,den_1,1)
+    def bandpassfilter(self):        
+        numerator = f"({-self.h_0 * 1/self.w_0} S)"
+        den_0 = 1/np.square(w_0)
+        den_1 = 1/(w_0*Q)
+        self.tf("Band Pass Filter: ",numerator,den_0,den_1,1)
+    def bandstopfilter(self):        
+        numerator = f"({1}+{np.square(1/self.w_0)} S^2){self.h_0}"
+        den_0 = 1/np.square(w_0)
+        den_1 = 1/(w_0*Q)
+        self.tf("Band Stop Filter: ",numerator,den_0,den_1,1)        
+
+# Given
+Q = 10
+f_0 = 1000 #Hz
+## so,
+w_0 = 2*np.pi*f_0
+
+# Choice
+H_0 = 1 #gain
+C = 0.1*10e-6 #F
+## so,
+R = 1/(w_0*C)
+
+### Rough Notes
+BSF_resistor = Q*R
+print(f"\
+    BSF resistor : {BSF_resistor*10e-3} kOhm,\n\
+    General R: {R*10e-3}kOhm\
+    ")
+
+# Filter design
+filter_1 = KHNFilter(H_0,w_0,Q)
+#filter_1.generatetf()
+
+# importing and plotting 
+l = ltspice.Ltspice('.\\RAW\\khn.raw') 
+l.parse() 
+f = l.get_frequency()
+
+```
+
+```{python}
+# low pass plot
+v_lpf = l.get_data('v(/lpf)')
+plt.xscale('log')
+plt.plot(f,v_lpf)
+plt.show()
+```
+```{python}
+# high pass plot
+v_hpf = l.get_data('v(/hpf)')
+plt.xscale('log')
+plt.plot(f,v_hpf)
+plt.show()
+```
+
+```{python}
+# band pass plot
+v_bpf = l.get_data('v(/bpf)')
+plt.xscale('log')
+plt.plot(f,v_bpf)
+plt.show()
+```
+
+```{python}
+# band stop plot
+v_bsf = l.get_data('v(/bsf)')
+plt.xscale('log')
+plt.plot(f,v_bsf)
+plt.show()
 ```
