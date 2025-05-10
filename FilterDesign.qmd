@@ -132,15 +132,17 @@ w_0 = 2*np.pi*f_0
 
 # Choice
 H_0 = 1 #gain
-C = 0.1*10e-6 #F
+C = 0.1 *10e-6 #F
 ## so,
 R = 1/(w_0*C)
 
 ### Rough Notes
 BSF_resistor = Q*R
+H_0_resistor = R/H_0
 print(f"\
     BSF resistor : {BSF_resistor*10e-3} kOhm,\n\
-    General R: {R*10e-3}kOhm\
+    General R: {R*10e-3}kOhm\n\
+    H_0 Resistor: {H_0_resistor*10e-3}kOhm\
     ")
 
 # Filter design
