@@ -46,22 +46,25 @@ $R$, $R_1$, $R_2$, $R_3$, $C$
 ```{python}
 #basic tow thomas
 import numpy as np
+import ltspice
+import matplotlib.pyplot as plt
+
 def bandPassFilterTowThomas(f_0,Q,A_mid,clist):
     for c in clist:
         print("For C: ",c)
-        c=c*10**-6 #in microFarard        
+        c=c*10e-6 #in microFarard        
         w_0 = 2*np.pi*f_0
         #Q=10 #quality factor
         #A_mid = 20 #midband gain
         k = 10**-3
         R = 1/(w_0*c)
-        print("\t R : "+str(np.ceil(R)*k)+" K ohm")
+        print(f"\t R : {R*10e-3} kOhm")
         R_2 = Q*R
-        print("\t R_2 : "+str(np.ceil(R_2)*k)+" K ohm") 
+        print(f"\t R_2 : {R_2*10e-3} kOhm") 
         R_1 = R*Q/A_mid
-        print("\t R_1 : "+str(np.ceil(R_1)*k)+" k ohm")
+        print(f"\t R_1 : {R_1*10e-3} kOhm")
 clist=[0.01,0.1,0.2,1,0.0027]
-bandPassFilterTowThomas(1000,10,10,clist)
+bandPassFilterTowThomas(1000,10,20,clist)
 ```
 
 #### Choice
@@ -73,16 +76,34 @@ We choose $C$ = 0.1$\mu F$ so as to have the resistance on a reasonable level an
 - We simulate the same using Ki-Cad
 ![Tow Thomas Biquad Filter](./Schematics/amcd-tow-thomas.svg)
 - The graph of the simulated data is as follows
-![bandpassTowThomas.png](./Graphs/bandpassTowThomas.png)
-![bandStopTowThomasFilter.png](./Graphs/bandStopTowThomasFilter.png)
 
+```{python}
+import ltspice
+# importing and plotting 
+tt = ltspice.Ltspice('.\\RAW\\tt.raw') 
+tt.parse() 
+f = tt.get_frequency()
+```
+```{python}
+# tt bandpass
+v_bpf = tt.get_data('v(/bpf)')
+plt.xscale('log')
+plt.plot(f,v_bpf)
+plt.grid()
+plt.show()
+```
 # KHN Biquad
+
+## Choice 
+we either choose $C$ or we choose $R$. A single value of R or C is chosen for `all individual filters` throughout for the design simplification.
+
+## Simulation
+- The simulation is as follows
+- We simulate the same using Ki-Cad
+![KHN Biquad Filter](./Schematics/KHNbiquad.svg)
 
 ```{python}
 #KHN biquad :: red pitaya
-import numpy as np
-import ltspice
-import matplotlib.pyplot as plt
 
 class KHNFilter:          
     def __init__(self,h_0,w_0,Q):                
@@ -150,40 +171,51 @@ filter_1 = KHNFilter(H_0,w_0,Q)
 #filter_1.generatetf()
 
 # importing and plotting 
-l = ltspice.Ltspice('.\\RAW\\khn.raw') 
-l.parse() 
-f = l.get_frequency()
+khn = ltspice.Ltspice('.\\RAW\\khn.raw') 
+khn.parse() 
+f = khn.get_frequency()
 
 ```
 
-
+#### Low pass khn biquad
 ```{python}
 # low pass plot
-v_lpf = l.get_data('v(/lpf)')
+v_lpf = khn.get_data('v(/lpf)')
 plt.xscale('log')
 plt.plot(f,v_lpf)
+plt.grid()
 plt.show()
 ```
+
+#### High pass khn biquad
+
 ```{python}
 # high pass plot
-v_hpf = l.get_data('v(/hpf)')
+v_hpf = khn.get_data('v(/hpf)')
 plt.xscale('log')
 plt.plot(f,v_hpf)
+plt.grid()
 plt.show()
 ```
+
+#### Band pass khn biquad
 
 ```{python}
 # band pass plot
-v_bpf = l.get_data('v(/bpf)')
+v_bpf = khn.get_data('v(/bpf)')
 plt.xscale('log')
 plt.plot(f,v_bpf)
+plt.grid()
 plt.show()
 ```
 
+#### Band stop khn biquad
+
 ```{python}
 # band stop plot
-v_bsf = l.get_data('v(/bsf)')
+v_bsf = khn.get_data('v(/bsf)')
 plt.xscale('log')
 plt.plot(f,v_bsf)
+plt.grid()
 plt.show()
 ```

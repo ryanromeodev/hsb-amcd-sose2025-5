@@ -1,2 +1,5 @@
 project:
   title: "Filter Design of BiQuad using TL082"
+format:
+  html:
+    code-fold: true
