@@ -166,7 +166,7 @@ window.Quarto = {
 <li>from the above equations we calculate all values and store the available capacitor values in <code>clist</code> of the below python code. Note that the capacitance value is in <span class="math inline">\(\mu F\)</span></li>
 <li><span class="math inline">\(R_3\)</span> is choosen arbitarily so as to not load down the second or the third op-amp</li>
 </ol>
-<div id="04762a7c" class="cell" data-execution_count="1">
+<div id="79049b50" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#basic tow thomas</span></span>
@@ -222,10 +222,10 @@ For C:  0.0027
 <section id="simulation" class="level4">
 <h4 class="anchored" data-anchor-id="simulation">Simulation</h4>
 <ul>
-<li>We simulate the same using Ki-Cad <img src="./Schematics/amcd-tow-thomas.svg" class="img-fluid" alt="Tow Thomas Biquad Filter"></li>
+<li>We simulate the same using Ki-Cad <img src="./Schematics/amcd%20class1.svg" class="img-fluid" alt="Tow Thomas Biquad Filter"></li>
 <li>The graph of the simulated data is as follows</li>
 </ul>
-<div id="8173624a" class="cell" data-execution_count="2">
+<div id="a1227ed0" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ltspice</span>
@@ -235,7 +235,7 @@ For C:  0.0027
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> tt.get_frequency()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="e409a23e" class="cell" data-execution_count="3">
+<div id="b614e006" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tt bandpass</span></span>
@@ -245,16 +245,10 @@ For C:  0.0027
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook.py:1709: ComplexWarning: Casting complex values to real discards the imaginary part
-  return math.isfinite(val)
-c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook.py:1345: ComplexWarning: Casting complex values to real discards the imaginary part
-  return np.asarray(x, float)</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="FilterDesign_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="FilterDesign_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -274,80 +268,80 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 <li>The simulation is as follows</li>
 <li>We simulate the same using Ki-Cad <img src="./Schematics/KHNbiquad.svg" class="img-fluid" alt="KHN Biquad Filter"></li>
 </ul>
-<div id="8e0a2e57" class="cell" data-execution_count="4">
+<div id="69716f51" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#KHN biquad :: red pitaya</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> KHNFilter:          </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,h_0,w_0,Q):                </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.h_0 <span class="op">=</span> h_0</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_0 <span class="op">=</span> w_0</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Q <span class="op">=</span> Q        </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> tf(<span class="va">self</span>,name,num,den_s_0,den_s_1,den_s_2):</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">'''Just a Display Function of a TF'''</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        line <span class="op">=</span> <span class="st">"---------------------"</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        den <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span>den_s_2<span class="sc">}</span><span class="ss"> S^2)(</span><span class="sc">{</span>den_s_1<span class="sc">}</span><span class="ss"> S)(</span><span class="sc">{</span>den_s_0<span class="sc">}</span><span class="ss">)"</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>name<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(num)            </span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(line)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(den)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> generatetf(<span class="va">self</span>):</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lowpassfilter()</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.highpassfilter()</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bandpassfilter()</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bandstopfilter()</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> lowpassfilter(<span class="va">self</span>):        </span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="sc">}</span><span class="ss">)"</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Low Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)   </span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> highpassfilter(<span class="va">self</span>):        </span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="op">*</span>np<span class="sc">.</span>square(<span class="dv">1</span><span class="op">/</span><span class="va">self</span>.w_0)<span class="sc">}</span><span class="ss"> S^2)"</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"High Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> bandpassfilter(<span class="va">self</span>):        </span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="op">-</span><span class="va">self</span><span class="sc">.</span>h_0 <span class="op">*</span> <span class="dv">1</span><span class="op">/</span><span class="va">self</span><span class="sc">.</span>w_0<span class="sc">}</span><span class="ss"> S)"</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Band Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> bandstopfilter(<span class="va">self</span>):        </span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="dv">1</span><span class="sc">}</span><span class="ss">+</span><span class="sc">{</span>np<span class="sc">.</span>square(<span class="dv">1</span><span class="op">/</span><span class="va">self</span>.w_0)<span class="sc">}</span><span class="ss"> S^2)</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Band Stop Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)        </span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Given</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>f_0 <span class="op">=</span> <span class="dv">1000</span> <span class="co">#Hz</span></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co">## so,</span></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>w_0 <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>f_0</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Choice</span></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>H_0 <span class="op">=</span> <span class="dv">1</span> <span class="co">#gain</span></span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span><span class="fl">10e-6</span> <span class="co">#F</span></span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co">## so,</span></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>C)</span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="co">### Rough Notes</span></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>BSF_resistor <span class="op">=</span> Q<span class="op">*</span>R</span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>H_0_resistor <span class="op">=</span> R<span class="op">/</span>H_0</span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="op">\</span></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="ss">    BSF resistor : </span><span class="sc">{</span>BSF_resistor<span class="op">*</span><span class="fl">10e-3</span><span class="sc">}</span><span class="ss"> kOhm,</span><span class="ch">\n</span><span class="op">\</span></span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="ss">    General R: </span><span class="sc">{</span>R<span class="op">*</span><span class="fl">10e-3</span><span class="sc">}</span><span class="ss">kOhm</span><span class="ch">\n</span><span class="op">\</span></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="ss">    H_0 Resistor: </span><span class="sc">{</span>H_0_resistor<span class="op">*</span><span class="fl">10e-3</span><span class="sc">}</span><span class="ss">kOhm</span><span class="op">\</span></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="ss">    "</span>)</span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter design</span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>filter_1 <span class="op">=</span> KHNFilter(H_0,w_0,Q)</span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="co">#filter_1.generatetf()</span></span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="co"># importing and plotting </span></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>khn <span class="op">=</span> ltspice.Ltspice(<span class="st">'.</span><span class="ch">\\</span><span class="st">RAW</span><span class="ch">\\</span><span class="st">khn.raw'</span>) </span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>khn.parse() </span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> khn.get_frequency()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#KHN biquad :: red pitaya</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> KHNFilter:          </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,h_0,w_0,Q):                </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.h_0 <span class="op">=</span> h_0</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_0 <span class="op">=</span> w_0</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Q <span class="op">=</span> Q        </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> tf(<span class="va">self</span>,name,num,den_s_0,den_s_1,den_s_2):</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">'''Just a Display Function of a TF'''</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        line <span class="op">=</span> <span class="st">"---------------------"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        den <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span>den_s_2<span class="sc">}</span><span class="ss"> S^2)(</span><span class="sc">{</span>den_s_1<span class="sc">}</span><span class="ss"> S)(</span><span class="sc">{</span>den_s_0<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>name<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(num)            </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(line)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(den)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> generatetf(<span class="va">self</span>):</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.lowpassfilter()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.highpassfilter()</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bandpassfilter()</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bandstopfilter()</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> lowpassfilter(<span class="va">self</span>):        </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Low Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)   </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> highpassfilter(<span class="va">self</span>):        </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="op">*</span>np<span class="sc">.</span>square(<span class="dv">1</span><span class="op">/</span><span class="va">self</span>.w_0)<span class="sc">}</span><span class="ss"> S^2)"</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"High Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> bandpassfilter(<span class="va">self</span>):        </span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="op">-</span><span class="va">self</span><span class="sc">.</span>h_0 <span class="op">*</span> <span class="dv">1</span><span class="op">/</span><span class="va">self</span><span class="sc">.</span>w_0<span class="sc">}</span><span class="ss"> S)"</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Band Pass Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> bandstopfilter(<span class="va">self</span>):        </span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        numerator <span class="op">=</span> <span class="ss">f"(</span><span class="sc">{</span><span class="dv">1</span><span class="sc">}</span><span class="ss">+</span><span class="sc">{</span>np<span class="sc">.</span>square(<span class="dv">1</span><span class="op">/</span><span class="va">self</span>.w_0)<span class="sc">}</span><span class="ss"> S^2)</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>h_0<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        den_0 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.square(w_0)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        den_1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>Q)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tf(<span class="st">"Band Stop Filter: "</span>,numerator,den_0,den_1,<span class="dv">1</span>)        </span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Given</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>f_0 <span class="op">=</span> <span class="dv">1000</span> <span class="co">#Hz</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="co">## so,</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>w_0 <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>f_0</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Choice</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>H_0 <span class="op">=</span> <span class="dv">1</span> <span class="co">#gain</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span><span class="fl">10e-6</span> <span class="co">#F</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="co">## so,</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(w_0<span class="op">*</span>C)</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="co">### Rough Notes</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>BSF_resistor <span class="op">=</span> Q<span class="op">*</span>R</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>H_0_resistor <span class="op">=</span> R<span class="op">/</span>H_0</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="op">\</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="ss">    BSF resistor : </span><span class="sc">{</span>BSF_resistor<span class="op">*</span><span class="fl">10e-3</span><span class="sc">}</span><span class="ss"> kOhm,</span><span class="ch">\n</span><span class="op">\</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="ss">    General R: </span><span class="sc">{</span>R<span class="op">*</span><span class="fl">10e-3</span><span class="sc">}</span><span class="ss">kOhm</span><span class="ch">\n</span><span class="op">\</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="ss">    H_0 Resistor: </span><span class="sc">{</span>H_0_resistor<span class="op">*</span><span class="fl">10e-3</span><span class="sc">}</span><span class="ss">kOhm</span><span class="op">\</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="ss">    "</span>)</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter design</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>filter_1 <span class="op">=</span> KHNFilter(H_0,w_0,Q)</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="co">#filter_1.generatetf()</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="co"># importing and plotting </span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>khn <span class="op">=</span> ltspice.Ltspice(<span class="st">'.</span><span class="ch">\\</span><span class="st">RAW</span><span class="ch">\\</span><span class="st">khn.raw'</span>) </span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>khn.parse() </span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> khn.get_frequency()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    BSF resistor : 15.915494309189533 kOhm,
@@ -357,15 +351,15 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 </div>
 <section id="low-pass-khn-biquad" class="level4">
 <h4 class="anchored" data-anchor-id="low-pass-khn-biquad">Low pass khn biquad</h4>
-<div id="ac84d1c1" class="cell" data-execution_count="5">
+<div id="b0c2f890" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># low pass plot</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>v_lpf <span class="op">=</span> khn.get_data(<span class="st">'v(/lpf)'</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_lpf)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># low pass plot</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>v_lpf <span class="op">=</span> khn.get_data(<span class="st">'v(/lpf)'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_lpf)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -378,15 +372,15 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 </section>
 <section id="high-pass-khn-biquad" class="level4">
 <h4 class="anchored" data-anchor-id="high-pass-khn-biquad">High pass khn biquad</h4>
-<div id="72959a72" class="cell" data-execution_count="6">
+<div id="4da46161" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># high pass plot</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>v_hpf <span class="op">=</span> khn.get_data(<span class="st">'v(/hpf)'</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_hpf)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># high pass plot</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>v_hpf <span class="op">=</span> khn.get_data(<span class="st">'v(/hpf)'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_hpf)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -399,15 +393,15 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 </section>
 <section id="band-pass-khn-biquad" class="level4">
 <h4 class="anchored" data-anchor-id="band-pass-khn-biquad">Band pass khn biquad</h4>
-<div id="64f7c7ef" class="cell" data-execution_count="7">
+<div id="c11ca8e0" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># band pass plot</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>v_bpf <span class="op">=</span> khn.get_data(<span class="st">'v(/bpf)'</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_bpf)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># band pass plot</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>v_bpf <span class="op">=</span> khn.get_data(<span class="st">'v(/bpf)'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_bpf)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -420,15 +414,15 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 </section>
 <section id="band-stop-khn-biquad" class="level4">
 <h4 class="anchored" data-anchor-id="band-stop-khn-biquad">Band stop khn biquad</h4>
-<div id="9505d252" class="cell" data-execution_count="8">
+<div id="5ed21e36" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># band stop plot</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>v_bsf <span class="op">=</span> khn.get_data(<span class="st">'v(/bsf)'</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_bsf)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># band stop plot</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>v_bsf <span class="op">=</span> khn.get_data(<span class="st">'v(/bsf)'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">'log'</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.plot(f,v_bsf)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>

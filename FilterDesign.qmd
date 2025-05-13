@@ -74,7 +74,7 @@ We choose $C$ = 0.1$\mu F$ so as to have the resistance on a reasonable level an
 #### Simulation
 
 - We simulate the same using Ki-Cad
-![Tow Thomas Biquad Filter](./Schematics/amcd-tow-thomas.svg)
+![Tow Thomas Biquad Filter](./Schematics/amcd%20class1.svg)
 - The graph of the simulated data is as follows
 
 ```{python}
