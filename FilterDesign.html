@@ -166,7 +166,7 @@ window.Quarto = {
 <li>from the above equations we calculate all values and store the available capacitor values in <code>clist</code> of the below python code. Note that the capacitance value is in <span class="math inline">\(\mu F\)</span></li>
 <li><span class="math inline">\(R_3\)</span> is choosen arbitarily so as to not load down the second or the third op-amp</li>
 </ol>
-<div id="efca358d" class="cell" data-execution_count="1">
+<div id="04762a7c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#basic tow thomas</span></span>
@@ -225,7 +225,7 @@ For C:  0.0027
 <li>We simulate the same using Ki-Cad <img src="./Schematics/amcd-tow-thomas.svg" class="img-fluid" alt="Tow Thomas Biquad Filter"></li>
 <li>The graph of the simulated data is as follows</li>
 </ul>
-<div id="7937b337" class="cell" data-execution_count="2">
+<div id="8173624a" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ltspice</span>
@@ -235,7 +235,7 @@ For C:  0.0027
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> tt.get_frequency()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="f92a3601" class="cell" data-execution_count="3">
+<div id="e409a23e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tt bandpass</span></span>
@@ -274,7 +274,7 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 <li>The simulation is as follows</li>
 <li>We simulate the same using Ki-Cad <img src="./Schematics/KHNbiquad.svg" class="img-fluid" alt="KHN Biquad Filter"></li>
 </ul>
-<div id="9cc71d75" class="cell" data-execution_count="4">
+<div id="8e0a2e57" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#KHN biquad :: red pitaya</span></span>
@@ -355,7 +355,9 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
     H_0 Resistor: 1.5915494309189533kOhm    </code></pre>
 </div>
 </div>
-<div id="7a50fd2a" class="cell" data-execution_count="5">
+<section id="low-pass-khn-biquad" class="level4">
+<h4 class="anchored" data-anchor-id="low-pass-khn-biquad">Low pass khn biquad</h4>
+<div id="ac84d1c1" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># low pass plot</span></span>
@@ -373,7 +375,10 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 </div>
 </div>
 </div>
-<div id="17810be8" class="cell" data-execution_count="6">
+</section>
+<section id="high-pass-khn-biquad" class="level4">
+<h4 class="anchored" data-anchor-id="high-pass-khn-biquad">High pass khn biquad</h4>
+<div id="72959a72" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># high pass plot</span></span>
@@ -391,7 +396,10 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 </div>
 </div>
 </div>
-<div id="36eee832" class="cell" data-execution_count="7">
+</section>
+<section id="band-pass-khn-biquad" class="level4">
+<h4 class="anchored" data-anchor-id="band-pass-khn-biquad">Band pass khn biquad</h4>
+<div id="64f7c7ef" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># band pass plot</span></span>
@@ -409,7 +417,10 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 </div>
 </div>
 </div>
-<div id="72c7f841" class="cell" data-execution_count="8">
+</section>
+<section id="band-stop-khn-biquad" class="level4">
+<h4 class="anchored" data-anchor-id="band-stop-khn-biquad">Band stop khn biquad</h4>
+<div id="9505d252" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># band stop plot</span></span>
@@ -427,6 +438,7 @@ c:\Users\91854\anaconda3\envs\envfilterdesign\Lib\site-packages\matplotlib\cbook
 </div>
 </div>
 </div>
+</section>
 </section>
 </section>
 

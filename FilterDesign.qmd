@@ -92,6 +92,7 @@ plt.plot(f,v_bpf)
 plt.grid()
 plt.show()
 ```
+
 # KHN Biquad
 
 ## Choice 
