@@ -1,0 +1,32 @@
+# Introduction
+
+#### Analysis
+
+1. from Eq.1 we get, $B.W$ = $\frac{f_0}{Q}$= $\frac{1000}{10}$=100Hz
+2. we substitute $\omega_0$ = $2\pi f_0$
+3. from the above equations we calculate all values and store the available capacitor values in `clist` of the below python code. Note that the capacitance value is in $\mu F$
+4. $R_3$ is choosen arbitarily so as to not load down the second or the third op-amp
+
+```{python}
+#basic tow thomas
+import numpy as np
+import ltspice
+import matplotlib.pyplot as plt
+
+def bandPassFilterTowThomas(f_0,Q,A_mid,clist):
+    for c in clist:
+        print("For C: ",c)
+        c=c*10e-6 #in microFarard        
+        w_0 = 2*np.pi*f_0
+        #Q=10 #quality factor
+        #A_mid = 20 #midband gain
+        k = 10**-3
+        R = 1/(w_0*c)
+        print(f"\t R : {R*10e-3} kOhm")
+        R_2 = Q*R
+        print(f"\t R_2 : {R_2*10e-3} kOhm")   
+        R_1 = R*Q/A_mid
+        print(f"\t R_1 : {R_1*10e-3} kOhm")
+clist=[0.01,0.1,0.2,1,0.0027]
+bandPassFilterTowThomas(1000,10,20,clist) #some
+```

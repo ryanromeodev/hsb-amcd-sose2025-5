@@ -11,12 +11,12 @@ author:
         city: Bremen
         state: Germany
         url: https://www.hs-bremen.de  
-  - name: 
+  - name: "Ryan Romeo"
     orcid: 
     email:
     corresponding: true
     roles: "Lead author"
-  - name: 
+  - name: "Sreelekshmi Bhai"
     orcid: 
     email:
     corresponding: true

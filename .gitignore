@@ -7,3 +7,5 @@ _freeze
 simulations
 *.raw
 
+
+/.quarto/
