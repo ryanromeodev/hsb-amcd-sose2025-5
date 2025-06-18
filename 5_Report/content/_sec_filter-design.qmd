@@ -1,0 +1,10 @@
+# Introduction
+
+As the availability of standardized integrated circuit solutions continues to diminish, the demand for tailored, application-specific analog and mixed-signal designs is steadily increasing [@Dobkin2011]. Reflecting this shift, students enrolled in the “Concept Engineering Mixed-Technology Systems” course, taught by Professor Meiners at The City University of Applied Sciences, have been tasked with designing a biquadratic filter. The goal is to create a high-performance, application-specific solution suitable for integration within a defined analog front-end system.
+
+Analog signal processing remains a foundational element of modern electronic design. Despite rapid advancements in digital technology—characterized by nanometer-scale fabrication and Gigahertz-level processing speeds—the real world continues to present signals in analog form. Therefore, analog circuitry, particularly in the front-end of many systems, plays a critical role in conditioning signals before digitization [@kester2005data].
+
+In mixed-signal systems, analog signal processing is increasingly being paired with powerful digital post-processing techniques. This synergy allows engineers to rely on cost-effective analog components while compensating for their limitations through digital correction and enhancement methods [@Baker2008]. However, before digital techniques can be applied, analog filtering remains essential for tasks such as noise suppression, anti-aliasing, and band selection. Biquadratic filters—due to their versatile frequency response characteristics and relatively simple implementation—are widely used in these contexts.
+
+# Filter Design
+

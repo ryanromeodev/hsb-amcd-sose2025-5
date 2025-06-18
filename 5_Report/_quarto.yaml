@@ -1,0 +1,33 @@
+project:
+  type: manuscript
+
+manuscript:
+  article: index.qmd
+
+execute:
+  freeze: auto
+
+format:
+  html:
+    theme: flatly
+  pdf:
+    documentclass: scrreprt
+#    lof: true
+#    lot: true
+    toc: true    
+    geometry:
+      - top=30mm
+      - left=20mm
+      - heightrounded
+    hyperrefoptions:
+      - linktoc=all
+    colorlinks: true
+    linkcolor: "blue"
+    biblio-style: ieee
+    highlight-style: github
+    mainfont: "Calibri"
+#    keep-tex: true
+    output-file: amcd_report 
+#  epub:
+#    theme: flatly
+#    output-file: amcd_report

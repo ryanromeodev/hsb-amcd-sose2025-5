@@ -1,0 +1,41 @@
+---
+title: "IC Design of a Universal Biquad Filter"
+author: 
+  - name: 
+    orcid: 
+    email:
+    corresponding: true
+    roles: "Lead author"
+    affiliation:
+      - name: Hochschule Bremen - City University of Applied Sciences (HSB)
+        city: Bremen
+        state: Germany
+        url: https://www.hs-bremen.de  
+  - name: 
+    orcid: 
+    email:
+    corresponding: true
+    roles: "Lead author"
+  - name: 
+    orcid: 
+    email:
+    corresponding: true
+    roles: "Lead author"
+
+keyword:
+  - Filter Design 
+  - PCB
+
+abstract: |
+    Lorem ipsum 
+
+date: last-modified
+number-sections: true
+bibliography: references.bib
+---
+
+{{< include content/_sec_introduction.qmd >}}
+{{< include content/_sec_filter-design.qmd >}}
+{{< include content/_sec_characterisation.qmd >}}
+{{< include content/references.qmd >}}
+
