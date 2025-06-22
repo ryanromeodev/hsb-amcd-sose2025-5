@@ -1,5 +1,22 @@
 # Introduction
 
+Second order filters (or	biquard	filters) are important since	they are	the	building blocks in the construction of $N^{th}$ order	filters, for $N > 2$. When $N$ is odd the $N^{th}$ order filter can be realised using $\frac{N-1}{2}$ second order filters and one first order filters. When  $N$ is even, we need $N-1$ second order filters. 
+
+Second order filters can be used to construct four different types of filters. The transfer function of four different filters is shown in [table 1](#table-1--transfer-functions), where $W_0 = 1/RC$ and $H_0$ is the low frequency gain of transfer function. The philtre names are often abbreviated as BPF(Bandpass filter), HPF(Highpass Filter), LPF(Lowpass Filter), BSF(Bandstop Filter).
+
+### Table 1 : Transfer Functions
+
+|Filter Type |Transfer Function |
+|------------|------------|
+|Low Pass Filter | $\frac{V_{03}}{V_i} = \frac{H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$|
+|High Pass Filter | $\frac{V_{01}}{V_i} = \frac{H_0\frac{s^2}{w_0^2}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$|
+|Band Pass Filter | $\frac{V_{02}}{V_i} = \frac{-H_0\frac{s}{w_0}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$|
+|Band Stop Filter | $\frac{V_{04}}{V_i} = \frac{(1 + \frac{s^2}{w_0^2})H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$|
+
+## Objective
+
+The objective of this report is to design a biquad filter with the $frequency = 1000 Hz$ and $Q = 10$.
+
 #### Analysis
 
 1. from Eq.1 we get, $B.W$ = $\frac{f_0}{Q}$= $\frac{1000}{10}$=100Hz
