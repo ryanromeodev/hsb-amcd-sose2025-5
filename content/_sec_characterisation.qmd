@@ -1,1 +1,46 @@
 # Characterisation
+
+The small signal ac analysis and transcient analysis for ideal, theoretical and practical scenario is plotted here.
+
+The plots are made in python with the help of `ltspice` package of python. 
+
+## Small signal ac analysis
+
+### ideal circuit
+```{python}
+import ltspice
+import matplotlib.pyplot as plt
+# importing and plotting 
+khn = ltspice.Ltspice('.\\RAW\\khn.raw') 
+khn.parse() 
+f = khn.get_frequency()
+# low pass plot
+v_lpf = khn.get_data('v(/lpf)')
+plt.xscale('log')
+plt.scatter(f,v_lpf)
+plt.grid()
+plt.show()
+
+# high pass plot
+v_hpf = khn.get_data('v(/hpf)')
+plt.xscale('log')
+plt.plot(f,v_hpf)
+plt.grid()
+plt.show()
+
+# band pass plot
+v_bpf = khn.get_data('v(/bpf)')
+plt.xscale('log')
+plt.plot(f,v_bpf)
+plt.grid()
+plt.show()
+
+# band stop plot
+v_bsf = khn.get_data('v(/bsf)')
+plt.xscale('log')
+plt.plot(f,v_bsf)
+plt.grid()
+plt.show()
+```
+### real circuit
+### practical circuit
