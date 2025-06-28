@@ -1,6 +1,10 @@
 
 # Filter Design
 
+ ![Caption](./RAW/FilterDiagram.svg){#fig-filter}
+
+as per @fig-filter we het.
+
 We are trying to achieve a ideal filter solution, theoretical filter solution and a practical/real filter solution.
 
 Since $f$ and $Q$ are predefined and fixed, we either choose $C$ or we choose $R$. A single value of $R$ or $C$ is chosen for `filters` throughout for the design simplification.
