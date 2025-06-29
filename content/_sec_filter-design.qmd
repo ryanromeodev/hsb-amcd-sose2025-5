@@ -1,37 +1,85 @@
 
 # Filter Design
 
- ![Caption](./RAW/FilterDiagram.svg){#fig-filter}
-
-as per @fig-filter we het.
-
 We are trying to achieve a ideal filter solution, theoretical filter solution and a practical/real filter solution.
 
 Since $f$ and $Q$ are predefined and fixed, we either choose $C$ or we choose $R$. A single value of $R$ or $C$ is chosen for `filters` throughout for the design simplification.
 
 ## Ideal Filter
-For this scenario we use the exact calculated values  for $R$ and $C$. 
+For this scenario we use the **exact** values  for $R$ and $C$. For the ease of process we fix $R = 1 kOhm$ and then calculate  the value of $C$.
 
 ```{python}
+# ideal Filter
 import numpy as np
 
-f0=1000 #hz
-Q=10
+class Filter:          
+    def __init__(self,h_0,w_0,Q):                
+        self.h_0 = h_0
+        self.w_0 = w_0
+        self.Q = Q        
+        
+    def generatetf(self):
+        '''Calculate all transfer functions'''
+        self.lowpassfilter()
+        self.highpassfilter()
+        self.bandpassfilter()
+        self.bandstopfilter()
+    def lowpassfilter(self):        
+        '''Low Pass Filter'''
+        numerator = f"          {self.h_0}"        
+        self.tf("Low Pass Filter: ",numerator)   
+    def highpassfilter(self):
+        '''High Pass Filter'''        
+        numerator = f"      {np.round(self.h_0*np.square(1/self.w_0)*10**8,4)}e8 s^2"
+        self.tf("High Pass Filter: ",numerator)
+    def bandpassfilter(self):        
+        '''Band Pass Filter'''
+        numerator = f"{np.round((-self.h_0 * 1/self.w_0)*10**3,4)}e-3 s"
+        self.tf("Band Pass Filter: ",numerator)
+    def bandstopfilter(self): 
+        '''Band Stop Filter'''       
+        numerator = f"  ( {1} + {np.round(np.square(1/self.w_0)*10**8,4)}e-8 s^2 ) {self.h_0}"        
+        self.tf("Band Stop Filter: ",numerator)        
+    def tf(self,name,num):
+        den_0 = np.round(1/np.square(self.w_0)*10**7,4)
+        den_1 = np.round(1/(self.w_0*self.Q)*10**5,4)
+        '''Just a Display Function of a TF'''
+        line = "----------------------------"
+        den = f"s^2 + {den_1}e-5s + {den_0}e-7"
+        print(f"\n{name}\n")
+        print(num)            
+        print(line)
+        print(den)
 
-#we fix 
-R = 1000 #Ohm
-H0 = 1
+# Given
+Q = 10
+f_0 = 1000 #Hz
+## so,
+w_0 = 2*np.pi*f_0
 
-# so,
-w0 = 2*np.pi*f0
-print(f"w_0 is {w0}")
-C = 1/(w0*R)
-print(f"capacitance is {np.round(C*10**6,3)} uF")
-print(f"resistance is {R*10**-3} kOhm")
-R2 = Q*R
-print(f"first resistance near BSF {R2*10**-3} kOhm")
-R3 = R/H0
-print(f"second resistance near BSF {R3*10**-3} kOhm")
+# Choice
+H_0 = 1 #gain
+# C = 0.1 *10**-6 #F
+R = 1000 # Ohm
+## so,
+C = 1/(w_0*R)
+
+### Rough Notes
+BSF_resistor = Q*R
+H_0_resistor = R/H_0
+print(f"\
+General Variables:
+R : {R*10**-3} K Ohm\n\
+C : {np.round(C*10**6,3)} uF\n\
+BSF resistor : {BSF_resistor*10**-3} kOhm,\n\
+General R: {R*10e-3}kOhm\n\
+H_0 Resistor: {H_0_resistor*10**-3}kOhm\
+")
+
+# Filter design
+idealfilter = Filter(H_0,w_0,Q)
+print("Transfer Functions:")
+idealfilter.generatetf()
 
 ```
 
@@ -46,126 +94,7 @@ For this filter, red pitaya board is used and simulated to get reponses. The gra
 
 ## Simulation
 - The simulation is as follows
-- We simulate the same using Ki-Cad
-![KHN Biquad Filter](./Schematics/KHNbiquad.svg)
+- We simulate the same using Ki-Cad as per @fig-filter
 
-```{python}
-#KHN biquad :: red pitaya
-# import numpy as np
-# import ltspice 
-
-# class KHNFilter:          
-#     def __init__(self,h_0,w_0,Q):                
-#         self.h_0 = h_0
-#         self.w_0 = w_0
-#         self.Q = Q        
-        
-#     def tf(self,name,num,den_s_0,den_s_1,den_s_2):
-#         '''Just a Display Function of a TF'''
-#         line = "---------------------"
-#         den = f"({den_s_2} S^2)({den_s_1} S)({den_s_0})"
-#         print(f"\n{name}\n")
-#         print(num)            
-#         print(line)
-#         print(den)
-#     def generatetf(self):
-#         self.lowpassfilter()
-#         self.highpassfilter()
-#         self.bandpassfilter()
-#         self.bandstopfilter()
-#     def lowpassfilter(self):        
-#         numerator = f"({self.h_0})"
-#         den_0 = 1/np.square(w_0)
-#         den_1 = 1/(w_0*Q)
-#         self.tf("Low Pass Filter: ",numerator,den_0,den_1,1)   
-#     def highpassfilter(self):        
-#         numerator = f"({self.h_0*np.square(1/self.w_0)} S^2)"
-#         den_0 = 1/np.square(w_0)
-#         den_1 = 1/(w_0*Q)
-#         self.tf("High Pass Filter: ",numerator,den_0,den_1,1)
-#     def bandpassfilter(self):        
-#         numerator = f"({-self.h_0 * 1/self.w_0} S)"
-#         den_0 = 1/np.square(w_0)
-#         den_1 = 1/(w_0*Q)
-#         self.tf("Band Pass Filter: ",numerator,den_0,den_1,1)
-#     def bandstopfilter(self):        
-#         numerator = f"({1}+{np.square(1/self.w_0)} S^2){self.h_0}"
-#         den_0 = 1/np.square(w_0)
-#         den_1 = 1/(w_0*Q)
-#         self.tf("Band Stop Filter: ",numerator,den_0,den_1,1)        
-
-# # Given
-# Q = 10
-# f_0 = 1000 #Hz
-# ## so,
-# w_0 = 2*np.pi*f_0
-
-# # Choice
-# H_0 = 1 #gain
-# C = 0.1 *10e-6 #F
-# ## so,
-# R = 1/(w_0*C)
-
-# ### Rough Notes
-# BSF_resistor = Q*R
-# H_0_resistor = R/H_0
-# print(f"\
-#     BSF resistor : {BSF_resistor*10e-3} kOhm,\n\
-#     General R: {R*10e-3}kOhm\n\
-#     H_0 Resistor: {H_0_resistor*10e-3}kOhm\
-#     ")
-
-# # Filter design
-# filter_1 = KHNFilter(H_0,w_0,Q)
-# #filter_1.generatetf()
-
-# importing and plotting 
-# khn = ltspice.Ltspice('.\\RAW\\khn.raw') 
-# khn.parse() 
-# f = khn.get_frequency()
-
-```
-
-#### Low pass khn biquad
-```{python}
-# low pass plot
-# v_lpf = khn.get_data('v(/lpf)')
-# plt.xscale('log')
-# plt.plot(f,v_lpf)
-# plt.grid()
-# plt.show()
-```
-
-#### High pass khn biquad
-
-```{python}
-# high pass plot
-# v_hpf = khn.get_data('v(/hpf)')
-# plt.xscale('log')
-# plt.plot(f,v_hpf)
-# plt.grid()
-# plt.show()
-```
-
-#### Band pass khn biquad
-
-```{python}
-# band pass plot
-# v_bpf = khn.get_data('v(/bpf)')
-# plt.xscale('log')
-# plt.plot(f,v_bpf)
-# plt.grid()
-# plt.show()
-```
-
-#### Band stop khn biquad
-
-```{python}
-# band stop plot
-# v_bsf = khn.get_data('v(/bsf)')
-# plt.xscale('log')
-# plt.plot(f,v_bsf)
-# plt.grid()
-# plt.show()
-```
+![Biquad Filter Design](./RAW/FilterDiagram.svg){#fig-filter}
 

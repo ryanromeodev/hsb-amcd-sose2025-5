@@ -2,7 +2,7 @@
 
 The small signal ac analysis and transcient analysis for ideal, theoretical and practical scenario is plotted here.
 
-The plots are made in python with the help of `ltspice` package of python. 
+The plots are made in python with the help of `matplotlib` package of python. 
 
 ## Small signal ac analysis
 
@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 def wrap_phase(phase):
     return (phase + np.pi) % (2 * np.pi) - np.pi
 # Load the CSV file
-filename = r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\graphs.csv"
+filename = r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\idealGraphs.csv"
 df = pd.read_csv(filename, sep=';', engine='python', usecols=[0, 1, 2])
 
 #BPF
