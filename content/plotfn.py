@@ -5,14 +5,15 @@ import matplotlib.pyplot as plt
 def wrap_phase(phase):
     return (phase + np.pi) % (2 * np.pi) - np.pi
 
-def freqAnalysisPlot(title,idealGraphsFilename,cols):    
-    filename = idealGraphsFilename
-    df = pd.read_csv(filename, sep=';', engine='python', usecols=cols)
-
-    #BPF
-
+def freqAnalysisPlot(title,graphsFilename,cols,seperator,invertPhaseGain):    
+    filename = graphsFilename
+    df = pd.read_csv(filename, sep=seperator, engine='python', usecols=cols)
+    
     # Rename columns
-    df.columns = ['Frequency', 'Phase', 'Gain']
+    if invertPhaseGain:
+        df.columns = ['Frequency', 'Phase', 'Gain']
+    else:
+        df.columns = ['Frequency', 'Gain', 'Phase']
     df = df.apply(pd.to_numeric, errors='coerce')
 
     # Plotting

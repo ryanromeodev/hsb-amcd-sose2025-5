@@ -26,13 +26,43 @@ filters = {
 for title_internal,attributes in filters.items():    
     fn.freqAnalysisPlot(
         title = title_internal,
-        idealGraphsFilename = filename,
-        cols = attributes
+        graphsFilename = filename,
+        cols = attributes,
+        seperator = ';'
     )
 
 ```
 ### real circuit
 ### practical circuit
+```{python}
+
+import plotfn as fn
+
+lpf_filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\redpitayaGraphs\LPF.csv"
+hpf_filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\redpitayaGraphs\HPF.csv"
+bsf_filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\redpitayaGraphs\BSF.csv"
+bpf_filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\redpitayaGraphs\BPF.csv"
+
+bpf_title = 'Frequency Response of BPF (Gain and Phase)'
+bsf_title = 'Frequency Response of BSF (Gain and Phase)'
+lpf_title = 'Frequency Response of LPF (Gain and Phase)'
+hpf_title = 'Frequency Response of HPF (Gain and Phase)'
+filters = {
+    bpf_title : ([0,1,2],bpf_filename),
+    bsf_title : ([0,1,2],bsf_filename),
+    hpf_title : ([0,1,2],hpf_filename),
+    lpf_title : ([0,1,2],lpf_filename)
+}
+for title_internal,attributes in filters.items():    
+    fn.freqAnalysisPlot(
+        title = title_internal,
+        graphsFilename = attributes[1],
+        cols = attributes[0],
+        seperator = ',',
+        invertPhaseGain = False
+    )
+
+```
 
 ## Transcient Analysis
 
