@@ -9,154 +9,38 @@ The plots are made in python with the help of `matplotlib` package of python.
 ### ideal circuit
 
 ```{python}
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 
+import plotfn as fn
 
+filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\idealGraphs.csv"
+bpf_title = 'Frequency Response of BPF (Gain and Phase)'
+bsf_title = 'Frequency Response of BSF (Gain and Phase)'
+lpf_title = 'Frequency Response of LPF (Gain and Phase)'
+hpf_title = 'Frequency Response of HPF (Gain and Phase)'
+filters = {
+    bpf_title : [0,1,2],
+    bsf_title : [0,3,4],
+    hpf_title : [0,5,6],
+    lpf_title : [0,7,8]
+}
+for title_internal,attributes in filters.items():    
+    fn.freqAnalysisPlot(
+        title = title_internal,
+        idealGraphsFilename = filename,
+        cols = attributes
+    )
 
-def wrap_phase(phase):
-    return (phase + np.pi) % (2 * np.pi) - np.pi
-# Load the CSV file
-filename = r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\idealGraphs.csv"
-df = pd.read_csv(filename, sep=';', engine='python', usecols=[0, 1, 2])
-
-#BPF
-
-# Rename columns
-df.columns = ['Frequency', 'Phase', 'Gain']
-df = df.apply(pd.to_numeric, errors='coerce')
-
-# Plotting
-fig, ax1 = plt.subplots(figsize=(10, 6))
- 
-# Plot Gain
-line1, = ax1.plot(df['Frequency'], df['Gain'], 'b-', label='Gain (dB)')
-# ax1.scatter(1000, max(df['Gain']),s=100,c="Green")
-ax1.set_xlabel('Frequency (Hz)')
-ax1.set_ylabel('Gain (dB)', color='b')
-ax1.set_xscale('log')
-ax1.tick_params(axis='y', labelcolor='b')
-
-# Plot Phase on secondary y-axis
-ax2 = ax1.twinx()
-line2, = ax2.plot(df['Frequency'],df['Phase'], 'r--', label='Phase (°)')
-ax2.set_ylabel('Phase (°)', color='r')
-ax2.tick_params(axis='y', labelcolor='r')
-
-# Combine legends from both axes
-lines = [line1, line2]
-labels = [line.get_label() for line in lines]
-ax1.legend(lines, labels, loc='upper right')
-
-# Title and layout
-plt.title('Frequency Response of BPF (Gain and Phase)')
-fig.tight_layout()
-plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-plt.show()
-
-
-#BSF
-df = pd.read_csv(filename, sep=';', engine='python', usecols=[0, 3, 4])
-
-# Rename columns
-df.columns = ['Frequency', 'Phase', 'Gain']
-df = df.apply(pd.to_numeric, errors='coerce')
-
-# Plotting
-fig, ax1 = plt.subplots(figsize=(10, 6))
-
-# Plot Gain
-line1, = ax1.plot(df['Frequency'], df['Gain'], 'b-', label='Gain (dB)')
-ax1.set_xlabel('Frequency (Hz)')
-ax1.set_ylabel('Gain (dB)', color='b')
-ax1.set_xscale('log')
-ax1.tick_params(axis='y', labelcolor='b')
-
-# Plot Phase on secondary y-axis
-ax2 = ax1.twinx()
-line2, = ax2.plot(df['Frequency'], df['Phase'], 'r--', label='Phase (°)')
-ax2.set_ylabel('Phase (°)', color='r')
-ax2.tick_params(axis='y', labelcolor='r')
-
-# Combine legends from both axes
-lines = [line1, line2]
-labels = [line.get_label() for line in lines]
-ax1.legend(lines, labels, loc='upper right')
-
-# Title and layout
-plt.title('Frequency Response of BSF (Gain and Phase)')
-fig.tight_layout()
-plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-plt.show()
-
-#HPF
-df = pd.read_csv(filename, sep=';', engine='python', usecols=[0, 5, 6])
-
-# Rename columns
-df.columns = ['Frequency', 'Phase', 'Gain']
-df = df.apply(pd.to_numeric, errors='coerce')
-
-# Plotting
-fig, ax1 = plt.subplots(figsize=(10, 6))
-
-# Plot Gain
-line1, = ax1.plot(df['Frequency'], df['Gain'], 'b-', label='Gain (dB)')
-ax1.set_xlabel('Frequency (Hz)')
-ax1.set_ylabel('Gain (dB)', color='b')
-ax1.set_xscale('log')
-ax1.tick_params(axis='y', labelcolor='b')
-
-# Plot Phase on secondary y-axis
-ax2 = ax1.twinx()
-line2, = ax2.plot(df['Frequency'], df['Phase'], 'r--', label='Phase (°)')
-ax2.set_ylabel('Phase (°)', color='r')
-ax2.tick_params(axis='y', labelcolor='r')
-
-# Combine legends from both axes
-lines = [line1, line2]
-labels = [line.get_label() for line in lines]
-ax1.legend(lines, labels, loc='upper right')
-
-# Title and layout
-plt.title('Frequency Response of HPF (Gain and Phase)')
-fig.tight_layout()
-plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-plt.show()
-
-#LPF
-df = pd.read_csv(filename, sep=';', engine='python', usecols=[0, 7, 8])
-
-# Rename columns
-df.columns = ['Frequency', 'Phase', 'Gain']
-df = df.apply(pd.to_numeric, errors='coerce')
-
-# Plotting
-fig, ax1 = plt.subplots(figsize=(10, 6))
-
-# Plot Gain
-line1, = ax1.plot(df['Frequency'], df['Gain'], 'b-', label='Gain (dB)')
-ax1.set_xlabel('Frequency (Hz)')
-ax1.set_ylabel('Gain (dB)', color='b')
-ax1.set_xscale('log')
-ax1.tick_params(axis='y', labelcolor='b')
-
-# Plot Phase on secondary y-axis
-ax2 = ax1.twinx()
-line2, = ax2.plot(df['Frequency'], df['Phase'], 'r--', label='Phase (°)')
-ax2.set_ylabel('Phase (°)', color='r')
-ax2.tick_params(axis='y', labelcolor='r')
-
-# Combine legends from both axes
-lines = [line1, line2]
-labels = [line.get_label() for line in lines]
-ax1.legend(lines, labels, loc='upper right')
-
-# Title and layout
-plt.title('Frequency Response of LPF (Gain and Phase)')
-fig.tight_layout()
-plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-plt.show()
 ```
 ### real circuit
 ### practical circuit
+
+## Transcient Analysis
+
+```{python}
+import plotfn as fn
+
+filename = r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\Red Pithaya images\Red Pithaya images\HPF_T_500.csv"
+title = "something"
+fn.transCientAnalysisPlot(title,filename,[0,1,2])
+
+```
