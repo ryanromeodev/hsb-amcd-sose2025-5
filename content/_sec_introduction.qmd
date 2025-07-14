@@ -23,3 +23,46 @@ The objective of this report is to design a biquad filter with the $frequency = 
 2. we substitute $\omega_0$ = $2\pi f_0$
 3. from the above equations we calculate all values and store the available capacitor values in `clist` of the below python code. Note that the capacitance value is in $\mu F$
 4. $R_3$ is choosen arbitarily so as to not load down the second or the third op-amp
+
+# **BASICS OF FILTER DESIGN**
+## **1.1 THE FILTER APPROXIMATION** 
+
+In filter design, the goal is to distinguish between useful signal components and unwanted noise or interference. Ideally, a filter would pass all desired frequencies without distortion while completely rejecting undesired frequencies. However, this ideal filter response is not physically realizable due to practical limitations inherent in real-world systems.
+The **filter approximation problem** arises from the need to design filters that approximate the ideal behaviour as closely as possible while adhering to physical and technological constraints. The design process involves selecting an appropriate approximation function and filter structure to meet given specifications for magnitude and phase response, roll-off characteristics, and allowable ripple.
+
+### **1.1.1 Ideal Filter**
+
+An ideal filter is a theoretical construct characterized by:
+•	Brick-wall characteristic: A perfectly sharp transition from passband to stopband at the cutoff frequency.
+•	Flat magnitude response in the passband: Constant gain for all frequencies below the cutoff frequency.
+•	Infinite attenuation in the stopband: Total rejection of all frequencies above the cutoff frequency.
+
+fig........
+
+### **1.1.2 Practical Filter**
+
+A practical filter is the realizable implementation of a filter that approximates the ideal filter characteristics as closely as possible. Its behaviour is limited by physical component tolerances and achievable performance:
+•	Ripple in the passband and/or stopband: Small variations in gain rather than perfectly flat response.
+•	Finite attenuation in the stopband: Incomplete suppression of unwanted frequencies.
+•	Gradual roll-off: The transition from passband to stopband occurs over a finite frequency range.
+
+fig......
+
+## **1.2 FILTER TEMPLATE**
+
+In practical filter design, it is impossible to implement an ideal filter with an infinitely sharp transition between passband and stopband, zero ripple, and infinite attenuation. Therefore, a filter template establishes performance limits that approximate the ideal response within tolerable deviations.
+By setting precise boundaries for key parameters—such as passband gain, stopband attenuation, and the width of the transition band—a filter template ensures that the resulting design will meet both functional and implementation requirements.
+A typical filter template specifies the following parameters, which apply to all filter types (lowpass, highpass, bandpass, bandstop):
+a) Passband Specifications
+•	Passband gain limits :
+Defines the acceptable range of gain variations (ripple) within the passband.
+•	Passband edge frequency :
+The highest (or lowest) frequency at which the filter is required to maintain its passband performance.
+b) Stopband Specifications
+•	Stopband edge frequency:
+The frequency beyond which the filter must provide sufficient attenuation.
+•	Minimum stopband attenuation :
+Specifies the required suppression of unwanted signals at or beyond ωₛ, usually expressed in decibels (dB).
+c) Transition Band
+•	The range of frequencies between the passband edge and stopband edge where the filter response transitions from passing to attenuating signals.
+•	A narrower transition band typically demands a higher-order filter and results in increased design complexity.

@@ -67,8 +67,7 @@ C = 1/(w_0*R)
 ### Rough Notes
 BSF_resistor = Q*R
 H_0_resistor = R/H_0
-print(f"\
-General Variables:
+print(f"General Variables:\
 R : {R*10**-3} K Ohm\n\
 C : {np.round(C*10**6,3)} uF\n\
 BSF resistor : {BSF_resistor*10**-3} kOhm,\n\
