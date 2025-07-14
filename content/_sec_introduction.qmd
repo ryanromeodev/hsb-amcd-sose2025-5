@@ -53,16 +53,11 @@ fig......
 In practical filter design, it is impossible to implement an ideal filter with an infinitely sharp transition between passband and stopband, zero ripple, and infinite attenuation. Therefore, a filter template establishes performance limits that approximate the ideal response within tolerable deviations.
 By setting precise boundaries for key parameters—such as passband gain, stopband attenuation, and the width of the transition band—a filter template ensures that the resulting design will meet both functional and implementation requirements.
 A typical filter template specifies the following parameters, which apply to all filter types (lowpass, highpass, bandpass, bandstop):
-a) Passband Specifications
-•	Passband gain limits :
-Defines the acceptable range of gain variations (ripple) within the passband.
-•	Passband edge frequency :
-The highest (or lowest) frequency at which the filter is required to maintain its passband performance.
-b) Stopband Specifications
-•	Stopband edge frequency:
-The frequency beyond which the filter must provide sufficient attenuation.
-•	Minimum stopband attenuation :
-Specifies the required suppression of unwanted signals at or beyond ωₛ, usually expressed in decibels (dB).
-c) Transition Band
-•	The range of frequencies between the passband edge and stopband edge where the filter response transitions from passing to attenuating signals.
-•	A narrower transition band typically demands a higher-order filter and results in increased design complexity.
+
+**Passband specifications**: The template defines an acceptable range of gain variation within the passband, commonly referred to as passband ripple. This is quantified by upper and lower limits, ensuring that the gain remains within a specified range, such as ±1 dB, across all frequencies in the passband. Additionally, the passband edge frequency, denoted specifies the upper or lower frequency limit of the passband.
+
+**Stopband specifications**: The filter template also sets requirements for attenuation in the stopband. The stopband edge frequency defines the frequency beyond which the filter must provide significant attenuation to unwanted signals. A minimum attenuation level, typically expressed in decibels (dB), specifies how much unwanted signals must be suppressed to ensure sufficient signal separation.
+
+**Transition band**: Between the passband and stopband lies the transition band, a frequency range over which the filter's response transitions from low attenuation to high attenuation. The width of the transition band is a critical parameter because it directly impacts filter complexity. A narrower transition band generally requires a higher-order filter, resulting in increased circuit complexity, sensitivity to component variations, and potential implementation challenges. Conversely, a wider transition band allows for a lower-order filter, simplifying design but reducing selectivity.
+
+By defining these parameters, the filter template sets clear and achievable targets for filter designers. Once the template is established, it serves as the reference for selecting an appropriate filter approximation method (e.g., Butterworth, Chebyshev, Elliptic), which provides a realizable filter that meets the template’s requirements.
