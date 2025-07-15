@@ -207,39 +207,7 @@ class SimulatedFilter:
         fig.tight_layout()
         plt.grid(True, linestyle='-', linewidth=0.5)
         plt.show()       
-        # for name,cols in filterdict:
-        #     dfs=[]
-        #     colors = ['b-', 'r-', 'g-', 'y-']
-        #     for freq,filename in graph.items():
-        #         dfs.append((pd.read_csv(filename, sep=";", engine='python', usecols=cols),freq,colors.pop()))
-        #     lines=[]        
-        #     fig, ax1 = plt.subplots(figsize=(10, 6))    
-        #     for df,freq,colors in dfs:
-        #         # Rename columns
-        #         df.columns = ['time', 'input']
-        #         df = df.apply(pd.to_numeric, errors='coerce')
-        #         # Plotting
-                
-        #         # Plot Gain
-        #         line1, = ax1.plot(df['time'], df['input'], colors, label=f'{freq} /Hz')    
-        #         ax1.set_xlabel('time /s')
-        #         ax1.set_ylabel('Voltage /V', color='b')    
-        #         ax1.tick_params(axis='y', labelcolor='b')
-        #         # Combine legends from both axes
-        #         lines.append(line1)
-        #     labels = [line.get_label() for line in lines]
-        #     ax1.legend(lines, labels, loc='upper right')
-        #     # Title and layout
-        #     plt.title(f"Red Pitaya {name} Transcient Plots")
-        #     fig.tight_layout()
-        #     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-        #     plt.show()     
-
-
-
-# SimulatedFilter().generateBodePlots()
-# SimulatedFilter().generateTranscientPlotsExperimental()
-SimulatedFilter().generateTranscientPlotsSimulated()
+      
 
 #------------------------------------------------------------------------------------------------------
 
@@ -247,6 +215,7 @@ SimulatedFilter().generateTranscientPlotsSimulated()
 import numpy as np
 from scipy import signal
 from scipy.signal import tf2zpk
+import control
 
 class TheoreticalFilter:          
     def __init__(self,h_0,w_0,Q):                
@@ -286,19 +255,7 @@ class TheoreticalFilter:
         print(line)
         print(den)
         return (float(real_den_2),float(real_den_1))
-
-    def rootplotgen(self):
-        filterdctionary = {
-            "Low Pass":self.lowpassfilter(),
-            "High Pass":self.highpassfilter(),
-            "Band Pass":self.bandpassfilter(),
-            "Band Stop":self.bandstopfilter(),
-        }
-        for name,func in filterdctionary.items():
-            self.bodeplotgen(func,name)
-            self.stepplotgen(func,name)
-            self.pzplot(func,name)
-
+    
     def bodeplotgen(self,values,filtername):        
         match filtername:
             case "Low Pass":                
@@ -402,6 +359,27 @@ class TheoreticalFilter:
         # Compute poles and zeros
         zeros, poles, gain = tf2zpk(numerator, denominator)
 
+        system = control.TransferFunction(numerator, denominator)
+
+        # Get the poles of the system
+        poles = control.poles(system)
+
+        # Calculate step response characteristics (including overshoot)
+        info = control.step_info(system)
+        overshoot = info['Overshoot']  # Overshoot in percentage
+
+        # Display results
+        print(f"Overshoot: {overshoot:.2f}%")
+
+        # Calculate the damping ratio for each pole
+        damping_ratios = []
+        for pole in poles:
+            wn = abs(pole)  # Natural frequency
+            zeta = -pole.real / wn  # Damping ratio
+            damping_ratios.append(zeta)
+
+        print("Poles:", poles)
+        print("Damping Ratios:", damping_ratios)
         # Plot the poles and zeros
         plt.figure(figsize=(10, 6))
         plt.scatter(np.real(zeros), np.imag(zeros), s=100, label='Zeros', marker='o', facecolors='none', edgecolors='b')
@@ -416,7 +394,133 @@ class TheoreticalFilter:
         plt.title(f'Pole-Zero Plot for {filtername} filter')
         plt.legend()
         plt.axis('equal')
-        plt.show()        
+        plt.show()    
+    def rootplotgen(self):
+            filterdctionary = {
+                "Low Pass":self.lowpassfilter(),
+                "High Pass":self.highpassfilter(),
+                "Band Pass":self.bandpassfilter(),
+                "Band Stop":self.bandstopfilter(),
+            }
+            for name,func in filterdctionary.items():
+                # self.bodeplotgen(func,name)
+                # self.stepplotgen(func,name)
+                self.pzplot(func,name)
+class PCB:
+    def bodePlots(self):
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        bpf_filename = os.path.join(my_path, "../content/RAW/PCBdata/BPF.csv")
+        # filename = os.path.join(my_path, "../content/RAW/BSF.csv")
+        hpf_filename = os.path.join(my_path, "../content/RAW/PCBdata/HPF.csv")
+        lpf_filename = os.path.join(my_path, "../content/RAW/PCBdata/LPF.csv")
+        filters = {
+            "Band Pass": bpf_filename,
+            "High Pass": hpf_filename,
+            "Low Pass" : lpf_filename
+        }
+        for name, filelocation in filters.items():
+            df = pd.read_csv(filelocation, sep=",", engine='python', usecols=[0,1,2])
+            
+            # Rename columns    
+            df.columns = ['Frequency', 'Gain', 'Phase']    
+            df = df.apply(pd.to_numeric, errors='coerce')            
+
+            # Plotting
+            fig, ax1 = plt.subplots(figsize=(10, 6))
+            
+            # Plot Gain
+            line1, = ax1.plot(df['Frequency'], df['Gain'], 'b-', label='Gain /dB')                 
+            ax1.set_xlabel('Frequency /Hz')
+            ax1.set_ylabel('Gain /dB')
+            ax1.set_xscale('log')
+            # ax1.tick_params(axis='y', labelcolor='b')
+
+            # Plot Phase on secondary y-axis
+            ax2 = ax1.twinx()
+            line2, = ax2.plot(df['Frequency'],df['Phase'], 'r--', label='Simulated Phase /°')            
+            ax2.set_ylabel('Phase /°')
+            # ax2.tick_params(axis='y', labelcolor='r')
+
+            # Combine legends from both axes
+            lines = [line1, line2]
+            labels = [line.get_label() for line in lines]
+            ax1.legend(lines, labels, loc='lower right')
+
+            # Title and layout
+            plt.title(name)
+            fig.tight_layout()
+            plt.grid(True, linestyle='-', linewidth=0.5)
+            plt.show()
+    def stepPlots(self):    
+        my_path = os.path.abspath(os.path.dirname(__file__))        
+        graphs = [
+            (   
+                "Band Pass",
+                {
+                    595 : os.path.join(my_path, "../content/RAW/PCBdata/BPF_595.csv"),
+                    1055: os.path.join(my_path, "../content/RAW/PCBdata/BPF_1055.csv"),
+                    2185: os.path.join(my_path, "../content/RAW/PCBdata/BPF_2185.csv"), 
+                    
+                }
+            ),
+            # (   
+            #     "Band Stop",
+            #     {
+            #         260: os.path.join(my_path, "../content/RAW/Transcient_CSV/bsf_t_260.csv"),
+            #         982: os.path.join(my_path, "../content/RAW/Transcient_CSV/bsf_t_982.csv"),
+            #         1055: os.path.join(my_path, "../content/RAW/Transcient_CSV/bsf_t_1055.csv"),
+            #         3187: os.path.join(my_path, "../content/RAW/Transcient_CSV/bsf_t_3187.csv"),
+            #     }
+            # ),
+            (   
+                "High Pass",
+                {
+                    701: os.path.join(my_path, "../content/RAW/PCBdata/HPF_701.csv"),
+                    1043: os.path.join(my_path, "../content/RAW/PCBdata/HPF_1043.csv"),
+                    3232: os.path.join(my_path, "../content/RAW/PCBdata/HPF_3232.csv"),
+                }
+            ),
+            (   
+                "Low Pass",
+                {
+                    390: os.path.join(my_path, "../content/RAW/PCBdata/LPF_390.csv"),
+                    1115: os.path.join(my_path, "../content/RAW/PCBdata/LPF_1115.csv"),
+                    1724: os.path.join(my_path, "../content/RAW/PCBdata/LPF_1724.csv"),
+                }
+            )
+        ]
+        for title,graph in graphs:
+            dfs=[]
+            colors = ['b-', 'r-', 'g-', 'y-']
+            for freq,filename in graph.items():
+                dfs.append((pd.read_csv(filename, sep=",", engine='python', usecols=[0,1]),freq,colors.pop()))
+            lines=[]        
+            fig, ax1 = plt.subplots(figsize=(10, 6))    
+            for df,freq,colors in dfs:
+                # Rename columns
+                df.columns = ['time', 'input']
+                df = df.apply(pd.to_numeric, errors='coerce')
+                # Plotting
+                
+                # Plot Gain
+                line1, = ax1.plot(df['time'], df['input'], colors, label=f'{freq} /Hz')    
+                ax1.set_xlabel('time /s')
+                ax1.set_ylabel('Voltage /V', color='b')    
+                ax1.tick_params(axis='y', labelcolor='b')
+                # Combine legends from both axes
+                lines.append(line1)
+            labels = [line.get_label() for line in lines]
+            ax1.legend(lines, labels, loc='upper right')
+            # Title and layout
+            plt.title(f"Red Pitaya {title} Transcient Plots")
+            fig.tight_layout()
+            plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+            plt.show()
+
+#----------------------------------------------------------------------------------------------------------------------
+#  Execution
+# ----------------------------------------------------------------------------------------------------------------------    
+
 # Given
 Q = 10
 w_0 =1000
@@ -437,7 +541,13 @@ General R: {R*10e-3}kOhm\n\
 H_0 Resistor: {H_0_resistor*10**-3}kOhm"
 )
 
-# # Filter design
-# idealfilter = TheoreticalFilter(H_0,w_0,Q)
-# print("Transfer Functions:")
-# idealfilter.rootplotgen()
+
+# TheoreticalFilter(H_0,w_0,Q).rootplotgen()
+
+# SimulatedFilter().generateBodePlots()
+# SimulatedFilter().generateTranscientPlotsExperimental()
+# SimulatedFilter().generateTranscientPlotsSimulated()
+
+# PCB().bodePlots()
+PCB().stepPlots()
+
