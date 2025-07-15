@@ -32,21 +32,21 @@ The **filter approximation problem** arises from the need to design filters that
 
 ### **1.1.1 Ideal Filter**
 
-An ideal filter is a theoretical construct characterized by:
+An ideal filter is a theoretical construct characterized by:  
 •	Brick-wall characteristic: A perfectly sharp transition from passband to stopband at the cutoff frequency.
 •	Flat magnitude response in the passband: Constant gain for all frequencies below the cutoff frequency.
 •	Infinite attenuation in the stopband: Total rejection of all frequencies above the cutoff frequency.
 
-fig........
+![Ideal Filter Response](./RAW/appro/ideal%20filter.png){#fig-filter}
 
 ### **1.1.2 Practical Filter**
 
-A practical filter is the realizable implementation of a filter that approximates the ideal filter characteristics as closely as possible. Its behaviour is limited by physical component tolerances and achievable performance:
-•	Ripple in the passband and/or stopband: Small variations in gain rather than perfectly flat response.
-•	Finite attenuation in the stopband: Incomplete suppression of unwanted frequencies.
+A practical filter is the realizable implementation of a filter that approximates the ideal filter characteristics as closely as possible. Its behaviour is limited by physical component tolerances and achievable performance:              
+•	Ripple in the passband and/or stopband: Small variations in gain rather than perfectly flat response.                  
+•	Finite attenuation in the stopband: Incomplete suppression of unwanted frequencies.                          
 •	Gradual roll-off: The transition from passband to stopband occurs over a finite frequency range.
 
-fig......
+![Practical filter Response](./RAW/appro/image.png){#fig-filter}
 
 ## **1.2 FILTER TEMPLATE**
 
@@ -61,3 +61,58 @@ A typical filter template specifies the following parameters, which apply to all
 **Transition band**: Between the passband and stopband lies the transition band, a frequency range over which the filter's response transitions from low attenuation to high attenuation. The width of the transition band is a critical parameter because it directly impacts filter complexity. A narrower transition band generally requires a higher-order filter, resulting in increased circuit complexity, sensitivity to component variations, and potential implementation challenges. Conversely, a wider transition band allows for a lower-order filter, simplifying design but reducing selectivity.
 
 By defining these parameters, the filter template sets clear and achievable targets for filter designers. Once the template is established, it serves as the reference for selecting an appropriate filter approximation method (e.g., Butterworth, Chebyshev, Elliptic), which provides a realizable filter that meets the template’s requirements.
+
+## **2. BIQUADS**
+A biquad is a filter section that implements a second-order transfer function, meaning its transfer function has a quadratic denominator (hence the name "biquad"). It is a fundamental building block used to design higher-order filters by cascading several second-order sections.
+A typical biquad transfer function is of the form:
+
+$H(s) = \frac{(b_0 s^2+b_1 s+b_2)}{(a_0 s^2+a_1 s+a_2)}$
+
+### **TYPES OF BIQUAD CIRCUITS**
+**Sallen Key Biquad**
+
+The Sallen-Key biquad is one of the simplest and most widely used second-order filter topologies. It typically requires only a single operational amplifier along with passive components (resistors and capacitors). This circuit is well-suited for realizing filters where the design requires poles only (no zeros), such as lowpass and highpass filters. It is particularly attractive due to its low component count and straightforward design procedure. However, the Sallen-Key configuration suffers from sensitivity issues: its performance degrades as the quality factor (Q) increases because it becomes more sensitive to component variations, particularly for high-Q applications. It is best used for filters with modest Q values where component tolerances can be well controlled.
+
+fig.....
+
+**Tow Thomas Biquad**
+The Tow-Thomas biquad is a widely used second-order active filter circuit valued for its versatility and efficiency. It can realize a variety of filter responses—including lowpass, bandpass, and highpass—using only three operational amplifiers along with resistors and capacitors. The circuit’s structure is based on a cascade of two integrators followed by a summing amplifier, which together form a robust architecture for implementing second-order systems. This configuration allows designers to achieve a general biquadratic transfer function with arbitrary poles and zeros, providing independent control over key filter parameters such as natural frequency and quality factor (Q). The Tow-Thomas topology is particularly well-suited for applications requiring precise filter characteristics, making it a popular choice in both analog signal processing and active filter design.
+
+
+
+**KHN Biquad**
+
+The KHN biquad, named after Kerwin, Huelsman, and Newcomb, is a versatile second-order active filter topology that allows simultaneous realization of multiple filter responses from a single circuit structure. It typically uses three operational amplifiers and provides lowpass, bandpass, and highpass outputs concurrently from the same input signal. This makes it especially useful in applications where multiple filter characteristics are required.
+
+The general structure of the KHN biquad is derived from a canonical second-order block diagram, implemented with two integrators and a summing amplifier. It is characterized by good sensitivity properties and allows independent tuning of natural frequency, w and quality factor (Q), providing flexibility and precision in filter design.
+
+The general transfer function for the KHN biquad is:
+
+$H(s) = \frac{(b_0 s^2+b_1 s+b_2)}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$
+
+
+
+
+
+
+
+# **TYPES OF FILTERS**
+## **Lowpass Filter**
+A low pass filter allows low-frequency signals (frequencies below a certain cutoff frequency ${f_c}$ ) to pass through with minimal attenuation while progressively attenuating signals at higher frequencies. An ideal LPF would have a perfectly flat response up to ${f_c}$ and then an immediate transition to complete attenuation (a brick-wall cutoff). In reality, a practical LPF exhibits a gradual roll-off beyond ${f_c}$, with the steepness of this roll-off determined by the order of the filter (e.g., -20 dB/decade for first-order, -40 dB/decade for second-order). Practical LPFs may also introduce slight ripple in the passband or stopband depending on the design type.
+
+![Amplitude response of the ideal and practical basic Lowpass filter.](./RAW/Filter%20types/Lowpass%20(2).png){#fig-filter}
+
+## **Highpass Filter**
+A high pass filter does the opposite of a low pass filter: it allows frequencies above a specified cutoff frequency to pass while attenuating frequencies below it. An ideal HPF would perfectly block all frequencies below ${f_c}$ and allow all above it with no loss. A practical HPF, however, exhibits a gradual roll-off near ${f_c}$ and may show slight peaking or ripple depending on its order and approximation.
+
+![Amplitude response of the ideal and practical basic Highpass filter.](./RAW/Filter%20types/Highpass.png){#fig-filter}
+
+## **Bandpass Filter**
+A band pass filter allows signals within a certain frequency range, centered around a resonant or center frequency ${f_0}$, to pass, while attenuating signals below and above this range. An ideal BPF would have perfectly flat gain inside the passband and sharp transitions at the band edges. A practical BPF shows a gradual roll-off and a passband width determined by the quality factor 𝑄, which controls the filter’s selectivity: a higher Q gives a narrower passband with sharper transitions, while a lower Q produces a broader passband.
+
+![Amplitude response of the ideal and practical basic Bandpass Filter](./RAW/Filter%20types/Bandpass.png){#fig-filter}
+
+## **Bandstop Filter**
+A band stop filter, also called a notch filter when the stopband is very narrow, attenuates a specific band of frequencies around a center frequency ${f_0}$ and allows frequencies outside this range to pass. An ideal BSF would completely eliminate frequencies within the stopband and perfectly pass all others. A practical BSF has finite attenuation in the stopband and gradual transitions at the band edges.
+
+![Amplitude response of the ideal and practical basic Bandstop Filter](./RAW/Filter%20types/Bandstop.png){#fig-filter}
