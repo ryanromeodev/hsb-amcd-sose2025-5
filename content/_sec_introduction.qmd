@@ -23,3 +23,41 @@ The objective of this report is to design a biquad filter with the $frequency = 
 2. we substitute $\omega_0$ = $2\pi f_0$
 3. from the above equations we calculate all values and store the available capacitor values in `clist` of the below python code. Note that the capacitance value is in $\mu F$
 4. $R_3$ is choosen arbitarily so as to not load down the second or the third op-amp
+
+# **BASICS OF FILTER DESIGN**
+## **1.1 THE FILTER APPROXIMATION** 
+
+In filter design, the goal is to distinguish between useful signal components and unwanted noise or interference. Ideally, a filter would pass all desired frequencies without distortion while completely rejecting undesired frequencies. However, this ideal filter response is not physically realizable due to practical limitations inherent in real-world systems.
+The **filter approximation problem** arises from the need to design filters that approximate the ideal behaviour as closely as possible while adhering to physical and technological constraints. The design process involves selecting an appropriate approximation function and filter structure to meet given specifications for magnitude and phase response, roll-off characteristics, and allowable ripple.
+
+### **1.1.1 Ideal Filter**
+
+An ideal filter is a theoretical construct characterized by:
+•	Brick-wall characteristic: A perfectly sharp transition from passband to stopband at the cutoff frequency.
+•	Flat magnitude response in the passband: Constant gain for all frequencies below the cutoff frequency.
+•	Infinite attenuation in the stopband: Total rejection of all frequencies above the cutoff frequency.
+
+fig........
+
+### **1.1.2 Practical Filter**
+
+A practical filter is the realizable implementation of a filter that approximates the ideal filter characteristics as closely as possible. Its behaviour is limited by physical component tolerances and achievable performance:
+•	Ripple in the passband and/or stopband: Small variations in gain rather than perfectly flat response.
+•	Finite attenuation in the stopband: Incomplete suppression of unwanted frequencies.
+•	Gradual roll-off: The transition from passband to stopband occurs over a finite frequency range.
+
+fig......
+
+## **1.2 FILTER TEMPLATE**
+
+In practical filter design, it is impossible to implement an ideal filter with an infinitely sharp transition between passband and stopband, zero ripple, and infinite attenuation. Therefore, a filter template establishes performance limits that approximate the ideal response within tolerable deviations.
+By setting precise boundaries for key parameters—such as passband gain, stopband attenuation, and the width of the transition band—a filter template ensures that the resulting design will meet both functional and implementation requirements.
+A typical filter template specifies the following parameters, which apply to all filter types (lowpass, highpass, bandpass, bandstop):
+
+**Passband specifications**: The template defines an acceptable range of gain variation within the passband, commonly referred to as passband ripple. This is quantified by upper and lower limits, ensuring that the gain remains within a specified range, such as ±1 dB, across all frequencies in the passband. Additionally, the passband edge frequency, denoted specifies the upper or lower frequency limit of the passband.
+
+**Stopband specifications**: The filter template also sets requirements for attenuation in the stopband. The stopband edge frequency defines the frequency beyond which the filter must provide significant attenuation to unwanted signals. A minimum attenuation level, typically expressed in decibels (dB), specifies how much unwanted signals must be suppressed to ensure sufficient signal separation.
+
+**Transition band**: Between the passband and stopband lies the transition band, a frequency range over which the filter's response transitions from low attenuation to high attenuation. The width of the transition band is a critical parameter because it directly impacts filter complexity. A narrower transition band generally requires a higher-order filter, resulting in increased circuit complexity, sensitivity to component variations, and potential implementation challenges. Conversely, a wider transition band allows for a lower-order filter, simplifying design but reducing selectivity.
+
+By defining these parameters, the filter template sets clear and achievable targets for filter designers. Once the template is established, it serves as the reference for selecting an appropriate filter approximation method (e.g., Butterworth, Chebyshev, Elliptic), which provides a realizable filter that meets the template’s requirements.
