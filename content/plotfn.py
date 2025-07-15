@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 class SimulatedFilter:
         
@@ -46,7 +47,7 @@ class SimulatedFilter:
         plt.grid(True, linestyle='-', linewidth=0.5)
         plt.show()
 
-    def transCientAnalysisPlot(self,title,idealGraphsFilename,cols):
+    def transcientAnalysisPlot(self,title,idealGraphsFilename,cols):
         filename = idealGraphsFilename
         df = pd.read_csv(filename, sep=',', engine='python', usecols=cols)
 
@@ -83,11 +84,12 @@ class SimulatedFilter:
         plt.show()
 
     def generateBodePlots(self):
-        filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\idealGraphs.csv"
-        lpf_filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\redpitayaGraphs\LPF.csv"
-        hpf_filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\redpitayaGraphs\HPF.csv"
-        bsf_filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\redpitayaGraphs\BSF.csv"
-        bpf_filename =  r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\redpitayaGraphs\BPF.csv"
+        my_path = os.path.abspath(os.path.dirname(__file__))
+        filename = os.path.join(my_path, "../content/RAW/idealGraphs.csv")
+        lpf_filename = os.path.join(my_path, "../content/RAW/redpitayaGraphs/LPF.csv")
+        hpf_filename = os.path.join(my_path, "../content/RAW/redpitayaGraphs/HPF.csv")
+        bsf_filename = os.path.join(my_path, "../content/RAW/redpitayaGraphs/BSF.csv")
+        bpf_filename = os.path.join(my_path, "../content/RAW/redpitayaGraphs/BPF.csv")        
         bpf_title = 'Frequency Response of BPF (Gain and Phase)'
         bsf_title = 'Frequency Response of BSF (Gain and Phase)'
         lpf_title = 'Frequency Response of LPF (Gain and Phase)'
@@ -100,7 +102,7 @@ class SimulatedFilter:
         }
         for title_internal,attributes in filters.items():    
             self.freqAnalysisPlot(
-                title=bpf_title,
+                title=title_internal,
                 maincols= attributes[0],
                 cols=[0,1,2],
                 graphsFilename=filename,
@@ -108,39 +110,41 @@ class SimulatedFilter:
                 seperator=';',
                 seperator_redpiataya=','
             )
-    def generateTranscientPlots(self):
+    def generateTranscientPlotsExperimental(self):
+        my_path = os.path.abspath(os.path.dirname(__file__))        
         graphs = [
             (   
                 "Band Pass",
                 {
-                    595: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\bpf_t_595.csv",
-                    1055: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\bpf_t_1055.csv",
-                    2185: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\bpf_t_2185.csv"
+                    595 : os.path.join(my_path, "../content/RAW/Transcient_CSV/bpf_t_595.csv"),
+                    1055: os.path.join(my_path, "../content/RAW/Transcient_CSV/bpf_t_1055.csv"),
+                    2185: os.path.join(my_path, "../content/RAW/Transcient_CSV/bpf_t_2185.csv"), 
+                    
                 }
             ),
             (   
                 "Band Stop",
                 {
-                    260: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\bsf_t_260.csv",
-                    982: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\bsf_t_982.csv",
-                    1055: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\bsf_t_1055.csv",
-                    3187: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\bsf_t_3187.csv"
+                    260: os.path.join(my_path, "../content/RAW/Transcient_CSV/bsf_t_260.csv"),
+                    982: os.path.join(my_path, "../content/RAW/Transcient_CSV/bsf_t_982.csv"),
+                    1055: os.path.join(my_path, "../content/RAW/Transcient_CSV/bsf_t_1055.csv"),
+                    3187: os.path.join(my_path, "../content/RAW/Transcient_CSV/bsf_t_3187.csv"),
                 }
             ),
             (   
                 "High Pass",
                 {
-                    701: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\hpf_t_701.csv",
-                    1043: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\hpf_t_1043.csv",
-                    3232: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\hpf_t_3232.csv"
+                    701: os.path.join(my_path, "../content/RAW/Transcient_CSV/hpf_t_701.csv"),
+                    1043: os.path.join(my_path, "../content/RAW/Transcient_CSV/hpf_t_1043.csv"),
+                    3232: os.path.join(my_path, "../content/RAW/Transcient_CSV/hpf_t_3232.csv"),
                 }
             ),
             (   
                 "Low Pass",
                 {
-                    390: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\lpf_t_390.csv",
-                    1115: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\lpf_t_1115.csv",
-                    1724: r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\Transcient_CSV\lpf_t_1724.csv"
+                    390: os.path.join(my_path, "../content/RAW/Transcient_CSV/lpf_t_390.csv"),
+                    1115: os.path.join(my_path, "../content/RAW/Transcient_CSV/lpf_t_1115.csv"),
+                    1724: os.path.join(my_path, "../content/RAW/Transcient_CSV/lpf_t_1724.csv"),
                 }
             )
         ]
@@ -158,24 +162,84 @@ class SimulatedFilter:
                 # Plotting
                 
                 # Plot Gain
-                line1, = ax1.plot(df['time'], df['input'], colors, label=f'{freq}(Hz)')    
-                ax1.set_xlabel('time (s)')
-                ax1.set_ylabel('Gain (dB)', color='b')    
+                line1, = ax1.plot(df['time'], df['input'], colors, label=f'{freq} /Hz')    
+                ax1.set_xlabel('time /s')
+                ax1.set_ylabel('Voltage /V', color='b')    
                 ax1.tick_params(axis='y', labelcolor='b')
                 # Combine legends from both axes
                 lines.append(line1)
             labels = [line.get_label() for line in lines]
             ax1.legend(lines, labels, loc='upper right')
             # Title and layout
-            plt.title(f"{title}")
+            plt.title(f"Red Pitaya {title} Transcient Plots")
             fig.tight_layout()
             plt.grid(True, which='both', linestyle='--', linewidth=0.5)
             plt.show()
+
+    def generateTranscientPlotsSimulated(self):
+        my_path = os.path.abspath(os.path.dirname(__file__))       
+         
+        # filename = os.path.join(my_path, "../content/RAW/kiCADTranscients/keycastranscients.csv"),
+        filename = r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\hsb-amcd-sose2025-5\content\RAW\kiCADTranscients\keycastranscients.csv"
+          
+        df = pd.read_csv(filename, sep=";", engine='python', usecols=[0,1,2,3,4])            
+        # Rename columns    
+        df.columns = ['Time', 'Voltage(BPF)', 'Voltage(BSF)','Voltage(HPF)','Voltage(LPF)']                    
+        df = df.apply(pd.to_numeric, errors='coerce')                
+
+        # Plotting
+        fig, ax1 = plt.subplots(figsize=(10, 6))
         
+        # Plot Gain
+        line1, = ax1.plot(df['Time'], df['Voltage(BPF)'], 'b-', label='Voltage(BPF) /V')   
+        line2, = ax1.plot(df['Time'], df['Voltage(BSF)'], 'g-', label='Voltage(BSF) /V')   
+        line3, = ax1.plot(df['Time'], df['Voltage(HPF)'], 'r-', label='Voltage(HPF) /V')   
+        line4, = ax1.plot(df['Time'], df['Voltage(LPF)'], 'y-', label='Voltage(LPF) /V')   
+        ax1.set_xlabel('Time /s')
+        ax1.set_ylabel('Voltage /V')
+        # Combine legends from both axes
+        lines = [line1,line2,line3,line4]
+        labels = [line.get_label() for line in lines]
+        ax1.legend(lines, labels, loc='lower right')
+
+        # Title and layout
+        plt.title(f"Step Analysis for Filters")
+        fig.tight_layout()
+        plt.grid(True, linestyle='-', linewidth=0.5)
+        plt.show()       
+        # for name,cols in filterdict:
+        #     dfs=[]
+        #     colors = ['b-', 'r-', 'g-', 'y-']
+        #     for freq,filename in graph.items():
+        #         dfs.append((pd.read_csv(filename, sep=";", engine='python', usecols=cols),freq,colors.pop()))
+        #     lines=[]        
+        #     fig, ax1 = plt.subplots(figsize=(10, 6))    
+        #     for df,freq,colors in dfs:
+        #         # Rename columns
+        #         df.columns = ['time', 'input']
+        #         df = df.apply(pd.to_numeric, errors='coerce')
+        #         # Plotting
+                
+        #         # Plot Gain
+        #         line1, = ax1.plot(df['time'], df['input'], colors, label=f'{freq} /Hz')    
+        #         ax1.set_xlabel('time /s')
+        #         ax1.set_ylabel('Voltage /V', color='b')    
+        #         ax1.tick_params(axis='y', labelcolor='b')
+        #         # Combine legends from both axes
+        #         lines.append(line1)
+        #     labels = [line.get_label() for line in lines]
+        #     ax1.legend(lines, labels, loc='upper right')
+        #     # Title and layout
+        #     plt.title(f"Red Pitaya {name} Transcient Plots")
+        #     fig.tight_layout()
+        #     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+        #     plt.show()     
 
 
-SimulatedFilter().generateBodePlots()
-# SimulatedFilter().generateTranscientPlots()
+
+# SimulatedFilter().generateBodePlots()
+# SimulatedFilter().generateTranscientPlotsExperimental()
+SimulatedFilter().generateTranscientPlotsSimulated()
 
 #------------------------------------------------------------------------------------------------------
 
@@ -272,10 +336,10 @@ class TheoreticalFilter:
         # Combine legends from both axes
         lines = [line1, line2]
         labels = [line.get_label() for line in lines]
-        ax1.legend(lines, labels, loc='lower right')
+        ax1.legend(lines, labels, loc='lower left')
 
         # Title and layout
-        plt.title(f"Phase and Magnitude plot of {filtername} Filter")
+        plt.title(f"Theoretical  Phase and Magnitude plot of {filtername} Filter")
         fig.tight_layout()
         plt.grid(True, linestyle='-', linewidth=0.5)
         plt.show()  
@@ -304,17 +368,17 @@ class TheoreticalFilter:
         
         # Plot Gain
         line1, = ax1.plot(time, y , 'b-', label='Gain /dB')            
-        ax1.set_xlabel('Frequency /Hz')
-        ax1.set_ylabel('Gain /dB')        
+        ax1.set_xlabel('time /s')
+        ax1.set_ylabel('Voltage /V')        
         # ax1.tick_params(axis='y', labelcolor='b')
 
         # Combine legends from both axes
         lines = [line1]
         labels = [line.get_label() for line in lines]
-        ax1.legend(lines, labels, loc='lower right')
+        ax1.legend(lines, labels, loc='lower left')
 
         # Title and layout
-        plt.title(f"Phase and Magnitude plot of {filtername} Filter")
+        plt.title(f"Theoretical Step Response plot of {filtername} Filter")
         fig.tight_layout()
         plt.grid(True, linestyle='-', linewidth=0.5)
         plt.show()
@@ -339,7 +403,7 @@ class TheoreticalFilter:
         zeros, poles, gain = tf2zpk(numerator, denominator)
 
         # Plot the poles and zeros
-        plt.figure(figsize=(6, 6))
+        plt.figure(figsize=(10, 6))
         plt.scatter(np.real(zeros), np.imag(zeros), s=100, label='Zeros', marker='o', facecolors='none', edgecolors='b')
         plt.scatter(np.real(poles), np.imag(poles), s=100, label='Poles', marker='x', color='r')
 
@@ -349,10 +413,10 @@ class TheoreticalFilter:
         plt.grid(color='gray', linestyle='--', linewidth=0.5)
         plt.xlabel('Real Part')
         plt.ylabel('Imaginary Part')
-        plt.title('Pole-Zero Plot')
+        plt.title(f'Pole-Zero Plot for {filtername} filter')
         plt.legend()
         plt.axis('equal')
-        plt.show()
+        plt.show()        
 # Given
 Q = 10
 w_0 =1000
@@ -373,7 +437,7 @@ General R: {R*10e-3}kOhm\n\
 H_0 Resistor: {H_0_resistor*10**-3}kOhm"
 )
 
-# Filter design
+# # Filter design
 # idealfilter = TheoreticalFilter(H_0,w_0,Q)
 # print("Transfer Functions:")
 # idealfilter.rootplotgen()
