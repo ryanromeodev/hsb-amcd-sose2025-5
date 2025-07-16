@@ -116,3 +116,442 @@ A band pass filter allows signals within a certain frequency range, centered aro
 A band stop filter, also called a notch filter when the stopband is very narrow, attenuates a specific band of frequencies around a center frequency ${f_0}$ and allows frequencies outside this range to pass. An ideal BSF would completely eliminate frequencies within the stopband and perfectly pass all others. A practical BSF has finite attenuation in the stopband and gradual transitions at the band edges.
 
 ![Amplitude response of the ideal and practical basic Bandstop Filter](./RAW/Filter%20types/Bandstop.png){#fig-filter}
+
+
+----------------
+
+
+# Basics of filters
+Circuits that are designed to amplify specific ranges of signal frequencies are usually referred to as **filters**.
+
+## Types of filter
+Amplifiers are often designed to selectively process signals of different frequency ranges. 
+
+- The **low-pass amplifier**, shown in Figure 1.21(a), passes all signals below some upper cutoff frequency $f_H$.  
+- The **high-pass amplifier**, shown in Figure 1.21(b), amplifies all signals above the lower cutoff frequency $f_L$.  
+- The **band-pass amplifier** passes all signals between the two cutoff frequencies $f_L$ and $f_H$, as illustrated in Figure 1.21(c).  
+- The **band-reject amplifier** in Figure 1.21(d) rejects all signals having frequencies lying between $f_L$ and $f_H$.
+
+figure
+
+---
+
+### Design Considerations
+
+When designing practical filters, several key parameters must be carefully selected to meet the desired frequency response and performance requirements. The following aspects are critical in the design of active filters:
+
+
+
+#### Cut-off Frequency ($f_0$)
+
+- The cutoff frequency defines the boundary between the passband and the stopband.
+- It is the frequency at which the filter’s gain falls by 3 dB from its passband level.
+- For low-pass filters, frequencies below the cutoff pass with minimal attenuation; for high-pass filters, frequencies above the cutoff are passed.
+- Band-pass and band-stop filters have both lower and upper cutoff frequencies ($f_L$ and $f_H$) defining their bandwidth.
+ figure 
+---
+
+#### Quality Factor (Q)
+
+- The quality factor, Q, defines how selective the filter is around its center frequency.
+- A high Q results in a narrow, sharp response, while a low Q produces a broader passband.
+- For band-pass and band-stop filters, Q is defined as:
+
+  $$
+  Q = \frac{f_0}{f_H - f_L}
+  $$
+
+- High-Q designs require precise components and stable operational amplifiers to avoid excessive peaking or instability.
+
+#### Gain ($A_0$)
+
+- The gain, $A_0$, sets the amplitude level in the filter’s passband (midband).
+- Expressed either as a linear ratio or in decibels (dB):
+
+  $$
+  A_0 \;(\text{dB}) = 20 \log_{10}(A_0)
+  $$
+
+- In active filter circuits, $A_0$ is determined by resistor ratios and must be chosen to provide adequate signal strength without causing distortion.
+
+
+#### Natural Frequency (ω₀)
+
+- The natural frequency, denoted ω₀, determines the center frequency of resonance in band-pass and band-stop filters and corresponds to the cutoff frequency in low-pass and high-pass filters.
+- It is given by:
+
+  $$
+  \omega_0 = 2\pi f_0
+  $$
+
+- Selecting ω₀ correctly ensures the filter passes or attenuates the intended frequency range.
+
+#### Filter Order
+
+- The filter order represents the number of reactive components (capacitors or inductors) influencing the frequency response.
+- Higher-order filters provide steeper roll-off slopes and better attenuation of unwanted frequencies.
+- Each order increases the slope by approximately −20 dB per decade:
+  - 1st-order → −20 dB/decade
+  - 2nd-order → −40 dB/decade
+
+
+---
+
+### Practical Design Implications
+
+- The choice of Q and ω₀ determines whether the filter achieves the desired bandwidth and selectivity.
+- Higher Q increases sensitivity to component tolerances and can introduce peaking or ringing in the time domain.
+- Operational amplifiers used in active filters must offer sufficient bandwidth and low noise to maintain signal integrity.
+- Gain settings must balance signal amplitude requirements with stability and noise performance.
+
+These considerations are essential to ensure that real filters not only match theoretical frequency responses but also operate reliably and efficiently in practical applications.
+
+---
+
+# Operational Amplifiers
+
+Operational amplifiers (op amps) are fundamental building blocks in analog circuit design, widely used for amplification, filtering, signal conditioning, and mathematical operations. Their design and layout involve both ideal and non-ideal considerations to ensure optimal performance in practical applications.
+
+## Common Configurations
+
+### Inverting Amplifier
+An inverting-amplifier circuit is built by grounding the positive input of the operational amplifier
+and connecting resistors $R_1$ and $R_2$, called the feedback network, between the inverting input and
+the signal source and amplifier output node, respectively, as in Fig. 
+
+---
+
+### Summing Amplifier
+
+Operational amplifiers can also be used to combine signals using the summing-amplifier circuit
+depicted in Fig. 10.24. Here, two input sources $v_1$ and $v_2$ are connected to the inverting input of the amplifier through resistors $R_1$ and $R_2$. Because the negative amplifier input represents a virtual ground, 
+
+$i_1 = \frac{v_1}{R_1}$ , $i_2 = \frac{v_2}{R_2}$ , $i_3 = -\frac{v_o}{R_3}$
+
+
+
+
+Since the input current into the op amp ($i^{-}$) is effectively zero, the currents satisfy: $i_3 = i_1 + i_2$.
+
+$$
+v_o = -\left(\frac{R_3}{R_1} v_1 \;+\; \frac{R_3}{R_2} v_2\right)
+$$
+
+
+
+The output voltage sums the scaled replicas of the two input voltages, and the scale factors for
+the two inputs may be independently adjusted through the choice of resistors $R_1$ and $R_2$. These two
+inputs can be scaled independently because of the virtual ground maintained at the inverting-input
+terminal of the op amp.
+The inverting-amplifier input node is also commonly called the summing junction because
+currents $i_1$ and $i_2$ are “summed” at this node and forced through the feedback resistor $R_3$. Although
+the amplifier in Fig. 10.24 has only two inputs, any number of inputs can be connected to the summing
+junction through additional resistors.
+
+---
+
+### Integrator
+
+The **integrator** is another important building block that uses an operational amplifier with frequency-dependent feedback. In the integrator circuit, the feedback resistor $R_2$ of a standard inverting amplifier is replaced by a capacitor $C$, as shown in Fig. 10.34. This configuration enables the circuit to perform integration of the input signal and provides a valuable example for op amp circuit analysis in the time domain.  
+
+Because the inverting input of the op amp behaves as a virtual ground, the input current and the capacitor current can be written as: $i_i = \frac{v_i}{R}$, $i_c = -C \frac{d v_o}{dt}$
+
+For an ideal op amp, the input current into the inverting terminal, $i^-$, is zero. Thus $i_c = i_i$
+
+Equating the two expressions and integrating both sides gives:
+
+$$
+d v_o = -\frac{1}{RC} \, v_i \, d\tau
+$$
+
+which integrates to:
+
+$$
+v_o(t) = v_o(0) - \frac{1}{RC} \int_0^t v_i(\tau) \, d\tau
+$$
+
+
+where $v_o(0)$ represents the initial voltage at the op amp output, determined by the initial voltage across the capacitor at $t=0$:
+
+$$
+v_o(0) = -v_C(0)
+$$
+
+Therefore, the voltage at the output of the integrator at any time $t$ equals the initial capacitor voltage minus the integral of the input signal from the starting time $t=0$.
+
+
+#### Understanding Integrator Circuit Operation
+The virtual ground at the inverting input of the op amp causes input voltage vi to appear directly
+across resistor R establishing an input current $v_i/R$. As the input current flows out through $C$, the
+capacitor accumulates a charge equal to the integral of the current, $Q_C = \frac{1}{C} \int i \, dt$ , and the overall
+scale factor becomes $-\frac{1}{RC}$.
+
+
+---
+
+
+# Basics of filters
+Circuits that are designed to amplify specific ranges of signal frequencies are usually referred to as **filters**.
+
+## Types of filter
+Amplifiers are often designed to selectively process signals of different frequency ranges. 
+
+- The **low-pass amplifier**, shown in Figure 1.21(a), passes all signals below some upper cutoff frequency $f_H$.  
+- The **high-pass amplifier**, shown in Figure 1.21(b), amplifies all signals above the lower cutoff frequency $f_L$.  
+- The **band-pass amplifier** passes all signals between the two cutoff frequencies $f_L$ and $f_H$, as illustrated in Figure 1.21(c).  
+- The **band-reject amplifier** in Figure 1.21(d) rejects all signals having frequencies lying between $f_L$ and $f_H$.
+
+figure
+
+---
+
+### Design Considerations
+
+When designing practical filters, several key parameters must be carefully selected to meet the desired frequency response and performance requirements. The following aspects are critical in the design of active filters:
+
+
+
+#### Cut-off Frequency ($f_0$)
+
+- The cutoff frequency defines the boundary between the passband and the stopband.
+- It is the frequency at which the filter’s gain falls by 3 dB from its passband level.
+- For low-pass filters, frequencies below the cutoff pass with minimal attenuation; for high-pass filters, frequencies above the cutoff are passed.
+- Band-pass and band-stop filters have both lower and upper cutoff frequencies ($f_L$ and $f_H$) defining their bandwidth.
+ figure 
+---
+
+#### Quality Factor (Q)
+
+- The quality factor, Q, defines how selective the filter is around its center frequency.
+- A high Q results in a narrow, sharp response, while a low Q produces a broader passband.
+- For band-pass and band-stop filters, Q is defined as:
+
+  $$
+  Q = \frac{f_0}{f_H - f_L}
+  $$
+
+- High-Q designs require precise components and stable operational amplifiers to avoid excessive peaking or instability.
+
+#### Gain ($A_0$)
+
+- The gain, $A_0$, sets the amplitude level in the filter’s passband (midband).
+- Expressed either as a linear ratio or in decibels (dB):
+
+  $$
+  A_0 \;(\text{dB}) = 20 \log_{10}(A_0)
+  $$
+
+- In active filter circuits, $A_0$ is determined by resistor ratios and must be chosen to provide adequate signal strength without causing distortion.
+
+
+#### Natural Frequency (ω₀)
+
+- The natural frequency, denoted ω₀, determines the center frequency of resonance in band-pass and band-stop filters and corresponds to the cutoff frequency in low-pass and high-pass filters.
+- It is given by:
+
+  $$
+  \omega_0 = 2\pi f_0
+  $$
+
+- Selecting ω₀ correctly ensures the filter passes or attenuates the intended frequency range.
+
+#### Filter Order
+
+- The filter order represents the number of reactive components (capacitors or inductors) influencing the frequency response.
+- Higher-order filters provide steeper roll-off slopes and better attenuation of unwanted frequencies.
+- Each order increases the slope by approximately −20 dB per decade:
+  - 1st-order → −20 dB/decade
+  - 2nd-order → −40 dB/decade
+
+
+---
+
+### Practical Design Implications
+
+- The choice of Q and ω₀ determines whether the filter achieves the desired bandwidth and selectivity.
+- Higher Q increases sensitivity to component tolerances and can introduce peaking or ringing in the time domain.
+- Operational amplifiers used in active filters must offer sufficient bandwidth and low noise to maintain signal integrity.
+- Gain settings must balance signal amplitude requirements with stability and noise performance.
+
+These considerations are essential to ensure that real filters not only match theoretical frequency responses but also operate reliably and efficiently in practical applications.
+
+---
+
+# Operational Amplifiers
+
+Operational amplifiers (op amps) are fundamental building blocks in analog circuit design, widely used for amplification, filtering, signal conditioning, and mathematical operations. Their design and layout involve both ideal and non-ideal considerations to ensure optimal performance in practical applications.
+
+## Common Configurations
+
+### Inverting Amplifier
+An inverting-amplifier circuit is built by grounding the positive input of the operational amplifier
+and connecting resistors $R_1$ and $R_2$, called the feedback network, between the inverting input and
+the signal source and amplifier output node, respectively, as in Fig. 
+
+---
+
+### Summing Amplifier
+
+Operational amplifiers can also be used to combine signals using the summing-amplifier circuit
+depicted in Fig. 10.24. Here, two input sources $v_1$ and $v_2$ are connected to the inverting input of the amplifier through resistors $R_1$ and $R_2$. Because the negative amplifier input represents a virtual ground, 
+
+$i_1 = \frac{v_1}{R_1}$ , $i_2 = \frac{v_2}{R_2}$ , $i_3 = -\frac{v_o}{R_3}$
+
+
+
+
+Since the input current into the op amp ($i^{-}$) is effectively zero, the currents satisfy: $i_3 = i_1 + i_2$.
+
+$$
+v_o = -\left(\frac{R_3}{R_1} v_1 \;+\; \frac{R_3}{R_2} v_2\right)
+$$
+
+
+
+The output voltage sums the scaled replicas of the two input voltages, and the scale factors for
+the two inputs may be independently adjusted through the choice of resistors $R_1$ and $R_2$. These two
+inputs can be scaled independently because of the virtual ground maintained at the inverting-input
+terminal of the op amp.
+The inverting-amplifier input node is also commonly called the summing junction because
+currents $i_1$ and $i_2$ are “summed” at this node and forced through the feedback resistor $R_3$. Although
+the amplifier in Fig. 10.24 has only two inputs, any number of inputs can be connected to the summing
+junction through additional resistors.
+
+---
+
+### Integrator
+
+The **integrator** is another important building block that uses an operational amplifier with frequency-dependent feedback. In the integrator circuit, the feedback resistor $R_2$ of a standard inverting amplifier is replaced by a capacitor $C$, as shown in Fig. 10.34. This configuration enables the circuit to perform integration of the input signal and provides a valuable example for op amp circuit analysis in the time domain.  
+
+Because the inverting input of the op amp behaves as a virtual ground, the input current and the capacitor current can be written as: $i_i = \frac{v_i}{R}$, $i_c = -C \frac{d v_o}{dt}$
+
+For an ideal op amp, the input current into the inverting terminal, $i^-$, is zero. Thus $i_c = i_i$
+
+Equating the two expressions and integrating both sides gives:
+
+$$
+d v_o = -\frac{1}{RC} \, v_i \, d\tau
+$$
+
+which integrates to:
+
+$$
+v_o(t) = v_o(0) - \frac{1}{RC} \int_0^t v_i(\tau) \, d\tau
+$$
+
+
+where $v_o(0)$ represents the initial voltage at the op amp output, determined by the initial voltage across the capacitor at $t=0$:
+
+$$
+v_o(0) = -v_C(0)
+$$
+
+Therefore, the voltage at the output of the integrator at any time $t$ equals the initial capacitor voltage minus the integral of the input signal from the starting time $t=0$.
+
+
+#### Understanding Integrator Circuit Operation
+The virtual ground at the inverting input of the op amp causes input voltage vi to appear directly
+across resistor R establishing an input current $v_i/R$. As the input current flows out through $C$, the
+capacitor accumulates a charge equal to the integral of the current, $Q_C = \frac{1}{C} \int i \, dt$ , and the overall
+scale factor becomes $-\frac{1}{RC}$.
+
+
+---
+
+
+
+
+
+
+
+# General KHN Biquad Filters
+
+The KHN biquad is an active filter topology that uses three operational amplifiers (op-amps) to implement a second-order filter. It is called a "biquad" because it realizes a biquadratic transfer function, which is a ratio of two quadratic polynomials. The KHN configuration is notable for providing simultaneous access to low-pass, high-pass, and bandpass outputs from a single circuit, making it highly versatile.
+The KHN filter is based on a state-variable filter approach, where the circuit maintains internal state variables (typically voltages) that represent the system's dynamics. This allows for independent control of the filter's key parameters: the natural frequency ($w_0$), quality factor ($Q$), and gain ($H$).
+
+
+## Circuit Configuration
+
+The KHN biquad filter consists of three main op-amp stages:
+
+- Two Integrators: These form the core of the state-variable filter, creating a feedback loop that defines the second-order dynamics.
+- A Summing Amplifier: This combines the input signal and feedback signals to produce the desired filter outputs.
+
+**Circuit Structure**
+
+First Integrator: Integrates the input signal or a combination of the input and feedback signals.
+Second Integrator: Integrates the output of the first integrator, producing the low-pass output.
+Summing Amplifier: Combines signals to produce the high-pass and bandpass outputs.
+
+The circuit typically includes resistors and capacitors to set the filter parameters, with the op-amps operating in a linear mode. A simplified block diagram of the KHN biquad is as follows:
+
+Input → Summing Amplifier → First Integrator → Second Integrator → Low-Pass Output
+Feedback loops from the integrators feed back to the summing amplifier.
+The high-pass output is taken from the summing amplifier, the bandpass from the first integrator, and the low-pass from the second integrator. Figure
+
+A typical KHN biquad circuit includes:
+
+Resistors (R₁, R₂, etc.) to control gain and feedback.
+Capacitors (C₁, C₂) to set the frequency response.
+Three op-amps configured as integrators and a summer.
+
+## Transfer Functions
+The KHN biquad provides three standard outputs: high-pass, bandpass, and low-pass. The transfer functions for these outputs are derived from the circuit’s feedback structure and can be expressed in the s-domain (Laplace domain) as follows, assuming ideal op-amps:
+General Biquadratic Transfer Function
+The general form of a second-order filter transfer function is:
+$$T(s) = \frac{N(s)}{D(s)} = \frac{a_2 s^2 + a_1 s + a_0}{s^2 + \frac{\omega_0}{Q} s + \omega_0^2}$$
+Where:
+
+( $s$ ) is the complex frequency variable.
+( $\omega_0$) is the natural angular frequency (related to the cutoff or center frequency).
+( $Q$ ) is the quality factor, which determines the sharpness of the resonance.
+( $a_2$, $a_1$, $a_0$ ) determine the filter type (high-pass, bandpass, low-pass, etc.).
+
+For the KHN biquad, the specific transfer functions for each output are:
+
+Low-Pass Output:
+
+$$H_{LP}(s) = \frac{\omega_0^2}{s^2 + \frac{\omega_0}{Q} s + \omega_0^2}$$
+
+This passes low frequencies and attenuates high frequencies.
+
+
+Bandpass Output:
+
+$$H_{BP}(s) = \frac{\frac{\omega_0}{Q} s}{s^2 + \frac{\omega_0}{Q} s + \omega_0^2}$$
+
+This passes a band of frequencies centered around ( \omega_0 ).
+
+
+High-Pass Output:
+
+$$H_{HP}(s) = \frac{s^2}{s^2 + \frac{\omega_0}{Q} s + \omega_0^2}$$
+
+This passes high frequencies and attenuates low frequencies.
+
+By adjusting resistor and capacitor values, other filter types (e.g., notch or all-pass) can be derived by combining these outputs with appropriate gain and summation.
+Key Parameters
+
+Natural Frequency (( $\omega_0$ )): Determines the cutoff or center frequency of the filter. For a KHN biquad, it is typically set by the resistors and capacitors in the integrator stages:
+
+$$\omega_0 = \frac{1}{\sqrt{R_1 R_2 C_1 C_2}}$$
+
+Quality Factor (Q): Controls the bandwidth and resonance of the filter. It is set by the feedback resistors:
+
+$$Q = \frac{\sqrt{R_1 R_2 C_1 C_2}}{R_f (C_1 + C_2)}$$
+where ( $R_f$ ) is the feedback resistor in the summing stage.
+
+Gain (H): The gain of each output (low-pass, bandpass, high-pass) can be adjusted by scaling the resistors in the summing amplifier.
+
+## Design Parameters and Tuning
+The KHN biquad is highly flexible because its key parameters (( $\omega_0$ ), ( $Q$ ), and gain) can be tuned independently:
+
+Tuning ( $\omega_0$ ): Adjust the resistors (( $R_1$, $R_2$ )) or capacitors (( $C_1$, $C_2$ )) in the integrator stages. Changing these values affects the frequency without altering ( $Q$ ) or gain significantly.
+
+Tuning ( $Q$ ): Adjust the feedback resistor (( $R_f$ )) in the summing stage. A smaller ( $R_f$ ) increases ( $Q$ ), making the filter more selective (narrower bandwidth).
+
+Tuning Gain: Adjust the resistors in the summing amplifier to scale the output amplitude for each filter type.
+
+This independent control is a significant advantage over other biquad topologies, such as the Sallen-Key filter, where parameters are often interdependent.
+
+
