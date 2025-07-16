@@ -287,18 +287,18 @@ class TheoreticalFilter:
     def highpassfilter(self):
         '''High Pass Filter'''        
         numerator = self.h_0*np.square(1/self.w_0)
-        numerator_string = f"      {np.round(numerator*10**8,4)}e8 s^2"
+        numerator_string = f"      {numerator} s^2"
         return (float(numerator),*self.tf("High Pass Filter: ",numerator_string))
     def bandpassfilter(self):        
         '''Band Pass Filter'''
         numerator = -(self.h_0)*1/self.w_0
-        numerator_string = f"{np.round((numerator)*10**3,4)}e-3 s"
+        numerator_string = f"{numerator} s"
         return (numerator,*self.tf("Band Pass Filter: ",numerator_string))
     def bandstopfilter(self): 
         '''Band Stop Filter'''       
         numerator_part_a = self.h_0
         numerator_part_b = np.square(1/self.w_0)*self.h_0
-        numerator_string = f"  ( {1} + {np.round(numerator_part_b*10**8,4)}e-8 s^2 ) {self.h_0}"        
+        numerator_string = f"  ( {1} + {numerator_part_b} s^2 ) {self.h_0}"        
         numerator = (float(numerator_part_a),float(numerator_part_b))
         return (*numerator,*self.tf("Band Stop Filter: ",numerator_string))
     def tf(self,name,num):

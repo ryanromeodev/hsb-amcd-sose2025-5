@@ -2,7 +2,7 @@
 
 ## Objective
 
-The objective is to design a biquadratic filter with the corner frequency = 1000 $Hz$ and Q = 10.
+The objective is to design a biquadratic filter with the **corner frequency = 1000Hz and Q = 10.**
 
 ## Behavioural Model
 
@@ -13,20 +13,20 @@ This is a theoretical model so as to understand the acheivable taget using the t
 Low Pass Filter :
 
 $$
-H(s) = \frac{H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}
+H(s) = \frac{H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})} = \frac{1}{1e-06s^2 + 0.0001s + 1}
 $$
 
 High Pass Filter:  
 
-$$H(s) = \frac{V_{01}}{V_i} = \frac{H_0\frac{s^2}{w_0^2}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$$
+$$H(s) = \frac{V_{01}}{V_i} = \frac{H_0\frac{s^2}{w_0^2}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})} = \frac{1e-06 s^2}{1e-06s^2 + 0.0001s + 1}$$
 
 Band Pass Filter:  
 
-$$H(s) = \frac{V_{02}}{V_i} = \frac{-H_0\frac{s}{w_0}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$$
+$$H(s) = \frac{V_{02}}{V_i} = \frac{-H_0\frac{s}{w_0}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})} = \frac{-0.001 s}{1e-06s^2 + 0.0001s + 1}$$
 
 Band Stop Filter:  
 
-$$H(s) = \frac{V_{04}}{V_i} = \frac{(1 + \frac{s^2}{w_0^2})H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$$
+$$H(s) = \frac{V_{04}}{V_i} = \frac{(1 + \frac{s^2}{w_0^2})H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})} = \frac{( 1 + 1e-06 s^2 ) 1}{1e-06s^2 + 0.0001s + 1}$$
 
 where, $Q$= Quality Factor, $H_0$= Gain,  $\omega_0$=Corner Frequency
 
@@ -95,7 +95,7 @@ KiCad and ngspice is used for the model simulation.
 - RD1 = $Q \cdot R$,Since Q=10, RD1 = 10k $\Omega$. 
 - RD3 = $R/H_0$. Since $H_0$ = 1, RD3 = 1000 $\Omega$.
 - U1A, U1B, U2A, U2B are operational amplifiers.
-- $V_in$ is the input voltage
+- $V_{in}$ is the input voltage
 - The outputs are take from the above mentioned op-amps. BPF from U1A, LPF from U1B, HPF from U2A and BSF from U2B respectively. 
 
 ![Biquad Filter Design](./RAW/FilterDiagram.svg){#fig-filter}
