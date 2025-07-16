@@ -1,0 +1,114 @@
+
+# Charecteristics 
+
+## Frequency response
+
+
+::: {#fig-comparison-frequency layout-ncol=2}
+
+![Band Pass](./RAW/images/comparison/bode/bpf.png){#fig-bpf}
+
+![Band Stop](./RAW/images/comparison/bode/bsf.png){#fig-bpf}
+
+![High Pass](./RAW/images/comparison/bode/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/comparison/bode/lpf.png){#fig-bpf}
+
+Behavioural phase and magnitude plots
+:::
+
+
+## Step response
+
+
+
+::: {#fig-comparison-transcient layout-ncol=2}
+
+![Simulation Band Pass](./RAW/images/comparison/Transcient/Simulated/bpf.png){#fig-bpf}
+
+![Experimental Band Pass](./RAW/images/comparison/Transcient/experimental/bpf.png){#fig-bpf}
+
+![Simulation High Pass](./RAW/images/comparison/Transcient/Simulated/hpf.png){#fig-bpf}
+
+![Experimental High Pass](./RAW/images/comparison/Transcient/experimental/hpf.png){#fig-bpf}
+
+![Simulation Low Pass](./RAW/images/comparison/Transcient/Simulated/lpf.png){#fig-bpf}
+
+![Experimental Low Pass](./RAW/images/comparison/Transcient/experimental/lpf.png){#fig-bpf}
+
+![Simulation Band Stop](./RAW/images/comparison/Transcient/Simulated/bsf.png){#fig-bpf}
+
+![Experimental Band Stop](./RAW/images/comparison/Transcient/experimental/bsf.png){#fig-bpf}
+
+Comparison of step response
+:::
+
+# PCB Design using KiCAD
+
+# PCB 2D Layout
+
+::: {#fig-pcb-2d layout-ncol=2}
+
+![PCB Front](./RAW/images/PCB/fpcb.png)
+
+![PCB Back](./RAW/images/PCB/bpcb.png)
+
+PCB 2D Layout
+:::
+
+## PCB 3D Rendered View
+
+::: {#fig-pcb-3d layout-ncol=2}
+
+![PCB Front](./RAW/images/PCB/fpcb.jpg)
+
+![PCB Back](./RAW/images/PCB/bpcb.jpg)
+
+PCB 3D rendered view
+:::
+
+# PCB Board images
+
+![PCB Board before soldering](./RAW/images/breadcrumps/boardBeforeSoldering.jpg){height="500"}
+
+![PCB Board after soldering](./RAW/images/breadcrumps/finalBoard.jpg){height="400"}
+
+
+
+# PCB Charecteristics
+
+## Frequency Analysis
+
+
+::: {#fig-pcb-frequency layout-ncol=2}
+
+![Band Pass](./RAW/images/PCB/bode/bpf.png){#fig-bpf}
+
+![High Pass](./RAW/images/PCB/bode/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/PCB/bode/lpf.png){#fig-bpf}
+
+Frequency Analysis
+:::
+
+## Transcient Analysis
+
+
+::: {#fig-pcb-transcient layout-ncol=2}
+
+![Band Pass](./RAW/images/PCB/Transcient/bpf.png){#fig-bpf}
+
+![High Pass](./RAW/images/PCB/Transcient/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/PCB/Transcient/lpf.png){#fig-bpf}
+
+Transcient Analysis
+:::
+
+# Conclusion
+
+The project successfully demonstrated the complete design and implementation of a universal biquad filter across behavioral modeling, simulation, ASLK PRO, and PCB levels. High-pass, low-pass, and band-pass filter configurations were realized with results that closely aligned with expected theoretical characteristics. These outcomes validate the robustness of the design methodology and the effectiveness of the development workflow.
+
+While the band-stop filter (BSF) at the PCB level did not yield optimal performance, likely due to signal noise or interference in the layout, this isolated issue does not overshadow the overall success of the project. On the contrary, it highlights valuable areas for further refinement in PCB design and noise mitigation. The experience reinforces the importance of layout considerations and serves as a stepping stone for future enhancements.
+
+Overall, the project showcases a comprehensive and reproducible analog design flow—from concept to hardware—using modern, open-source tools and platforms.
