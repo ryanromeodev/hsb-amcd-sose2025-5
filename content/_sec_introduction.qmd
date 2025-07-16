@@ -260,7 +260,7 @@ Bandpass Output:
 
 $$H_{BP}(s) = \frac{\frac{\omega_0}{Q} s}{s^2 + \frac{\omega_0}{Q} s + \omega_0^2}$$
 
-This passes a band of frequencies centered around ( \omega_0 ).
+This passes a band of frequencies centered around ( $\omega_0 $).
 
 
 High-Pass Output:
