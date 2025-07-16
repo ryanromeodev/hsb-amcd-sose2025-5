@@ -1,124 +1,12 @@
 # Introduction
+ 
+This project centers on the analog circuit design of a universal biquad filter targeting a corner frequency of 1 kHz and a quality factor (Q) of 10. The design process spans the complete development cycle—from initial specification and simulation to physical layout and hardware realization. Key phases include schematic design, functional modeling, simulation, and full PCB development.
 
-Second order filters (or	biquard	filters) are important since	they are	the	building blocks in the construction of $N^{th}$ order	filters, for $N > 2$. When $N$ is odd the $N^{th}$ order filter can be realised using $\frac{N-1}{2}$ second order filters and one first order filters. When  $N$ is even, we need $N-1$ second order filters. 
+Modern simulation environments and open-source platforms played a pivotal role throughout the project. The schematic capture and performance analysis—covering both frequency and time domains—were conducted using KiCad, which was also used for PCB layout and implementation. Functional modeling was performed using the Analog System Lab Kit (ASLK) and Red Pitaya, with the latter offering a flexible and cost-efficient solution for capturing frequency responses from ASLK-based implementations.
 
-Second order filters can be used to construct four different types of filters. The transfer function of four different filters is shown in [table 1](#table-1--transfer-functions), where $W_0 = 1/RC$ and $H_0$ is the low frequency gain of transfer function. The philtre names are often abbreviated as BPF(Bandpass filter), HPF(Highpass Filter), LPF(Lowpass Filter), BSF(Bandstop Filter).
+The project workflow is tightly integrated with reproducible tools such as Quarto, Jupyter Notebooks, Python, NumPy, and Matplotlib for analysis, visualization, and documentation. Version control and collaboration were managed through Git, ensuring transparency and traceability at each stage.
 
-### Table 1 : Transfer Functions
-
-|Filter Type |Transfer Function |
-|------------|------------|
-|Low Pass Filter | $\frac{V_{03}}{V_i} = \frac{H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$|
-|High Pass Filter | $\frac{V_{01}}{V_i} = \frac{H_0\frac{s^2}{w_0^2}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$|
-|Band Pass Filter | $\frac{V_{02}}{V_i} = \frac{-H_0\frac{s}{w_0}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$|
-|Band Stop Filter | $\frac{V_{04}}{V_i} = \frac{(1 + \frac{s^2}{w_0^2})H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$|
-
-## Objective
-
-The objective of this report is to design a biquad filter with the $frequency = 1000 Hz$ and $Q = 10$.
-
-#### Analysis
-
-1. from Eq.1 we get, $B.W$ = $\frac{f_0}{Q}$= $\frac{1000}{10}$=100Hz
-2. we substitute $\omega_0$ = $2\pi f_0$
-3. from the above equations we calculate all values and store the available capacitor values in `clist` of the below python code. Note that the capacitance value is in $\mu F$
-4. $R_3$ is choosen arbitarily so as to not load down the second or the third op-amp
-
-# **BASICS OF FILTER DESIGN**
-## **1.1 THE FILTER APPROXIMATION** 
-
-In filter design, the goal is to distinguish between useful signal components and unwanted noise or interference. Ideally, a filter would pass all desired frequencies without distortion while completely rejecting undesired frequencies. However, this ideal filter response is not physically realizable due to practical limitations inherent in real-world systems.
-The **filter approximation problem** arises from the need to design filters that approximate the ideal behaviour as closely as possible while adhering to physical and technological constraints. The design process involves selecting an appropriate approximation function and filter structure to meet given specifications for magnitude and phase response, roll-off characteristics, and allowable ripple.
-
-### **1.1.1 Ideal Filter**
-
-An ideal filter is a theoretical construct characterized by:  
-•	Brick-wall characteristic: A perfectly sharp transition from passband to stopband at the cutoff frequency.
-•	Flat magnitude response in the passband: Constant gain for all frequencies below the cutoff frequency.
-•	Infinite attenuation in the stopband: Total rejection of all frequencies above the cutoff frequency.
-
-![Ideal Filter Response](./RAW/appro/ideal%20filter.png){#fig-filter}
-
-### **1.1.2 Practical Filter**
-
-A practical filter is the realizable implementation of a filter that approximates the ideal filter characteristics as closely as possible. Its behaviour is limited by physical component tolerances and achievable performance:              
-•	Ripple in the passband and/or stopband: Small variations in gain rather than perfectly flat response.                  
-•	Finite attenuation in the stopband: Incomplete suppression of unwanted frequencies.                          
-•	Gradual roll-off: The transition from passband to stopband occurs over a finite frequency range.
-
-![Practical filter Response](./RAW/appro/image.png){#fig-filter}
-
-## **1.2 FILTER TEMPLATE**
-
-In practical filter design, it is impossible to implement an ideal filter with an infinitely sharp transition between passband and stopband, zero ripple, and infinite attenuation. Therefore, a filter template establishes performance limits that approximate the ideal response within tolerable deviations.
-By setting precise boundaries for key parameters—such as passband gain, stopband attenuation, and the width of the transition band—a filter template ensures that the resulting design will meet both functional and implementation requirements.
-A typical filter template specifies the following parameters, which apply to all filter types (lowpass, highpass, bandpass, bandstop):
-
-**Passband specifications**: The template defines an acceptable range of gain variation within the passband, commonly referred to as passband ripple. This is quantified by upper and lower limits, ensuring that the gain remains within a specified range, such as ±1 dB, across all frequencies in the passband. Additionally, the passband edge frequency, denoted specifies the upper or lower frequency limit of the passband.
-
-**Stopband specifications**: The filter template also sets requirements for attenuation in the stopband. The stopband edge frequency defines the frequency beyond which the filter must provide significant attenuation to unwanted signals. A minimum attenuation level, typically expressed in decibels (dB), specifies how much unwanted signals must be suppressed to ensure sufficient signal separation.
-
-**Transition band**: Between the passband and stopband lies the transition band, a frequency range over which the filter's response transitions from low attenuation to high attenuation. The width of the transition band is a critical parameter because it directly impacts filter complexity. A narrower transition band generally requires a higher-order filter, resulting in increased circuit complexity, sensitivity to component variations, and potential implementation challenges. Conversely, a wider transition band allows for a lower-order filter, simplifying design but reducing selectivity.
-
-By defining these parameters, the filter template sets clear and achievable targets for filter designers. Once the template is established, it serves as the reference for selecting an appropriate filter approximation method (e.g., Butterworth, Chebyshev, Elliptic), which provides a realizable filter that meets the template’s requirements.
-
-## **2. BIQUADS**
-A biquad is a filter section that implements a second-order transfer function, meaning its transfer function has a quadratic denominator (hence the name "biquad"). It is a fundamental building block used to design higher-order filters by cascading several second-order sections.
-A typical biquad transfer function is of the form:
-
-$H(s) = \frac{(b_0 s^2+b_1 s+b_2)}{(a_0 s^2+a_1 s+a_2)}$
-
-### **TYPES OF BIQUAD CIRCUITS**
-**Sallen Key Biquad**
-
-The Sallen-Key biquad is one of the simplest and most widely used second-order filter topologies. It typically requires only a single operational amplifier along with passive components (resistors and capacitors). This circuit is well-suited for realizing filters where the design requires poles only (no zeros), such as lowpass and highpass filters. It is particularly attractive due to its low component count and straightforward design procedure. However, the Sallen-Key configuration suffers from sensitivity issues: its performance degrades as the quality factor (Q) increases because it becomes more sensitive to component variations, particularly for high-Q applications. It is best used for filters with modest Q values where component tolerances can be well controlled.
-
-fig.....
-
-**Tow Thomas Biquad**
-The Tow-Thomas biquad is a widely used second-order active filter circuit valued for its versatility and efficiency. It can realize a variety of filter responses—including lowpass, bandpass, and highpass—using only three operational amplifiers along with resistors and capacitors. The circuit’s structure is based on a cascade of two integrators followed by a summing amplifier, which together form a robust architecture for implementing second-order systems. This configuration allows designers to achieve a general biquadratic transfer function with arbitrary poles and zeros, providing independent control over key filter parameters such as natural frequency and quality factor (Q). The Tow-Thomas topology is particularly well-suited for applications requiring precise filter characteristics, making it a popular choice in both analog signal processing and active filter design.
-
-
-
-**KHN Biquad**
-
-The KHN biquad, named after Kerwin, Huelsman, and Newcomb, is a versatile second-order active filter topology that allows simultaneous realization of multiple filter responses from a single circuit structure. It typically uses three operational amplifiers and provides lowpass, bandpass, and highpass outputs concurrently from the same input signal. This makes it especially useful in applications where multiple filter characteristics are required.
-
-The general structure of the KHN biquad is derived from a canonical second-order block diagram, implemented with two integrators and a summing amplifier. It is characterized by good sensitivity properties and allows independent tuning of natural frequency, w and quality factor (Q), providing flexibility and precision in filter design.
-
-The general transfer function for the KHN biquad is:
-
-$H(s) = \frac{(b_0 s^2+b_1 s+b_2)}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$
-
-
-
-
-
-
-
-# **TYPES OF FILTERS**
-## **Lowpass Filter**
-A low pass filter allows low-frequency signals (frequencies below a certain cutoff frequency ${f_c}$ ) to pass through with minimal attenuation while progressively attenuating signals at higher frequencies. An ideal LPF would have a perfectly flat response up to ${f_c}$ and then an immediate transition to complete attenuation (a brick-wall cutoff). In reality, a practical LPF exhibits a gradual roll-off beyond ${f_c}$, with the steepness of this roll-off determined by the order of the filter (e.g., -20 dB/decade for first-order, -40 dB/decade for second-order). Practical LPFs may also introduce slight ripple in the passband or stopband depending on the design type.
-
-![Amplitude response of the ideal and practical basic Lowpass filter.](./RAW/Filter%20types/Lowpass%20(2).png){#fig-filter}
-
-## **Highpass Filter**
-A high pass filter does the opposite of a low pass filter: it allows frequencies above a specified cutoff frequency to pass while attenuating frequencies below it. An ideal HPF would perfectly block all frequencies below ${f_c}$ and allow all above it with no loss. A practical HPF, however, exhibits a gradual roll-off near ${f_c}$ and may show slight peaking or ripple depending on its order and approximation.
-
-![Amplitude response of the ideal and practical basic Highpass filter.](./RAW/Filter%20types/Highpass.png){#fig-filter}
-
-## **Bandpass Filter**
-A band pass filter allows signals within a certain frequency range, centered around a resonant or center frequency ${f_0}$, to pass, while attenuating signals below and above this range. An ideal BPF would have perfectly flat gain inside the passband and sharp transitions at the band edges. A practical BPF shows a gradual roll-off and a passband width determined by the quality factor 𝑄, which controls the filter’s selectivity: a higher Q gives a narrower passband with sharper transitions, while a lower Q produces a broader passband.
-
-![Amplitude response of the ideal and practical basic Bandpass Filter](./RAW/Filter%20types/Bandpass.png){#fig-filter}
-
-## **Bandstop Filter**
-A band stop filter, also called a notch filter when the stopband is very narrow, attenuates a specific band of frequencies around a center frequency ${f_0}$ and allows frequencies outside this range to pass. An ideal BSF would completely eliminate frequencies within the stopband and perfectly pass all others. A practical BSF has finite attenuation in the stopband and gradual transitions at the band edges.
-
-![Amplitude response of the ideal and practical basic Bandstop Filter](./RAW/Filter%20types/Bandstop.png){#fig-filter}
-
-
-----------------
+Note: All design files, source code, and documentation are publicly available in our [GitHub repository].
 
 
 # Basics of filters
@@ -127,12 +15,12 @@ Circuits that are designed to amplify specific ranges of signal frequencies are 
 ## Types of filter
 Amplifiers are often designed to selectively process signals of different frequency ranges. 
 
-- The **low-pass amplifier**, shown in Figure 1.21(a), passes all signals below some upper cutoff frequency $f_H$.  
-- The **high-pass amplifier**, shown in Figure 1.21(b), amplifies all signals above the lower cutoff frequency $f_L$.  
-- The **band-pass amplifier** passes all signals between the two cutoff frequencies $f_L$ and $f_H$, as illustrated in Figure 1.21(c).  
-- The **band-reject amplifier** in Figure 1.21(d) rejects all signals having frequencies lying between $f_L$ and $f_H$.
+- The **low-pass amplifier**, shown in @fig-types (a), passes all signals below some upper cutoff frequency $f_H$.  
+- The **high-pass amplifier**, shown in @fig-types (b), amplifies all signals above the lower cutoff frequency $f_L$.  
+- The **band-pass amplifier** passes all signals between the two cutoff frequencies $f_L$ and $f_H$, as illustrated in @fig-types (c).  
+- The **band-reject amplifier** in @fig-types (d) rejects all signals having frequencies lying between $f_L$ and $f_H$.
 
-figure
+![Ideal amplifier frequency responses: (a) low-pass, (b) high-pass, (c) band-pass, (d) band-reject characteristics](./RAW/ImageIntroduction/TypesFilter.png){#fig-types}
 
 ---
 
@@ -148,7 +36,13 @@ When designing practical filters, several key parameters must be carefully selec
 - It is the frequency at which the filter’s gain falls by 3 dB from its passband level.
 - For low-pass filters, frequencies below the cutoff pass with minimal attenuation; for high-pass filters, frequencies above the cutoff are passed.
 - Band-pass and band-stop filters have both lower and upper cutoff frequencies ($f_L$ and $f_H$) defining their bandwidth.
- figure 
+
+![(a) Low-pass amplifier: BW = ωH and GBW = AoωH ; (b) low-pass filter symbol.](./RAW/ImageIntroduction/lowpassF.png){#fig-lowpass}
+
+![(a) High-pass amplifier; (b) high-pass filter symbol.](./RAW/ImageIntroduction/highpassf.png){#fig-highpass}
+
+![Band-pass amplifier.](./RAW/ImageIntroduction/bandpassF.png){#fig-bandpass}
+
 ---
 
 #### Quality Factor (Q)
@@ -162,6 +56,13 @@ When designing practical filters, several key parameters must be carefully selec
   $$
 
 - High-Q designs require precise components and stable operational amplifiers to avoid excessive peaking or instability.
+
+![Low-pass filter response for ωo = 1 and four values of Q.](./RAW/ImageIntroduction/lowpassQ.png){#fig-lowpassq}
+
+![High-pass filter response for ωo = 1 and four values of Q.](./RAW/ImageIntroduction/highpassQ.png){#fig-highpassq}
+
+![Band-pass filter response for ωo = 1 and three values of Q assuming $C1 = C2$ with $R3$ = ∞](./RAW/ImageIntroduction/bandpassQ.png){#fig-bandpassq}
+
 
 #### Gain ($A_0$)
 
@@ -217,7 +118,9 @@ Operational amplifiers (op amps) are fundamental building blocks in analog circu
 ### Inverting Amplifier
 An inverting-amplifier circuit is built by grounding the positive input of the operational amplifier
 and connecting resistors $R_1$ and $R_2$, called the feedback network, between the inverting input and
-the signal source and amplifier output node, respectively, as in Fig. 
+the signal source and amplifier output node, respectively, as in @fig-inverter.
+
+![Inverting Amplifier.](./RAW/ImageIntroduction/Inverting.png){#fig-inverter}
 
 ---
 
@@ -245,185 +148,20 @@ inputs can be scaled independently because of the virtual ground maintained at t
 terminal of the op amp.
 The inverting-amplifier input node is also commonly called the summing junction because
 currents $i_1$ and $i_2$ are “summed” at this node and forced through the feedback resistor $R_3$. Although
-the amplifier in Fig. 10.24 has only two inputs, any number of inputs can be connected to the summing
+the amplifier in @fig-adder has only two inputs, any number of inputs can be connected to the summing
 junction through additional resistors.
+
+![Summing Amplifier.](./RAW/ImageIntroduction/Adder.png){#fig-adder}
 
 ---
 
 ### Integrator
 
-The **integrator** is another important building block that uses an operational amplifier with frequency-dependent feedback. In the integrator circuit, the feedback resistor $R_2$ of a standard inverting amplifier is replaced by a capacitor $C$, as shown in Fig. 10.34. This configuration enables the circuit to perform integration of the input signal and provides a valuable example for op amp circuit analysis in the time domain.  
+The **integrator** is another important building block that uses an operational amplifier with frequency-dependent feedback. In the integrator circuit, the feedback resistor $R_2$ of a standard inverting amplifier is replaced by a capacitor $C$, as shown in @fig-inte. This configuration enables the circuit to perform integration of the input signal and provides a valuable example for op amp circuit analysis in the time domain. 
 
 Because the inverting input of the op amp behaves as a virtual ground, the input current and the capacitor current can be written as: $i_i = \frac{v_i}{R}$, $i_c = -C \frac{d v_o}{dt}$
 
-For an ideal op amp, the input current into the inverting terminal, $i^-$, is zero. Thus $i_c = i_i$
-
-Equating the two expressions and integrating both sides gives:
-
-$$
-d v_o = -\frac{1}{RC} \, v_i \, d\tau
-$$
-
-which integrates to:
-
-$$
-v_o(t) = v_o(0) - \frac{1}{RC} \int_0^t v_i(\tau) \, d\tau
-$$
-
-
-where $v_o(0)$ represents the initial voltage at the op amp output, determined by the initial voltage across the capacitor at $t=0$:
-
-$$
-v_o(0) = -v_C(0)
-$$
-
-Therefore, the voltage at the output of the integrator at any time $t$ equals the initial capacitor voltage minus the integral of the input signal from the starting time $t=0$.
-
-
-#### Understanding Integrator Circuit Operation
-The virtual ground at the inverting input of the op amp causes input voltage vi to appear directly
-across resistor R establishing an input current $v_i/R$. As the input current flows out through $C$, the
-capacitor accumulates a charge equal to the integral of the current, $Q_C = \frac{1}{C} \int i \, dt$ , and the overall
-scale factor becomes $-\frac{1}{RC}$.
-
-
----
-
-
-# Basics of filters
-Circuits that are designed to amplify specific ranges of signal frequencies are usually referred to as **filters**.
-
-## Types of filter
-Amplifiers are often designed to selectively process signals of different frequency ranges. 
-
-- The **low-pass amplifier**, shown in Figure 1.21(a), passes all signals below some upper cutoff frequency $f_H$.  
-- The **high-pass amplifier**, shown in Figure 1.21(b), amplifies all signals above the lower cutoff frequency $f_L$.  
-- The **band-pass amplifier** passes all signals between the two cutoff frequencies $f_L$ and $f_H$, as illustrated in Figure 1.21(c).  
-- The **band-reject amplifier** in Figure 1.21(d) rejects all signals having frequencies lying between $f_L$ and $f_H$.
-
-figure
-
----
-
-### Design Considerations
-
-When designing practical filters, several key parameters must be carefully selected to meet the desired frequency response and performance requirements. The following aspects are critical in the design of active filters:
-
-
-
-#### Cut-off Frequency ($f_0$)
-
-- The cutoff frequency defines the boundary between the passband and the stopband.
-- It is the frequency at which the filter’s gain falls by 3 dB from its passband level.
-- For low-pass filters, frequencies below the cutoff pass with minimal attenuation; for high-pass filters, frequencies above the cutoff are passed.
-- Band-pass and band-stop filters have both lower and upper cutoff frequencies ($f_L$ and $f_H$) defining their bandwidth.
- figure 
----
-
-#### Quality Factor (Q)
-
-- The quality factor, Q, defines how selective the filter is around its center frequency.
-- A high Q results in a narrow, sharp response, while a low Q produces a broader passband.
-- For band-pass and band-stop filters, Q is defined as:
-
-  $$
-  Q = \frac{f_0}{f_H - f_L}
-  $$
-
-- High-Q designs require precise components and stable operational amplifiers to avoid excessive peaking or instability.
-
-#### Gain ($A_0$)
-
-- The gain, $A_0$, sets the amplitude level in the filter’s passband (midband).
-- Expressed either as a linear ratio or in decibels (dB):
-
-  $$
-  A_0 \;(\text{dB}) = 20 \log_{10}(A_0)
-  $$
-
-- In active filter circuits, $A_0$ is determined by resistor ratios and must be chosen to provide adequate signal strength without causing distortion.
-
-
-#### Natural Frequency (ω₀)
-
-- The natural frequency, denoted ω₀, determines the center frequency of resonance in band-pass and band-stop filters and corresponds to the cutoff frequency in low-pass and high-pass filters.
-- It is given by:
-
-  $$
-  \omega_0 = 2\pi f_0
-  $$
-
-- Selecting ω₀ correctly ensures the filter passes or attenuates the intended frequency range.
-
-#### Filter Order
-
-- The filter order represents the number of reactive components (capacitors or inductors) influencing the frequency response.
-- Higher-order filters provide steeper roll-off slopes and better attenuation of unwanted frequencies.
-- Each order increases the slope by approximately −20 dB per decade:
-  - 1st-order → −20 dB/decade
-  - 2nd-order → −40 dB/decade
-
-
----
-
-### Practical Design Implications
-
-- The choice of Q and ω₀ determines whether the filter achieves the desired bandwidth and selectivity.
-- Higher Q increases sensitivity to component tolerances and can introduce peaking or ringing in the time domain.
-- Operational amplifiers used in active filters must offer sufficient bandwidth and low noise to maintain signal integrity.
-- Gain settings must balance signal amplitude requirements with stability and noise performance.
-
-These considerations are essential to ensure that real filters not only match theoretical frequency responses but also operate reliably and efficiently in practical applications.
-
----
-
-# Operational Amplifiers
-
-Operational amplifiers (op amps) are fundamental building blocks in analog circuit design, widely used for amplification, filtering, signal conditioning, and mathematical operations. Their design and layout involve both ideal and non-ideal considerations to ensure optimal performance in practical applications.
-
-## Common Configurations
-
-### Inverting Amplifier
-An inverting-amplifier circuit is built by grounding the positive input of the operational amplifier
-and connecting resistors $R_1$ and $R_2$, called the feedback network, between the inverting input and
-the signal source and amplifier output node, respectively, as in Fig. 
-
----
-
-### Summing Amplifier
-
-Operational amplifiers can also be used to combine signals using the summing-amplifier circuit
-depicted in Fig. 10.24. Here, two input sources $v_1$ and $v_2$ are connected to the inverting input of the amplifier through resistors $R_1$ and $R_2$. Because the negative amplifier input represents a virtual ground, 
-
-$i_1 = \frac{v_1}{R_1}$ , $i_2 = \frac{v_2}{R_2}$ , $i_3 = -\frac{v_o}{R_3}$
-
-
-
-
-Since the input current into the op amp ($i^{-}$) is effectively zero, the currents satisfy: $i_3 = i_1 + i_2$.
-
-$$
-v_o = -\left(\frac{R_3}{R_1} v_1 \;+\; \frac{R_3}{R_2} v_2\right)
-$$
-
-
-
-The output voltage sums the scaled replicas of the two input voltages, and the scale factors for
-the two inputs may be independently adjusted through the choice of resistors $R_1$ and $R_2$. These two
-inputs can be scaled independently because of the virtual ground maintained at the inverting-input
-terminal of the op amp.
-The inverting-amplifier input node is also commonly called the summing junction because
-currents $i_1$ and $i_2$ are “summed” at this node and forced through the feedback resistor $R_3$. Although
-the amplifier in Fig. 10.24 has only two inputs, any number of inputs can be connected to the summing
-junction through additional resistors.
-
----
-
-### Integrator
-
-The **integrator** is another important building block that uses an operational amplifier with frequency-dependent feedback. In the integrator circuit, the feedback resistor $R_2$ of a standard inverting amplifier is replaced by a capacitor $C$, as shown in Fig. 10.34. This configuration enables the circuit to perform integration of the input signal and provides a valuable example for op amp circuit analysis in the time domain.  
-
-Because the inverting input of the op amp behaves as a virtual ground, the input current and the capacitor current can be written as: $i_i = \frac{v_i}{R}$, $i_c = -C \frac{d v_o}{dt}$
+![(a) The integrator circuit; (b) output voltage for a step-function input with $v_C$ (0) = 0.](./RAW/ImageIntroduction/Integrator.png){#fig-inte}
 
 For an ideal op amp, the input current into the inverting terminal, $i^-$, is zero. Thus $i_c = i_i$
 
@@ -487,7 +225,9 @@ The circuit typically includes resistors and capacitors to set the filter parame
 
 Input → Summing Amplifier → First Integrator → Second Integrator → Low-Pass Output
 Feedback loops from the integrators feed back to the summing amplifier.
-The high-pass output is taken from the summing amplifier, the bandpass from the first integrator, and the low-pass from the second integrator. Figure
+The high-pass output is taken from the summing amplifier, the bandpass from the first integrator, and the low-pass from the second integrator. 
+
+![Block diagram of the KHN biquad.](./RAW/ImageIntroduction/KhnBiquad.png){#fig-khn}
 
 A typical KHN biquad circuit includes:
 
