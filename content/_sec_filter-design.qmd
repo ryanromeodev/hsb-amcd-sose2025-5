@@ -102,7 +102,7 @@ KiCad and ngspice is used for the model simulation.
 
 ![Biquad Filter Design](./RAW/FilterDiagram.svg){#fig-filter}
 
-The same is realised in KiCad as shown in the Figure @fig-kicadschematics
+The same is realised in KiCad as shown in @fig-kicadschematics
 
 ![KiCad schematics](./RAW/images/breadcrumps/RealKHNbiquad.svg){#fig-kicadschematics}
 
