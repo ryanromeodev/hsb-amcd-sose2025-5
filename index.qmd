@@ -13,7 +13,7 @@ author:
         url: https://www.hs-bremen.de  
   - name: "Sreelekshmi Bhai"
     orcid: 
-    email: 
+    email: sthazhethil@stud.hs-bremen.de
     corresponding: true
     roles: "Lead author"
     affiliation:
