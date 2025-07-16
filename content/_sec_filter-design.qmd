@@ -2,7 +2,7 @@
 
 ## Objective
 
-The objective is to design a biquadratic filter with the $frequency = 1000 Hz$ and $Q = 10$.
+The objective is to design a biquadratic filter with the corner frequency = 1000 $Hz$ and Q = 10.
 
 ## Behavioural Model
 
