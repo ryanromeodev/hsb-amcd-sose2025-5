@@ -3,7 +3,7 @@ title: "IC Design of a Universal Biquad Filter"
 author: 
   - name: Vismaya Abi
     orcid: 
-    email:
+    email: vabi001@stud.hs-bremen.de
     corresponding: true
     roles: "Lead author"
     affiliation:
