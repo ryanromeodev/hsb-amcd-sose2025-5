@@ -6,7 +6,7 @@ The objective is to design a biquadratic filter with the $frequency = 1000 Hz$ a
 
 ## Behavioural Model
 
-This is a theoretical model so as to understand the acheivable taget using the transfer functions of active filters such as low pass, high pass, band pass and band stop filter.
+This is a theoretical model so as to understand the acheivable taget using the transfer functions of active filters such as low pass, high pass, band pass and band stop filter. The basics is refered from @baker2010.
 
 ### Behavioural model of active filters using Python
 
@@ -92,26 +92,32 @@ KiCad and ngspice is used for the model simulation.
 
 - We know $\omega = \frac{1}{RC}$. We set an initial value for $R$, here,$R=1000 \Omega$. Calculating we get the $C = 157 nF$.
 - We arrive at a sample circuit diagram as per @fig-filter. 
-- Where, RA1,RB1,RC1,RC2,RC3,RD2 = R = 1000 $\Omega$
-- CA4,CB3 = C = 157 $nF$. 
+- Where, RA1, RB1, RC1, RC2, RC3, RD2 = R = 1000 $\Omega$
+- CA4 , CB3 = C = 157 $nF$. 
 - RD1 = $Q \cdot R$,Since Q=10, RD1 = 10k $\Omega$. 
 - RD3 = $R/H_0$. Since $H_0$ = 1, RD3 = 1000 $\Omega$.
-- U1A,U1B,U2A,U2B are operational amplifiers.
+- U1A, U1B, U2A, U2B are operational amplifiers.
 - $V_in$ is the input voltage
 - The outputs are take from the above mentioned op-amps. BPF from U1A, LPF from U1B, HPF from U2A and BSF from U2B respectively. 
 
 ![Biquad Filter Design](./RAW/FilterDiagram.svg){#fig-filter}
 
-The same is realised in KiCad as shown in the Figure @kicadschematics
+The same is realised in KiCad as shown in the Figure @fig-kicadschematics
 
-![KiCad schematics](./RAW/images/breadcrumps/RealKHNbiquad.svg){#kicadschematics}
+![KiCad schematics](./RAW/images/breadcrumps/RealKHNbiquad.svg){#fig-kicadschematics}
 
 ### Comparison of models using **KiCad-ngspice** and **Red Pitaya-Analog System Lab Kit PRO**
 
 #### ALSK Pro board circuit connections
 
-![ALSK Pro board circuit connections](./RAW/images/breadcrumps/alskdigikey.jpg)
+The circuit connections in ALSK Pro is made as @fig-alsk-connections
 
-![Red pitaya module](./RAW/images/breadcrumps/red-pitaya.jpg)
+![ALSK Pro board circuit connections](./RAW/images/breadcrumps/alskdigikey.jpg){#fig-alsk-connections}
 
-![Complete circuit connections](./RAW/images/breadcrumps/setup.jpg)
+The red-pitaya module as in @fig-red-pitaya-module acts as an oscilloscope, where the data could be taken from the server hosted by the module.
+
+![Red pitaya module](./RAW/images/breadcrumps/red-pitaya.jpg){#fig-red-pitaya-module}
+
+The Complete Circuit connection for the setup is shown as @fig-setup
+
+![Complete circuit connections](./RAW/images/breadcrumps/setup.jpg){#fig-setup}

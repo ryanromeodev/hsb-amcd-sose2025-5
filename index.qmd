@@ -1,5 +1,5 @@
 ---
-title: "IC Design of a Universal Biquad Filter"
+title: "Design and Implementation of Univesal Biquad Filter"
 author: 
   - name: Vismaya Abi
     orcid: 
@@ -16,16 +16,24 @@ author:
     email: 
     corresponding: true
     roles: "Lead author"
+    affiliation:
+      - name: Hochschule Bremen - City University of Applied Sciences (HSB)
+        city: Bremen
+        state: Germany
+        url: https://www.hs-bremen.de
   - name: "Ryan Romeo"
     orcid: 
     email: ryan.romeo@stud.hs-bremen.de
     corresponding: true
     roles: "Lead author"
-
+    affiliation:
+      - name: Hochschule Bremen - City University of Applied Sciences (HSB)
+        city: Bremen
+        state: Germany
+        url: https://www.hs-bremen.de
 keyword:
   - Filter Design 
   - PCB
-
 abstract: |
     This project focuses on the design and implementation of a second-order universal active (biquad) filter capable of producing low-pass, high-pass, band-pass, and band-stop responses. The filter is developed and tested across simulation environments, the ASLK PRO kit, and PCB hardware. Its performance is analyzed in both the frequency and time domains, with particular attention to gain, phase, and transient characteristics. The study emphasizes the comparison between theoretical predictions and practical outcomes, highlighting key trade-offs in analog filter design.
 

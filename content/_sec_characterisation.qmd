@@ -49,9 +49,9 @@ Comparison of step response
 
 ::: {#fig-pcb-2d layout-ncol=2}
 
-![PCB Front](./RAW/images/PCB/fpcb.png)
+![PCB Front](./RAW/images/PCB/fpcb2d.png)
 
-![PCB Back](./RAW/images/PCB/bpcb.png)
+![PCB Back](./RAW/images/PCB/bpcb2d.png)
 
 PCB 2D Layout
 :::
@@ -60,9 +60,9 @@ PCB 2D Layout
 
 ::: {#fig-pcb-3d layout-ncol=2}
 
-![PCB Front](./RAW/images/PCB/fpcb.jpg)
+![PCB Front](./RAW/images/PCB/fpcb.png)
 
-![PCB Back](./RAW/images/PCB/bpcb.jpg)
+![PCB Back](./RAW/images/PCB/bpcb.png)
 
 PCB 3D rendered view
 :::
