@@ -1,30 +1,105 @@
-# Characterisation
 
-The small signal ac analysis and transcient analysis for ideal, theoretical and practical scenario is plotted here.
+# Charecteristics 
 
-The plots are made in python with the help of `matplotlib` package of python. 
+## Frequency response
 
-## Small signal ac analysis
+::: {#fig-comparison-frequency layout-ncol=2}
 
-### ideal circuit
+![Band Pass](./RAW/images/comparison/bode/bpf.png){#fig-bpf}
 
-```{python}
+![Band Stop](./RAW/images/comparison/bode/bsf.png){#fig-bpf}
 
-import plotfn as fn
+![High Pass](./RAW/images/comparison/bode/hpf.png){#fig-bpf}
 
-fn.generatePlots()
-```
-### real circuit
+![Low Pass](./RAW/images/comparison/bode/lpf.png){#fig-bpf}
 
-### practical circuit
+Behavioural phase and magnitude plots
+:::
+
+
+## Step response
+
+::: {#fig-comparison-frequency layout-ncol=2}
+
+![Simulation Band Pass](./RAW/images/comparison/Transcient/Simulated/bpf.png){#fig-bpf}
+
+![Experimental Band Pass](./RAW/images/comparison/Transcient/experimental/bpf.png){#fig-bpf}
+
+![Simulation High Pass](./RAW/images/comparison/Transcient/Simulated/hpf.png){#fig-bpf}
+
+![Experimental High Pass](./RAW/images/comparison/Transcient/experimental/hpf.png){#fig-bpf}
+
+![Simulation Low Pass](./RAW/images/comparison/Transcient/Simulated/lpf.png){#fig-bpf}
+
+![Experimental Low Pass](./RAW/images/comparison/Transcient/experimental/lpf.png){#fig-bpf}
+
+![Simulation Band Stop](./RAW/images/comparison/Transcient/Simulated/bsf.png){#fig-bpf}
+
+![Experimental Band Stop](./RAW/images/comparison/Transcient/experimental/bsf.png){#fig-bpf}
+
+Comparison of step response
+:::
+
+# PCB Design using KiCAD
+
+# PCB 2D Layout
+
+::: {#fig-pcb-2d layout-ncol=2}
+
+![PCB Front](./RAW/images/PCB/fpcb.png)
+
+![PCB Back](./RAW/images/PCB/bpcb.png)
+
+PCB 2D Layout
+:::
+
+## PCB 3D Rendered View
+
+::: {#fig-pcb-3d layout-ncol=2}
+
+![PCB Front](./RAW/images/PCB/fpcb.jpg)
+
+![PCB Back](./RAW/images/PCB/bpcb.jpg)
+
+PCB 3D rendered view
+:::
+
+# PCB Board images
+
+![PCB Board before soldering](./RAW/images/breadcrumps/boardBeforeSoldering.jpg){height="500"}
+
+![PCB Board after soldering](./RAW/images/breadcrumps/finalBoard.jpg){height="400"}
+
+
+
+# PCB Charecteristics
+
+## Frequency Analysis
+
+
+::: {#fig-pcb-frequency layout-ncol=2}
+
+![Band Pass](./RAW/images/PCB/bode/bpf.png){#fig-bpf}
+
+![High Pass](./RAW/images/PCB/bode/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/PCB/bode/lpf.png){#fig-bpf}
+
+Frequency Analysis
+:::
 
 ## Transcient Analysis
 
-```{python}
-import plotfn as fn
 
-filename = r"C:\Users\91854\Documents\Study Materials\summer25\amcd-shared-repo\Red Pithaya images\Red Pithaya images\HPF_T_500.csv"
-title = "something"
-fn.transCientAnalysisPlot(title,filename,[0,1,2])
+::: {#fig-pcb-transcient layout-ncol=2}
 
-```
+![Band Pass](./RAW/images/PCB/Transcient/bpf.png){#fig-bpf}
+
+![High Pass](./RAW/images/PCB/Transcient/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/PCB/Transcient/lpf.png){#fig-bpf}
+
+Transcient Analysis
+:::
+
+# Conclusion
