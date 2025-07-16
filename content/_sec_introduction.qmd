@@ -191,7 +191,7 @@ Therefore, the voltage at the output of the integrator at any time $t$ equals th
 The virtual ground at the inverting input of the op amp causes input voltage vi to appear directly
 across resistor R establishing an input current $v_i/R$. As the input current flows out through $C$, the
 capacitor accumulates a charge equal to the integral of the current, $Q_C = \frac{1}{C} \int i \, dt$ , and the overall
-scale factor becomes $-\frac{1}{RC}$.
+scale factor becomes $-\frac{1}{RC}$ @baker2010.
 
 
 ---
@@ -205,7 +205,7 @@ scale factor becomes $-\frac{1}{RC}$.
 # General KHN Biquad Filters
 
 The KHN biquad is an active filter topology that uses three operational amplifiers (op-amps) to implement a second-order filter. It is called a "biquad" because it realizes a biquadratic transfer function, which is a ratio of two quadratic polynomials. The KHN configuration is notable for providing simultaneous access to low-pass, high-pass, and bandpass outputs from a single circuit, making it highly versatile.
-The KHN filter is based on a state-variable filter approach, where the circuit maintains internal state variables (typically voltages) that represent the system's dynamics. This allows for independent control of the filter's key parameters: the natural frequency ($w_0$), quality factor ($Q$), and gain ($H$).
+The KHN filter is based on a state-variable filter approach, where the circuit maintains internal state variables (typically voltages) that represent the system's dynamics. This allows for independent control of the filter's key parameters: the natural frequency ($w_0$), quality factor ($Q$), and gain ($H$) @stanfordEE315.
 
 
 ## Circuit Configuration
