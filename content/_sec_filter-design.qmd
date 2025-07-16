@@ -1,99 +1,216 @@
-
 # Filter Design
 
-We are trying to achieve a ideal filter solution, theoretical filter solution and a practical/real filter solution.
+## Objective
 
-Since $f$ and $Q$ are predefined and fixed, we either choose $C$ or we choose $R$. A single value of $R$ or $C$ is chosen for `filters` throughout for the design simplification.
+The objective is to design a biquadratic filter with the $frequency = 1000 Hz$ and $Q = 10$.
 
-## Ideal Filter
-For this scenario we use the **exact** values  for $R$ and $C$. For the ease of process we fix $R = 1 kOhm$ and then calculate  the value of $C$.
+## Behavioural Model
 
-```{python}
-# ideal Filter
-import numpy as np
+This is a theoretical model so as to understand the acheivable taget using the transfer functions of active filters such as low pass, high pass, band pass and band stop filter.
 
-class Filter:          
-    def __init__(self,h_0,w_0,Q):                
-        self.h_0 = h_0
-        self.w_0 = w_0
-        self.Q = Q        
-        
-    def generatetf(self):
-        '''Calculate all transfer functions'''
-        self.lowpassfilter()
-        self.highpassfilter()
-        self.bandpassfilter()
-        self.bandstopfilter()
-    def lowpassfilter(self):        
-        '''Low Pass Filter'''
-        numerator = f"          {self.h_0}"        
-        self.tf("Low Pass Filter: ",numerator)   
-    def highpassfilter(self):
-        '''High Pass Filter'''        
-        numerator = f"      {np.round(self.h_0*np.square(1/self.w_0)*10**8,4)}e8 s^2"
-        self.tf("High Pass Filter: ",numerator)
-    def bandpassfilter(self):        
-        '''Band Pass Filter'''
-        numerator = f"{np.round((-self.h_0 * 1/self.w_0)*10**3,4)}e-3 s"
-        self.tf("Band Pass Filter: ",numerator)
-    def bandstopfilter(self): 
-        '''Band Stop Filter'''       
-        numerator = f"  ( {1} + {np.round(np.square(1/self.w_0)*10**8,4)}e-8 s^2 ) {self.h_0}"        
-        self.tf("Band Stop Filter: ",numerator)        
-    def tf(self,name,num):
-        den_0 = np.round(1/np.square(self.w_0)*10**7,4)
-        den_1 = np.round(1/(self.w_0*self.Q)*10**5,4)
-        '''Just a Display Function of a TF'''
-        line = "----------------------------"
-        den = f"s^2 + {den_1}e-5s + {den_0}e-7"
-        print(f"\n{name}\n")
-        print(num)            
-        print(line)
-        print(den)
+### Behavioural model of active filters using Python
 
-# Given
-Q = 10
-f_0 = 1000 #Hz
-## so,
-w_0 = 2*np.pi*f_0
+Low Pass Filter :
 
-# Choice
-H_0 = 1 #gain
-# C = 0.1 *10**-6 #F
-R = 1000 # Ohm
-## so,
-C = 1/(w_0*R)
+$$
+H(s) = \frac{H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}
+$$
 
-### Rough Notes
-BSF_resistor = Q*R
-H_0_resistor = R/H_0
-print(f"General Variables:\
-R : {R*10**-3} K Ohm\n\
-C : {np.round(C*10**6,3)} uF\n\
-BSF resistor : {BSF_resistor*10**-3} kOhm,\n\
-General R: {R*10e-3}kOhm\n\
-H_0 Resistor: {H_0_resistor*10**-3}kOhm\
-")
+High Pass Filter:  
 
-# Filter design
-idealfilter = Filter(H_0,w_0,Q)
-print("Transfer Functions:")
-idealfilter.generatetf()
+$$H(s) = \frac{V_{01}}{V_i} = \frac{H_0\frac{s^2}{w_0^2}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$$
 
-```
+Band Pass Filter:  
 
-## Theoretical Filter
-For this scenario we use the values of capacitors and resistors readily available in the laboratory for $R$ and $C$. The simuations for the arorementioned is made along.
+$$H(s) = \frac{V_{02}}{V_i} = \frac{-H_0\frac{s}{w_0}}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$$
 
-Since we adjust with the laboratory available solutionw we go for capactiance $C = 157 uF$ and All the resistors are of $1k$ instead of the first resistor near BSF which is of $10k$.
+Band Stop Filter:  
 
-## Practical Filter
-For this filter, red pitaya board is used and simulated to get reponses. The graphs and details are generated from the red pitaya software.
+$$H(s) = \frac{V_{04}}{V_i} = \frac{(1 + \frac{s^2}{w_0^2})H_0}{(1+\frac{s}{w_0 Q}+\frac{s^2}{w_0^2})}$$
+
+where, $Q$= Quality Factor, $H_0$= Gain,  $\omega_0$=Corner Frequency
+
+The python code for generating frequency response and step response is given [here.](https://github.com/oreymaonr/hsb-amcd-sose2025-5/blob/main/content/plotfn.py)
+
+#### Behavioural phase and magnitude plots (Frequency response plots)
+
+::: {#fig-behavioural-frequency layout-ncol=2}
+
+![Band Pass](./RAW/images/behaviourial/bode/bpf.png){#fig-bpf}
+
+![Band Stop](./RAW/images/behaviourial/bode/bsf.png){#fig-bpf}
+
+![High Pass](./RAW/images/behaviourial/bode/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/behaviourial/bode/lpf.png){#fig-bpf}
+
+Behavioural phase and magnitude plots
+:::
+
+#### Behavioural Steady State response (Transcient response plots)
+
+::: {#fig-behavioural-frequency layout-ncol=2}
+
+![Band Pass](./RAW/images/behaviourial/Transcient/bpf.png){#fig-bpf}
+
+![Band Stop](./RAW/images/behaviourial/Transcient/bsf.png){#fig-bpf}
+
+![High Pass](./RAW/images/behaviourial/Transcient/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/behaviourial/Transcient/lpf.png){#fig-bpf}
+
+Behavioural phase and magnitude plots
+:::
 
 
-## Simulation
-- The simulation is as follows
-- We simulate the same using Ki-Cad as per @fig-filter
+#### Behavioural pole-zero plots
+
+::: {#fig-behavioural-pole-zero layout-ncol=2}
+
+![Band Pass](./RAW/images/behaviourial/pzplot/bpf.png){#fig-bpf}
+
+![Band Stop](./RAW/images/behaviourial/pzplot/bsf.png){#fig-bpf}
+
+![High Pass](./RAW/images/behaviourial/pzplot/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/behaviourial/pzplot/lpf.png){#fig-bpf}
+
+Behavioural phase and magnitude plots
+:::
+#### Step Response (Steady State Analysis)
+
+## Simulation Model
+
+KiCad and ngspice is used for the model simulation. 
+
+- We know $\omega = \frac{1}{RC}$. We set an initial value for $R$, here,$R=1000 \Omega$. Calculating we get the $C = 157 nF$.
+- We arrive at a sample circuit diagram as per @fig-filter. 
+- Where, RA1,RB1,RC1,RC2,RC3,RD2 = R = 1000 $\Omega$
+- CA4,CB3 = C = 157 $nF$. 
+- RD1 = $Q \cdot R$,Since Q=10, RD1 = 10k $\Omega$. 
+- RD3 = $R/H_0$. Since $H_0$ = 1, RD3 = 1000 $\Omega$.
+- U1A,U1B,U2A,U2B are operational amplifiers.
+- $V_in$ is the input voltage
+- The outputs are take from the above mentioned op-amps. BPF from U1A, LPF from U1B, HPF from U2A and BSF from U2B respectively. 
 
 ![Biquad Filter Design](./RAW/FilterDiagram.svg){#fig-filter}
 
+The same is realised in KiCad as shown in the Figure @kicadschematics
+
+![KiCad schematics](./RAW/images/breadcrumps/RealKHNbiquad.svg){#kicadschematics}
+
+### Comparison of models using **KiCad-ngspice** and **Red Pitaya-Analog System Lab Kit PRO**
+
+#### ALSK Pro board circuit connections
+
+![ALSK Pro board circuit connections](./RAW/images/breadcrumps/alskdigikey.jpg)
+
+![Red pitaya module](./RAW/images/breadcrumps/red-pitaya.jpg)
+
+![Complete circuit connections](./RAW/images/breadcrumps/setup.jpg)
+
+
+# Charecteristics 
+
+## Frequency response
+
+::: {#fig-comparison-frequency layout-ncol=2}
+
+![Band Pass](./RAW/images/comparison/bode/bpf.png){#fig-bpf}
+
+![Band Stop](./RAW/images/comparison/bode/bsf.png){#fig-bpf}
+
+![High Pass](./RAW/images/comparison/bode/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/comparison/bode/lpf.png){#fig-bpf}
+
+Behavioural phase and magnitude plots
+:::
+
+
+## Step response
+
+::: {#fig-comparison-frequency layout-ncol=2}
+
+![Simulation Band Pass](./RAW/images/comparison/Transcient/Simulated/bpf.png){#fig-bpf}
+
+![Experimental Band Pass](./RAW/images/comparison/Transcient/experimental/bpf.png){#fig-bpf}
+
+![Simulation High Pass](./RAW/images/comparison/Transcient/Simulated/hpf.png){#fig-bpf}
+
+![Experimental High Pass](./RAW/images/comparison/Transcient/experimental/hpf.png){#fig-bpf}
+
+![Simulation Low Pass](./RAW/images/comparison/Transcient/Simulated/lpf.png){#fig-bpf}
+
+![Experimental Low Pass](./RAW/images/comparison/Transcient/experimental/lpf.png){#fig-bpf}
+
+![Simulation Band Stop](./RAW/images/comparison/Transcient/Simulated/bsf.png){#fig-bpf}
+
+![Experimental Band Stop](./RAW/images/comparison/Transcient/experimental/bsf.png){#fig-bpf}
+
+Comparison of step response
+:::
+
+# PCB Design using KiCAD
+
+# PCB 2D Layout
+
+::: {#fig-pcb-2d layout-ncol=2}
+
+![PCB Front](./RAW/images/PCB/fpcb.png)
+
+![PCB Back](./RAW/images/PCB/bpcb.png)
+
+PCB 2D Layout
+:::
+
+## PCB 3D Rendered View
+
+::: {#fig-pcb-3d layout-ncol=2}
+
+![PCB Front](./RAW/images/PCB/fpcb.jpg)
+
+![PCB Back](./RAW/images/PCB/bpcb.jpg)
+
+PCB 3D rendered view
+:::
+
+# PCB Board images
+
+![PCB Board before soldering](./RAW/images/breadcrumps/boardBeforeSoldering.jpg){height="500"}
+
+![PCB Board after soldering](./RAW/images/breadcrumps/finalBoard.jpg){height="400"}
+
+
+
+# PCB Charecteristics
+
+## Frequency Analysis
+
+
+::: {#fig-pcb-frequency layout-ncol=2}
+
+![Band Pass](./RAW/images/PCB/bode/bpf.png){#fig-bpf}
+
+![High Pass](./RAW/images/PCB/bode/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/PCB/bode/lpf.png){#fig-bpf}
+
+Frequency Analysis
+:::
+
+## Transcient Analysis
+
+
+::: {#fig-pcb-transcient layout-ncol=2}
+
+![Band Pass](./RAW/images/PCB/Transcient/bpf.png){#fig-bpf}
+
+![High Pass](./RAW/images/PCB/Transcient/hpf.png){#fig-bpf}
+
+![Low Pass](./RAW/images/PCB/Transcient/lpf.png){#fig-bpf}
+
+Transcient Analysis
+:::
+
+# Conclusion
