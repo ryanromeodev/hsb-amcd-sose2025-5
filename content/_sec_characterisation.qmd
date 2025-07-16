@@ -3,6 +3,7 @@
 
 ## Frequency response
 
+A slight variation as per @fig-comparison-frequency in experimental model  from the simulation is to be tolerated for an acceptable inference.
 
 ::: {#fig-comparison-frequency layout-ncol=2}
 
@@ -20,7 +21,7 @@ Behavioural phase and magnitude plots
 
 ## Step response
 
-
+A slight variations as per @fig-comparison-transcient in experimental model  from the simulation is to be tolerated for an acceptable inference.
 
 ::: {#fig-comparison-transcient layout-ncol=2}
 
@@ -45,7 +46,11 @@ Comparison of step response
 
 # PCB Design using KiCAD
 
+From the above @fig-kicadschematics , we get can generate a PCB Layout. Care is taken to avoid signal interference. The track width is chosen to be 0.025 inches or 0.635 mm. The number of via's and 90 degree tracks are reduced and avoided.
+
 # PCB 2D Layout
+
+Most of the SMD(Surface Mount Devices) are chosen with 0805 variants. For the op-amp, the spice model, 3D model and footprint is downloaded from official [ti website](https://www.ti.com/product/TL082#design-tools-simulation). The DRC check and zone filling of voltages in PCB is also done.
 
 ::: {#fig-pcb-2d layout-ncol=2}
 
@@ -57,6 +62,8 @@ PCB 2D Layout
 :::
 
 ## PCB 3D Rendered View
+
+The 3D model of all devices including the op-amp is loaded from the official websites and hence rendered. The final view is cross verified.  
 
 ::: {#fig-pcb-3d layout-ncol=2}
 
