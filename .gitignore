@@ -2,7 +2,6 @@
 */.ipynb_checkpoints/*
 
 .quarto/
-_manuscript
 _freeze
 simulations
 *.raw
