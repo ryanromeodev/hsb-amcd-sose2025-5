@@ -1,5 +1,5 @@
 ---
-title: "Design and Implementation of Univesal Biquad Filter"
+title: "Design and Implementation of Universal Biquad Filter"
 author: 
   - name: Vismaya Abi
     orcid: 
