@@ -1,3 +1,9 @@
+# Design and Implementation of Universal Biquad Filter
+
+## Abstract
+
+This project focuses on the design and implementation of a second-order universal active (biquad) filter capable of producing low-pass, high-pass, band-pass, and band-stop responses. The filter is developed and tested across simulation environments, the ASLK PRO kit, and PCB hardware. Its performance is analyzed in both the frequency and time domains, with particular attention to gain, phase, and transient characteristics. The study emphasizes the comparison between theoretical predictions and practical outcomes, highlighting key trade-offs in analog filter design.
+
 # Introduction
 
 This project centers on the analog circuit design of a universal biquad filter targeting a corner frequency of 1 kHz and a quality factor (Q) of 10. The design process spans the complete development cycle—from initial specification and simulation to physical layout and hardware realization. Key phases include schematic design, functional modeling, simulation, and full PCB development.
