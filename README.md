@@ -76,12 +76,12 @@ Behavioural phase and magnitude plots
 
 <table>
   <tr>
-    <td><img src="./RAW/images/behaviourial/bode/bpf.png" width="200"></td>
-    <td><img src="./RAW/images/behaviourial/bode/bsf.png" width="200" ></td>
+    <td><img src="./RAW/images/behaviourial/bode/bpf.png"></td>
+    <td><img src="./RAW/images/behaviourial/bode/bsf.png"></td>
   </tr>
   <tr>
-    <td><img src="./RAW/images/behaviourial/bode/hpf.png" width="200"></td>
-    <td><img src="./RAW/images/behaviourial/bode/lpf.png" width="200"></td>
+    <td><img src="./RAW/images/behaviourial/bode/hpf.png"></td>
+    <td><img src="./RAW/images/behaviourial/bode/lpf.png"></td>
   </tr>
 </table>
 
