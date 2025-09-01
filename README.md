@@ -76,7 +76,7 @@ Behavioural phase and magnitude plots
 
 <table>
   <tr>
-    <td><img src="./RAW/images/behaviourial/bode/bpf.png"></td>
+    <td><img src="./RAW/images/behaviourial/bode/bpf.png"><em>Band Pass</em></td>
     <td><img src="./RAW/images/behaviourial/bode/bsf.png"></td>
   </tr>
   <tr>
