@@ -76,12 +76,12 @@ Behavioural phase and magnitude plots
 
 <table>
   <tr>
-    <td>![Band Pass](./RAW/images/behaviourial/bode/bpf.png){#fig-bpf}</td>
-    <td>![Band Stop](./RAW/images/behaviourial/bode/bsf.png){#fig-bpf}</td>
+    <td><img src="./RAW/images/behaviourial/bode/bpf.png" width="200"></td>
+    <td><img src="./RAW/images/behaviourial/bode/bsf.png" width="200" ></td>
   </tr>
   <tr>
-    <td>![High Pass](./RAW/images/behaviourial/bode/hpf.png){#fig-bpf}</td>
-    <td>![Low Pass](./RAW/images/behaviourial/bode/lpf.png){#fig-bpf}</td>
+    <td><img src="./RAW/images/behaviourial/bode/hpf.png" width="200"></td>
+    <td><img src="./RAW/images/behaviourial/bode/lpf.png" width="200"></td>
   </tr>
 </table>
 
