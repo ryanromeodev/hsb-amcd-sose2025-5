@@ -240,27 +240,32 @@ From the above @fig-kicadschematics , we get can generate a PCB Layout. Care is 
 
 Most of the SMD(Surface Mount Devices) are chosen with 0805 variants. For the op-amp, the spice model, 3D model and footprint is downloaded from official [ti website](https://www.ti.com/product/TL082#design-tools-simulation). The DRC check and zone filling of voltages in PCB is also done.
 
-::: {#fig-pcb-2d layout-ncol=2}
-
-![PCB Front](./RAW/images/PCB/fpcb2d.png)
-
-![PCB Back](./RAW/images/PCB/bpcb2d.png)
 
 PCB 2D Layout
-:::
+
+<table>
+  <tr>
+    <td><img src="./RAW/images/PCB/fpcb2d.png"><em>PCB Front</em></td>
+    <td><img src="./RAW/images/PCB/bpcb2d.png">
+    <em>PCB Back</em>
+    </td>
+  </tr>
+</table>
 
 ## PCB 3D Rendered View
 
 The 3D model of all devices including the op-amp is loaded from the official websites and hence rendered. The final view is cross verified.  
 
-::: {#fig-pcb-3d layout-ncol=2}
-
-![PCB Front](./RAW/images/PCB/fpcb.png)
-
-![PCB Back](./RAW/images/PCB/bpcb.png)
-
 PCB 3D rendered view
-:::
+
+<table>
+  <tr>
+    <td><img src="./RAW/images/PCB/fpcb.png"><em>PCB Front</em></td>
+    <td><img src="./RAW/images/PCB/bpcb.png">
+    <em>PCB Back</em>
+    </td>
+  </tr>
+</table>
 
 ## PCB Board images
 
