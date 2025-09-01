@@ -20,7 +20,7 @@ Amplifiers are often designed to selectively process signals of different freque
 - The **band-pass amplifier** passes all signals between the two cutoff frequencies $f_L$ and $f_H$, as illustrated in @fig-types (c).  
 - The **band-reject amplifier** in @fig-types (d) rejects all signals having frequencies lying between $f_L$ and $f_H$.
 
-![Ideal amplifier frequency responses: (a) low-pass, (b) high-pass, (c) band-pass, (d) band-reject characteristics](./RAW/ImageIntroduction/TypesFilter.png){#fig-types}
+![Ideal amplifier frequency responses: (a) low-pass, (b) high-pass, (c) band-pass, (d) band-reject characteristics](../../RAW/ImageIntroduction/TypesFilter.png){#fig-types}
 
 ---
 
@@ -37,11 +37,11 @@ When designing practical filters, several key parameters must be carefully selec
 - For low-pass filters, frequencies below the cutoff pass with minimal attenuation; for high-pass filters, frequencies above the cutoff are passed.
 - Band-pass and band-stop filters have both lower and upper cutoff frequencies ($f_L$ and $f_H$) defining their bandwidth.
 
-![(a) Low-pass amplifier: BW = ωH and GBW = AoωH ; (b) low-pass filter symbol.](./RAW/ImageIntroduction/lowpassF.png){#fig-lowpass}
+![(a) Low-pass amplifier: BW = ωH and GBW = AoωH ; (b) low-pass filter symbol.](../../RAW/ImageIntroduction/lowpassF.png){#fig-lowpass}
 
-![(a) High-pass amplifier; (b) high-pass filter symbol.](./RAW/ImageIntroduction/highpassf.png){#fig-highpass}
+![(a) High-pass amplifier; (b) high-pass filter symbol.](../../RAW/ImageIntroduction/highpassf.png){#fig-highpass}
 
-![Band-pass amplifier.](./RAW/ImageIntroduction/bandpassF.png){#fig-bandpass}
+![Band-pass amplifier.](../../RAW/ImageIntroduction/bandpassF.png){#fig-bandpass}
 
 ---
 
@@ -57,11 +57,11 @@ When designing practical filters, several key parameters must be carefully selec
 
 - High-Q designs require precise components and stable operational amplifiers to avoid excessive peaking or instability.
 
-![Low-pass filter response for ωo = 1 and four values of Q.](./RAW/ImageIntroduction/lowpassQ.png){#fig-lowpassq}
+![Low-pass filter response for ωo = 1 and four values of Q.](../../RAW/ImageIntroduction/lowpassQ.png){#fig-lowpassq}
 
-![High-pass filter response for ωo = 1 and four values of Q.](./RAW/ImageIntroduction/highpassQ.png){#fig-highpassq}
+![High-pass filter response for ωo = 1 and four values of Q.](../../RAW/ImageIntroduction/highpassQ.png){#fig-highpassq}
 
-![Band-pass filter response for ωo = 1 and three values of Q assuming $C1 = C2$ with $R3$ = ∞](./RAW/ImageIntroduction/bandpassQ.png){#fig-bandpassq}
+![Band-pass filter response for ωo = 1 and three values of Q assuming $C1 = C2$ with $R3$ = ∞](../../RAW/ImageIntroduction/bandpassQ.png){#fig-bandpassq}
 
 
 #### Gain ($A_0$)
@@ -120,7 +120,7 @@ An inverting-amplifier circuit is built by grounding the positive input of the o
 and connecting resistors $R_1$ and $R_2$, called the feedback network, between the inverting input and
 the signal source and amplifier output node, respectively, as in @fig-inverter.
 
-![Inverting Amplifier.](./RAW/ImageIntroduction/Inverting.png){#fig-inverter}
+![Inverting Amplifier.](../../RAW/ImageIntroduction/Inverting.png){#fig-inverter}
 
 ---
 
@@ -151,7 +151,7 @@ currents $i_1$ and $i_2$ are “summed” at this node and forced through the fe
 the amplifier in @fig-adder has only two inputs, any number of inputs can be connected to the summing
 junction through additional resistors.
 
-![Summing Amplifier.](./RAW/ImageIntroduction/Adder.png){#fig-adder}
+![Summing Amplifier.](../../RAW/ImageIntroduction/Adder.png){#fig-adder}
 
 ---
 
@@ -161,7 +161,7 @@ The **integrator** is another important building block that uses an operational 
 
 Because the inverting input of the op amp behaves as a virtual ground, the input current and the capacitor current can be written as: $i_i = \frac{v_i}{R}$, $i_c = -C \frac{d v_o}{dt}$
 
-![(a) The integrator circuit; (b) output voltage for a step-function input with $v_C$ (0) = 0.](./RAW/ImageIntroduction/Integrator.png){#fig-inte}
+![(a) The integrator circuit; (b) output voltage for a step-function input with $v_C$ (0) = 0.](../../RAW/ImageIntroduction/Integrator.png){#fig-inte}
 
 For an ideal op amp, the input current into the inverting terminal, $i^-$, is zero. Thus $i_c = i_i$
 
@@ -227,7 +227,7 @@ Input → Summing Amplifier → First Integrator → Second Integrator → Low-P
 Feedback loops from the integrators feed back to the summing amplifier.
 The high-pass output is taken from the summing amplifier, the bandpass from the first integrator, and the low-pass from the second integrator. 
 
-![Block diagram of the KHN biquad.](./RAW/ImageIntroduction/KhnBiquad.png){#fig-khn}
+![Block diagram of the KHN biquad.](../../RAW/ImageIntroduction/KhnBiquad.png){#fig-khn}
 
 A typical KHN biquad circuit includes:
 
