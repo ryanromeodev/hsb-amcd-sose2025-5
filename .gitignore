@@ -1,0 +1,11 @@
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+.quarto/
+_manuscript
+_freeze
+simulations
+*.raw
+
+
+/.quarto/
