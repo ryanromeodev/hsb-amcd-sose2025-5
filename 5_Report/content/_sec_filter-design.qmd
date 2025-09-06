@@ -98,7 +98,7 @@ KiCad and ngspice is used for the model simulation.
 - $V_{in}$ is the input voltage
 - The outputs are take from the above mentioned op-amps. BPF from U1A, LPF from U1B, HPF from U2A and BSF from U2B respectively. 
 
-![Biquad Filter Design](../FilterDiagram.svg){#fig-filter}
+![Biquad Filter Design](images/FilterDiagram.svg){#fig-filter}
 
 The same is realised in KiCad as shown in @fig-kicadschematics
 
