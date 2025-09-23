@@ -6,4 +6,4 @@ Modern simulation environments and open-source platforms played a pivotal role t
 
 The project workflow is tightly integrated with reproducible tools such as Quarto, Jupyter Notebooks, Python, NumPy,Scipy, Control and Matplotlib for analysis, visualization, and documentation. Version control and collaboration were managed through Git, ensuring transparency and traceability at each stage.
 
-Note: All design files, source code, and documentation are publicly available in our [GitHub repository](https://github.com/oreymaonr/hsb-amcd-sose2025-5).
+Note: All design files, source code, and documentation are publicly available in our [GitHub repository](https://github.com/oreymaonr/hsb-amcd-sose2025-5). 
