@@ -1,0 +1,133 @@
+# Charecteristics 
+
+## Frequency response
+
+A slight variation as per @fig-comparison-frequency in experimental model  from the simulation is to be tolerated for an acceptable inference.
+
+::: {#fig-comparison-frequency layout-ncol=2}
+
+![Band Pass](images/comparison/bode/bpf.png){#fig-bpf}
+
+![Band Stop](images/comparison/bode/bsf.png){#fig-bpf}
+
+![High Pass](images/comparison/bode/hpf.png){#fig-bpf}
+
+![Low Pass](images/comparison/bode/lpf.png){#fig-bpf}
+
+Behavioural phase and magnitude plots
+:::
+
+
+## Step response
+
+A slight variations as per @fig-comparison-transcient in experimental model  from the simulation is to be tolerated for an acceptable inference.
+
+::: {#fig-comparison-transcient layout-ncol=2}
+
+![Simulation Band Pass](images/comparison/Transcient/Simulated/bpf.png){#fig-bpf}
+
+![Experimental Band Pass](images/comparison/Transcient/experimental/bpf.png){#fig-bpf}
+
+![Simulation High Pass](images/comparison/Transcient/Simulated/hpf.png){#fig-bpf}
+
+![Experimental High Pass](images/comparison/Transcient/experimental/hpf.png){#fig-bpf}
+
+![Simulation Low Pass](images/comparison/Transcient/Simulated/lpf.png){#fig-bpf}
+
+![Experimental Low Pass](images/comparison/Transcient/experimental/lpf.png){#fig-bpf}
+
+![Simulation Band Stop](images/comparison/Transcient/Simulated/bsf.png){#fig-bpf}
+
+![Experimental Band Stop](images/comparison/Transcient/experimental/bsf.png){#fig-bpf}
+
+Comparison of step response
+:::
+
+# PCB Design using KiCAD
+
+From the above @fig-kicadschematics , we get can generate a PCB Layout. Care is taken to avoid signal interference. The
+track width is chosen to be 0.025 inches or 0.635 mm. The number of via's and 90 degree tracks are reduced and avoided.
+
+## PCB 2D Layout
+
+Most of the SMD(Surface Mount Devices) are chosen with 0805 variants. For the op-amp, the spice model, 3D model and
+footprint is downloaded from official [ti website](https://www.ti.com/product/TL082#design-tools-simulation). The DRC
+check and zone filling of voltages in PCB is also done.
+
+::: {#fig-pcb-2d layout-ncol=2}
+
+![PCB Front](images/PCB/fpcb2d.png)
+
+![PCB Back](images/PCB/bpcb2d.png)
+
+PCB 2D Layout
+:::
+
+## PCB 3D Rendered View
+
+The 3D model of all devices including the op-amp is loaded from the official websites and hence rendered. The final view
+is cross verified.
+
+::: {#fig-pcb-3d layout-ncol=2}
+
+![PCB Front](images/PCB/fpcb.png)
+
+![PCB Back](images/PCB/bpcb.png)
+
+PCB 3D rendered view
+:::
+
+## PCB Board images
+
+
+![PCB Board before soldering](images/breadcrumps/boardBeforeSoldering.jpg){height="500"}
+
+![PCB Board after soldering](images/breadcrumps/finalBoard.jpg){height="400"}
+
+
+
+# PCB Charecteristics
+
+
+## Frequency Analysis
+
+
+::: {#fig-pcb-frequency layout-ncol=2}
+
+![Band Pass](images/PCB/bode/bpf.png){#fig-bpf}
+
+![High Pass](images/PCB/bode/hpf.png){#fig-bpf}
+
+![Low Pass](images/PCB/bode/lpf.png){#fig-bpf}
+
+Frequency Analysis
+:::
+
+## Transcient Analysis
+
+
+::: {#fig-pcb-transcient layout-ncol=2}
+
+![Band Pass](images/PCB/Transcient/bpf.png){#fig-bpf}
+
+![High Pass](images/PCB/Transcient/hpf.png){#fig-bpf}
+
+![Low Pass](images/PCB/Transcient/lpf.png){#fig-bpf}
+
+Transcient Analysis
+:::
+
+# Conclusion
+
+The project successfully demonstrated the complete design and implementation of a universal biquad filter across
+behavioral modeling, simulation, ASLK PRO, and PCB levels. High-pass, low-pass, and band-pass filter configurations were
+realized with results that closely aligned with expected theoretical characteristics. These outcomes validate the
+robustness of the design methodology and the effectiveness of the development workflow.
+
+While the band-stop filter (BSF) at the PCB level did not yield optimal performance, likely due to signal noise or
+interference in the layout, this isolated issue does not overshadow the overall success of the project. On the contrary,
+it highlights valuable areas for further refinement in PCB design and noise mitigation. The experience reinforces the
+importance of layout considerations and serves as a stepping stone for future enhancements.
+
+Overall, the project showcases a comprehensive and reproducible analog design flow—from concept to hardware—using
+modern, open-source tools and platforms.
